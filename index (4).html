@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraLens | Professional Photography</title>
+    <meta name="description"
+        content="Professional photography that turns real moments into timeless visual memories. Capture portraits, events, and lifestyle stories with AuraLens.">
+
+    <!-- Google Fonts: Outfit & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600;700&family=Playfair+Display:wght@900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #ffffff;
+            --accent: #FF4D00;
+            /* Sunset Orange */
+            --logo-dark: #2d3e50;
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.8);
+            --font-family: 'Outfit', sans-serif;
+            --font-logo: 'Playfair Display', serif;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: #050505;
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 1rem 5%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            /* Back to horizontal */
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-family: var(--font-logo);
+            text-transform: uppercase;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* Left align text */
+            line-height: 1.2;
+            text-align: left;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-name-top {
+            font-size: 1.8rem;
+            /* Made larger for prominence */
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .logo-name-bottom {
+            font-size: 0.85rem;
+            /* Increased slightly as requested */
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            opacity: 1;
+        }
+
+        nav a:hover {
+            opacity: 1;
+        }
+
+        .book-btn {
+            background: var(--primary);
+            color: #000;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* Align content to the bottom as requested */
+            padding: 120px 5% 10vh 5%;
+            /* Balanced padding */
+            overflow: hidden;
+        }
+
+        .hero-bg-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
+        }
+
+        .hero-bg-layer.hidden {
+            opacity: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* Brightened background by reducing overlay opacity */
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.5) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 45%;
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .hero-tag {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-tag::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: #fff;
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 2.5rem;
+            /* Increased to push subtext lower */
+            color: white;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.8rem;
+            /* Reduced spacing */
+            max-width: 500px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .whatsapp-btn {
+            background: var(--accent);
+            color: white;
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .view-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 77, 0, 0.4);
+        }
+
+        /* --- Right-Side Arced UI --- */
+        .arch-section {
+            position: absolute;
+            right: 0;
+            top: 20%;
+            /* Lowered as requested */
+            height: 72%;
+            /* Reduced to create gap from bottom */
+            width: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .arch-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        /* Text content anchored to the right border */
+        .arch-center-text {
+            position: absolute;
+            right: 10vh;
+            /* Shifted slightly right for better balance */
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            width: 30vh;
+            /* Scaled to fit inside the circle */
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        .arch-center-text h2 {
+            font-family: var(--font-main);
+            font-size: 2.2rem;
+            /* Reduced size to fit inside arc */
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.1;
+            color: white;
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.9);
+            white-space: nowrap;
+            /* Keep on one line */
+        }
+
+        .arch-center-text p {
+            font-size: 0.9rem;
+            /* Reduced size */
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            line-height: 1.6;
+            max-width: 100%;
+            text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .follow-btn {
+            background: white;
+            color: black;
+            padding: 0.6rem 1.5rem;
+            /* Smaller button */
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .follow-btn:hover {
+            transform: scale(1.05);
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Wheel positioned "before" (to the left of) the text */
+        .arch-wheel {
+            position: absolute;
+            right: -15vh;
+            top: 50%;
+            width: 70vh;
+            height: 70vh;
+            pointer-events: auto;
+            /* Infinite rotation animation */
+            animation: rotateWheel 40s linear infinite;
+        }
+
+        .arch-icon {
+            position: absolute;
+            width: 9vh;
+            height: 9vh;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            /* Center the icon on its coordinate and keep upright */
+            transform: translate(-50%, -50%);
+            animation: rotateIcon 40s linear infinite;
+            transition: border-color 0.3s ease, opacity 0.3s ease;
+            /* Added opacity transition */
+        }
+
+        .arch-icon.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .arch-icon:hover {
+            transform: translate(-50%, -50%);
+            /* Removed scale */
+            border-color: white;
+            z-index: 50;
+        }
+
+        /* 10 icons spaced around the full 360 degrees (36 degrees apart) */
+        .icon-1 {
+            top: 50%;
+            left: 0%;
+        }
+
+        .icon-2 {
+            top: 20.6%;
+            left: 9.5%;
+        }
+
+        .icon-3 {
+            top: 2.4%;
+            left: 34.5%;
+        }
+
+        .icon-4 {
+            top: 2.4%;
+            left: 65.5%;
+        }
+
+        .icon-5 {
+            top: 20.6%;
+            left: 90.5%;
+        }
+
+        .icon-6 {
+            top: 50%;
+            left: 100%;
+        }
+
+        .icon-7 {
+            top: 79.4%;
+            left: 90.5%;
+        }
+
+        .icon-8 {
+            top: 97.6%;
+            left: 65.5%;
+        }
+
+        .icon-9 {
+            top: 97.6%;
+            left: 34.5%;
+        }
+
+        .icon-10 {
+            top: 79.4%;
+            left: 9.5%;
+        }
+
+        @keyframes rotateWheel {
+            from {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+
+        @keyframes rotateIcon {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(-360deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        /* Adjustments for 125% zoom / Large Laptops */
+        @media (max-width: 1600px) and (min-width: 1201px) {
+            .arch-wheel {
+                right: -15vh;
+                /* Keep standard position */
+            }
+
+            .arch-center-text {
+                right: 10vh;
+                /* Stay centered in wheel */
+                width: 25vh;
+                /* Slightly narrower for zoom */
+            }
+
+            .logo-name-top {
+                font-size: 1.2rem;
+                /* Reduced size for 125% zoom */
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .arch-section {
+                width: 100%;
+                right: 0;
+                top: 10%;
+                height: 80%;
+            }
+
+            .arch-wheel {
+                right: 10px;
+                width: 500px;
+            }
+
+            .arch-center-text {
+                right: 5%;
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                height: auto;
+                padding-top: 120px;
+            }
+
+            .hero-content {
+                width: 90%;
+                text-align: center;
+                margin-bottom: 50px;
+            }
+
+            .cta-group {
+                justify-content: center;
+            }
+
+            .arch-section {
+                position: relative;
+                width: 100%;
+                top: 0;
+                height: 600px;
+                transform: none;
+            }
+
+            .arch-wheel {
+                right: 50%;
+                transform: translate(50%, -50%);
+                top: 40%;
+                width: 500px;
+                height: 500px;
+            }
+
+            .arch-center-text {
+                right: 50%;
+                top: 85%;
+                transform: translateX(50%);
+                text-align: center;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <a href="#" class="logo">
+            <div class="logo-circle">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=100&q=80"
+                    alt="Logo">
+            </div>
+            <div class="logo-text">
+                <div class="logo-name-top">AuraLens</div>
+                <div class="logo-name-bottom">photography</div>
+            </div>
+        </a>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Portfolio</a>
+            <a href="#">Contact</a>
+        </nav>
+        <a href="#" class="book-btn">Book Now</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div id="bg-layer-1" class="hero-bg-layer" style="background-image: url('1.jpg');">
+            </div>
+            <div id="bg-layer-2" class="hero-bg-layer hidden"></div>
+
+            <div class="hero-content">
+                <div class="hero-tag">Professional Excellence</div>
+                <h1>
+                    Turning moments<br>
+                    into timeless<br>
+                    memories.
+                </h1>
+                <p>Curated photography across portraits, lifestyle, and events. Experience storytelling through a lens
+                    of precision and creativity.</p>
+
+                <div class="cta-group">
+                    <a href="#" class="whatsapp-btn">Get Started</a>
+                    <a href="#" class="view-btn">Full Portfolio</a>
+                </div>
+            </div>
+
+            <!-- Arced Navigation Section -->
+            <div class="arch-section">
+                <div class="arch-container">
+                    <div class="arch-wheel">
+                        <div class="arch-icon icon-1 active" style="background-image: url('1.jpg');"
+                            onclick="updateHero(0, '1.jpg', 'Portrait Arts', 'Every face tells a unique story. We specialize in capturing the essence of personality through cinematic lighting.')">
+                        </div>
+                        <div class="arch-icon icon-2" style="background-image: url('2.jpg');"
+                            onclick="updateHero(1, '2.jpg', 'Style Fashion', 'Highlighting character through style. Bold compositions for the modern aesthetic.')">
+                        </div>
+                        <div class="arch-icon icon-3" style="background-image: url('3.webp');"
+                            onclick="updateHero(2, '3.webp', 'Urban Stories', 'Capturing the heartbeat of the city. Raw, candid, and full of life.')">
+                        </div>
+                        <div class="arch-icon icon-4" style="background-image: url('4.jpg');"
+                            onclick="updateHero(3, '4.jpg', 'Classic Frames', 'Timeless monochrome and rich textures that never go out of style.')">
+                        </div>
+                        <div class="arch-icon icon-5" style="background-image: url('5.jpg');"
+                            onclick="updateHero(4, '5.jpg', 'Outdoor Vibe', 'Nature meets portraiture. Beautiful golden hour shots and natural backdrops.')">
+                        </div>
+                         <div class="arch-icon icon-6" style="background-image: url('6.jpg');"
+                            onclick="updateHero(5, '6.jpg', 'Modern Life', 'High-end commercial and lifestyle photography for the digital age.')">
+                        </div>
+                        <div class="arch-icon icon-7" style="background-image: url('7.webp');"
+                            onclick="updateHero(6, '7.webp', 'Cinema Moments', 'Stunning cinematic shots that capture the drama and beauty of life.')">
+                        </div>
+                        <div class="arch-icon icon-8" style="background-image: url('8.webp');"
+                            onclick="updateHero(7, '8.webp', 'Artistic Vision', 'Exploring unique perspectives and creative compositions in portraiture.')">
+                        </div>
+                        <div class="arch-icon icon-9" style="background-image: url('9.jpg');"
+                            onclick="updateHero(8, '9.jpg', 'Natural Light', 'Mastering the art of natural illumination for soft, ethereal portraits.')">
+                        </div>
+                        <div class="arch-icon icon-10" style="background-image: url('10.webp');"
+                            onclick="updateHero(9, '10.webp', 'Studio Master', 'Precision lighting and professional backdrops for high-end studio work.')">
+                        </div>
+                    </div>
+
+                    <div class="arch-center-text">
+                        <h2 id="archTitle">Portrait Arts</h2>
+                        <p id="archDesc">Every face tells a unique story. We specialize in capturing the essence of
+                            personality through cinematic lighting and natural expressions.</p>
+                        <a href="#" class="follow-btn">Explore services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const header = document.getElementById('header');
+        const archTitle = document.getElementById('archTitle');
+        const archDesc = document.getElementById('archDesc');
+        let currentLayer = 1;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        function updateHero(index, imageUrl, title, description) {
+            const icons = document.querySelectorAll('.arch-icon');
+            icons.forEach((icon, i) => {
+                if (i === index) icon.classList.add('active');
+                else icon.classList.remove('active');
+            });
+
+            archTitle.style.opacity = 0;
+            archDesc.style.opacity = 0;
+
+            setTimeout(() => {
+                archTitle.textContent = title;
+                archDesc.textContent = description;
+                archTitle.style.opacity = 1;
+                archDesc.style.opacity = 1;
+            }, 300);
+
+            const nextLayer = currentLayer === 1 ? 2 : 1;
+            const currentEl = document.getElementById(`bg-layer-${currentLayer}`);
+            const nextEl = document.getElementById(`bg-layer-${nextLayer}`);
+
+            const img = new Image();
+            img.src = imageUrl;
+            img.onload = () => {
+                nextEl.style.backgroundImage = `url('${imageUrl}')`;
+                nextEl.classList.remove('hidden');
+                currentEl.classList.add('hidden');
+                currentLayer = nextLayer;
+            };
+        }
+
+        let lastApexIndex = -1;
+        function monitorApex() {
+            const icons = document.querySelectorAll('.arch-icon');
+            const wheel = document.querySelector('.arch-wheel');
+            const wheelRect = wheel.getBoundingClientRect();
+            const wheelCenterX = wheelRect.left + wheelRect.width / 2;
+            const centerY = window.innerHeight / 2;
+
+            let closestIcon = null;
+            let minDistance = Infinity;
+            let closestIndex = -1;
+
+            icons.forEach((icon, index) => {
+                const rect = icon.getBoundingClientRect();
+                const iconCenterX = rect.left + rect.width / 2;
+                const iconCenterY = rect.top + rect.height / 2;
+                const distance = Math.abs(iconCenterY - centerY);
+
+                // Visibility logic: Disappear at a fixed point near the right margin
+                // This ensures top and bottom cards disappear/appear at the same vertical level
+                const thresholdX = window.innerWidth - 80;
+                if (iconCenterX > thresholdX) {
+                    icon.style.opacity = '0';
+                    icon.style.pointerEvents = 'none';
+                } else {
+                    icon.style.opacity = '1';
+                    icon.style.pointerEvents = 'auto';
+
+                    // Only consider visible icons for the selection "apex"
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIcon = icon;
+                        closestIndex = index;
+                    }
+                }
+            });
+
+            // Trigger update when the closest icon to the vertical center changes
+            // and it's within a narrow "active zone" (distance < 30px)
+            if (closestIndex !== -1 && closestIndex !== lastApexIndex && minDistance < 30) {
+                closestIcon.click();
+                lastApexIndex = closestIndex;
+            }
+
+            requestAnimationFrame(monitorApex);
+        }
+
+        // Start the monitoring loop
+        requestAnimationFrame(monitorApex);
+    </script>
+</body>
+
+</html>

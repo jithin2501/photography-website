@@ -1,0 +1,351 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 120px 5% 10vh 5%;
+  overflow: hidden;
+}
+
+.heroBgLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+.heroBgLayer.hidden {
+  opacity: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  width: 45%;
+  animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroTag {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.heroTag::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: #fff;
+  display: inline-block;
+}
+
+.heroH1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin-bottom: 2.5rem;
+  color: white;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  letter-spacing: -1px;
+}
+
+.heroP {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.8rem;
+  max-width: 500px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.ctaGroup {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.whatsappBtn {
+  background: #FF4D00;
+  color: white;
+  padding: 1.1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsappBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.4);
+}
+
+.viewBtn {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 1.1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.viewBtn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+/* ---- Arch Section ---- */
+.archSection {
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 72%;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.archContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.archCenterText {
+  position: absolute;
+  right: 10vh;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  width: 30vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.archCenterText h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+  color: white;
+  text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.archCenterText p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 100%;
+  text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s ease;
+}
+
+.archCenterText h2.fade,
+.archCenterText p.fade {
+  opacity: 0;
+}
+
+.followBtn {
+  background: white;
+  color: black;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-block;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.followBtn:hover {
+  transform: scale(1.05);
+  background: #FF4D00;
+  color: white;
+}
+
+.archWheel {
+  position: absolute;
+  right: -15vh;
+  top: 50%;
+  width: 70vh;
+  height: 70vh;
+  pointer-events: auto;
+  animation: rotateWheel 40s linear infinite;
+}
+
+@keyframes rotateWheel {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.archIcon {
+  position: absolute;
+  width: 9vh;
+  height: 9vh;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
+  animation: rotateIcon 40s linear infinite;
+  transition: border-color 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+@keyframes rotateIcon {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+.archIcon.active {
+  border-color: #FF4D00;
+  box-shadow: 0 0 30px #FF4D00;
+}
+
+.archIcon:hover {
+  transform: translate(-50%, -50%);
+  border-color: white;
+  z-index: 50;
+}
+
+/* Icon positions — 10 icons at 36° increments */
+.icon1  { top: 50%;    left: 0%; }
+.icon2  { top: 20.6%;  left: 9.5%; }
+.icon3  { top: 2.4%;   left: 34.5%; }
+.icon4  { top: 2.4%;   left: 65.5%; }
+.icon5  { top: 20.6%;  left: 90.5%; }
+.icon6  { top: 50%;    left: 100%; }
+.icon7  { top: 79.4%;  left: 90.5%; }
+.icon8  { top: 97.6%;  left: 65.5%; }
+.icon9  { top: 97.6%;  left: 34.5%; }
+.icon10 { top: 79.4%;  left: 9.5%; }
+
+/* Responsive */
+@media (max-width: 1600px) and (min-width: 1201px) {
+  .archCenterText {
+    right: 10vh;
+    width: 25vh;
+  }
+}
+
+@media (max-width: 1200px) {
+  .archSection {
+    width: 100%;
+    right: 0;
+    top: 10%;
+    height: 80%;
+  }
+
+  .archWheel {
+    right: 10px;
+    width: 500px;
+    height: 500px;
+  }
+
+  .archCenterText {
+    right: 5%;
+    width: 280px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+    padding-top: 120px;
+  }
+
+  .heroContent {
+    width: 90%;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .ctaGroup {
+    justify-content: center;
+  }
+
+  .archSection {
+    position: relative;
+    width: 100%;
+    top: 0;
+    height: 600px;
+    transform: none;
+  }
+
+  .archWheel {
+    right: 50%;
+    transform: translate(50%, -50%);
+    top: 40%;
+    width: 500px;
+    height: 500px;
+  }
+
+  .archCenterText {
+    right: 50%;
+    top: 85%;
+    transform: translateX(50%);
+    text-align: center;
+    width: 90%;
+  }
+}

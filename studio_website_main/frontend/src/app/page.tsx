@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection';
 import ServicesSection from '@/components/ServicesSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import GallerySection from '@/components/GallerySection';
+import ReviewsSection from '@/components/ReviewsSection';
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
         <ServicesSection />
         <WhyChooseUsSection />
         <GallerySection />
+        <ReviewsSection />
       </main>
     </>
   );

@@ -1,0 +1,384 @@
+.reviews {
+  padding: 120px 0;
+  background-color: #121212;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.reviewsContainer {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Header Area */
+.headerArea {
+  text-align: center;
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.tag {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.heading {
+  font-family: var(--font-logo);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.highlightText {
+  color: #FF4D00;
+}
+
+.titleLine {
+  width: 80px;
+  height: 2px;
+  background-color: #FF4D00;
+  margin-top: 12px;
+}
+
+/* Content Grid */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 4.5fr 5.5fr;
+  gap: 60px;
+  width: 100%;
+  align-items: center;
+}
+
+/* Left Column: Unique Polaroid Collage */
+.leftCol {
+  position: relative;
+  height: 580px;
+  width: 100%;
+}
+
+.polaroid {
+  background: #ffffff;
+  padding: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  position: absolute;
+  width: 170px;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+.polaroidImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  background-color: #eaeaea;
+  overflow: hidden;
+}
+
+.polaroidImg {
+  object-fit: cover;
+}
+
+.polaroid:hover {
+  transform: scale(1.1) rotate(0deg) translateY(-10px);
+  z-index: 10;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Individual Polaroid Placements */
+.pol1 {
+  top: 40px;
+  left: 20px;
+  transform: rotate(-10deg);
+}
+
+.pol2 {
+  top: 30px;
+  right: 110px;
+  transform: rotate(8deg);
+}
+
+.pol3 {
+  top: 190px;
+  left: 140px;
+  transform: rotate(-3deg);
+  z-index: 3;
+}
+
+.pol4 {
+  bottom: 60px;
+  left: 10px;
+  transform: rotate(6deg);
+}
+
+.pol5 {
+  bottom: 40px;
+  right: 100px;
+  transform: rotate(-8deg);
+}
+
+/* Right Column: Statistics & Reviews Slider */
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Stats Board */
+.statsBoard {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  color: #121212;
+}
+
+.statCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.statCol:not(:last-child) {
+  border-right: 1px solid #eaeaea;
+}
+
+.statIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.statNumber {
+  font-family: var(--font-logo);
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: #121212;
+}
+
+.ratingNumber {
+  color: #FF4D00;
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.statLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #777777;
+}
+
+.starsMini {
+  color: #FF4D00;
+  font-size: 0.75rem;
+  margin: 2px 0;
+}
+
+/* Review Slider */
+.sliderContainer {
+  width: 100%;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.reviewCard {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 32px 20px;
+  text-align: center;
+  color: #121212;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+}
+
+.reviewCard:hover {
+  transform: translateY(-8px);
+}
+
+.avatarWrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #FF4D00;
+  margin-bottom: 16px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(255, 77, 0, 0.25);
+}
+
+.clientName {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #121212;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.stars {
+  color: #FF4D00;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.reviewText {
+  color: #555555;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Slider Controls */
+.sliderControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 35px;
+}
+
+.arrowBtn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.arrowBtn:hover {
+  background-color: #FF4D00;
+  border-color: #FF4D00;
+  transform: scale(1.05);
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.dotActive {
+  background-color: #FF4D00;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .heading {
+    font-size: 3rem;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .leftCol {
+    max-width: 500px;
+    height: 480px;
+    margin: 0 auto;
+  }
+
+  .polaroid {
+    width: 140px;
+  }
+
+  .pol1 { top: 40px; left: 10px; }
+  .pol2 { top: 25px; right: 50px; }
+  .pol3 { top: 150px; left: 100px; }
+  .pol4 { bottom: 50px; left: 0; }
+  .pol5 { bottom: 35px; right: 40px; }
+}
+
+@media (max-width: 768px) {
+  .reviews {
+    padding: 80px 0;
+  }
+
+  .heading {
+    font-size: 2.5rem;
+  }
+
+  .statsBoard {
+    grid-template-columns: repeat(2, 2fr);
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .statCol:nth-child(2) {
+    border-right: none;
+  }
+
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .reviewCard {
+    padding: 35px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsBoard {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .statCol:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 16px;
+  }
+}

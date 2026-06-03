@@ -75,7 +75,6 @@ export default function ServicesSection() {
                   <br />
                   {service.subtitle}
                 </h3>
-                <div className={styles.cardLine} />
               </div>
             </div>
           ))}

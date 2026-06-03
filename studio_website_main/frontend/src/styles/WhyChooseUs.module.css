@@ -61,7 +61,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 80px;
   width: 100%;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Left Column Styling */
@@ -123,11 +123,8 @@
 /* Right Column: Layered Images */
 .rightCol {
   position: relative;
-  height: 520px;
+  height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .imageContainer {
@@ -141,7 +138,7 @@
   top: 0;
   right: 0;
   width: 70%;
-  height: 90%;
+  height: 100%;
   border-radius: 32px;
   overflow: hidden;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
@@ -149,10 +146,10 @@
 
 .fgImageWrapper {
   position: absolute;
-  bottom: 0;
+  bottom: 10%;
   left: 0;
   width: 50%;
-  height: 60%;
+  height: 80%;
   border-radius: 32px;
   overflow: hidden;
   border: 8px solid #121212; /* Match parent section background */
@@ -173,7 +170,7 @@
 .badge {
   position: absolute;
   top: 50%;
-  left: 42%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 140px;
   height: 140px;

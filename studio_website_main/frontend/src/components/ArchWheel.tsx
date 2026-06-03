@@ -52,8 +52,10 @@ export default function ArchWheel({ icons, activeIndex, onIconClick }: ArchWheel
         const iconCenterY = rect.top + rect.height / 2;
         const distance = Math.abs(iconCenterY - centerY);
 
-        // Hide icon if its left edge goes past the Book Now button's right border
-        if (rect.left > thresholdX) {
+        // Hide icon if its right edge goes past the Book Now button's right border
+        const shouldHide = rect.right > thresholdX;
+
+        if (shouldHide) {
           icon.style.opacity = '0';
           icon.style.pointerEvents = 'none';
         } else {

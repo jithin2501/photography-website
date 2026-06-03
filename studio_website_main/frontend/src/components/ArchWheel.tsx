@@ -36,19 +36,24 @@ export default function ArchWheel({ icons, activeIndex, onIconClick }: ArchWheel
         return;
       }
 
-      const centerY = window.innerHeight / 2;
+      const centerY = window.innerHeight * 0.54;
       let closestIcon: HTMLDivElement | null = null;
       let minDistance = Infinity;
       let closestIndex = -1;
 
+      // Get the right border of the Book Now button dynamically, default to 95% of window width
+      const bookNowBtn = document.getElementById('book-now-btn');
+      const thresholdX = bookNowBtn
+        ? bookNowBtn.getBoundingClientRect().right
+        : window.innerWidth * 0.95;
+
       iconEls.forEach((icon, index) => {
         const rect = icon.getBoundingClientRect();
-        const iconCenterX = rect.left + rect.width / 2;
         const iconCenterY = rect.top + rect.height / 2;
         const distance = Math.abs(iconCenterY - centerY);
 
-        const thresholdX = window.innerWidth - 80;
-        if (iconCenterX > thresholdX) {
+        // Hide icon if its left edge goes past the Book Now button's right border
+        if (rect.left > thresholdX) {
           icon.style.opacity = '0';
           icon.style.pointerEvents = 'none';
         } else {

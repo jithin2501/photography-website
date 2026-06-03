@@ -6,7 +6,7 @@ export const archIcons: ArchIcon[] = [
     imageUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
     title: 'Portrait Arts',
     description:
-      'Every face tells a unique story. We specialize in capturing the essence of personality through cinematic lighting.',
+      'Every face tells a unique story. Capturing the essence of personality.',
   },
   {
     id: 2,
@@ -55,7 +55,7 @@ export const archIcons: ArchIcon[] = [
     imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
     title: 'Artistic Vision',
     description:
-      'Exploring unique perspectives and creative compositions in portraiture.',
+      'Exploring unique perspectives and creative compositions.',
   },
   {
     id: 9,

@@ -136,8 +136,8 @@
 .archSection {
   position: absolute;
   right: 0;
-  top: 20%;
-  height: 72%;
+  top: 0;
+  height: 100%;
   width: 100%;
   z-index: 10;
   pointer-events: none;
@@ -154,11 +154,11 @@
 
 .archCenterText {
   position: absolute;
-  right: 10vh;
-  top: 50%;
+  right: 14vh;
+  top: 54%;
   transform: translateY(-50%);
   text-align: center;
-  width: 30vh;
+  width: 28vh;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -217,9 +217,9 @@
 .archWheel {
   position: absolute;
   right: -15vh;
-  top: 50%;
-  width: 70vh;
-  height: 70vh;
+  top: 54%;
+  width: 68vh;
+  height: 68vh;
   pointer-events: auto;
   animation: rotateWheel 40s linear infinite;
 }
@@ -235,9 +235,9 @@
 
 .archIcon {
   position: absolute;
-  width: 9vh;
-  height: 9vh;
-  border-radius: 20px;
+  width: 14vh;
+  height: 14vh;
+  border-radius: 28px;
   background-size: cover;
   background-position: center;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -283,7 +283,7 @@
 /* Responsive */
 @media (max-width: 1600px) and (min-width: 1201px) {
   .archCenterText {
-    right: 10vh;
+    right: 14vh;
     width: 25vh;
   }
 }

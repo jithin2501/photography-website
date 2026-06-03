@@ -42,7 +42,7 @@ export default function Header() {
         ))}
       </nav>
 
-      <Link href="#" className={styles.bookBtn}>
+      <Link href="#" id="book-now-btn" className={styles.bookBtn}>
         Book Now
       </Link>
     </header>

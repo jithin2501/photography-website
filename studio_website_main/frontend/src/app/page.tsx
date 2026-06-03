@@ -5,6 +5,7 @@ import ServicesSection from '@/components/ServicesSection';
 import WhyChooseUsSection from '@/components/WhyChooseUsSection';
 import GallerySection from '@/components/GallerySection';
 import ReviewsSection from '@/components/ReviewsSection';
+import Footer from '@/components/Footer';
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
         <GallerySection />
         <ReviewsSection />
       </main>
+      <Footer />
     </>
   );
 }

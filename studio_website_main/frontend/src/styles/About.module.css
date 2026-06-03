@@ -22,13 +22,8 @@
 /* Image Grid Styling */
 .aboutGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.aboutCol {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1.8fr 1fr;
   gap: 24px;
   height: 100%;
 }
@@ -45,22 +40,22 @@
 }
 
 .imgTopLeft {
-  flex: 38;
+  grid-column: span 7;
   border-radius: 32px;
 }
 
 .imgBottomLeft {
-  flex: 30;
+  grid-column: span 6;
   border-radius: 32px;
 }
 
 .imgTopRight {
-  flex: 44;
+  grid-column: span 5;
   border-radius: 32px;
 }
 
 .imgBottomRight {
-  flex: 24;
+  grid-column: span 6;
   border-radius: 32px;
 }
 
@@ -160,12 +155,14 @@
     align-items: center; /* Reset to center when stacked */
   }
 
-  .aboutCol {
+  .aboutGrid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    gap: 20px;
     height: auto;
   }
 
   .imgTopLeft, .imgBottomLeft, .imgTopRight, .imgBottomRight {
-    flex: none;
     height: 320px;
   }
 
@@ -187,11 +184,12 @@
 @media (max-width: 600px) {
   .aboutGrid {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     gap: 20px;
   }
   
   .imgTopLeft, .imgBottomLeft, .imgTopRight, .imgBottomRight {
-    flex: none;
+    grid-column: span 1 !important;
     height: 300px;
     border-radius: 30px;
   }

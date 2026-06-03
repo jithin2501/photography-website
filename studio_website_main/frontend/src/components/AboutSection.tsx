@@ -9,46 +9,42 @@ export default function AboutSection() {
       <div className={styles.aboutContainer}>
         {/* Left Side: Dynamic Masonry Image Grid */}
         <div className={styles.aboutGrid}>
-          <div className={styles.aboutCol}>
-            <div className={`${styles.aboutImage} ${styles.imgTopLeft}`} style={{ position: 'relative', overflow: 'hidden' }}>
-              <Image
-                src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80"
-                alt="Transforming Vision - Mountains Sunset Gown Portrait"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                style={{ objectFit: 'cover' }}
-                priority
-              />
-            </div>
-            <div className={`${styles.aboutImage} ${styles.imgBottomLeft}`} style={{ position: 'relative', overflow: 'hidden' }}>
-              <Image
-                src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?auto=format&fit=crop&w=800&q=80"
-                alt="Visual Reality - Outdoor Scenic Hills Couple Photoshoot"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+          <div className={`${styles.aboutImage} ${styles.imgTopLeft}`} style={{ position: 'relative', overflow: 'hidden' }}>
+            <Image
+              src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80"
+              alt="Transforming Vision - Mountains Sunset Gown Portrait"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+              priority
+            />
           </div>
-          <div className={styles.aboutCol}>
-            <div className={`${styles.aboutImage} ${styles.imgTopRight}`} style={{ position: 'relative', overflow: 'hidden' }}>
-              <Image
-                src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
-                alt="Cinematic Maternity Portrait Sunset Desert"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <div className={`${styles.aboutImage} ${styles.imgBottomRight}`} style={{ position: 'relative', overflow: 'hidden' }}>
-              <Image
-                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80"
-                alt="Cozy Family Maternity Newborn Moments"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
+          <div className={`${styles.aboutImage} ${styles.imgTopRight}`} style={{ position: 'relative', overflow: 'hidden' }}>
+            <Image
+              src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+              alt="Cinematic Maternity Portrait Sunset Desert"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+          <div className={`${styles.aboutImage} ${styles.imgBottomLeft}`} style={{ position: 'relative', overflow: 'hidden' }}>
+            <Image
+              src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?auto=format&fit=crop&w=800&q=80"
+              alt="Visual Reality - Outdoor Scenic Hills Couple Photoshoot"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+          <div className={`${styles.aboutImage} ${styles.imgBottomRight}`} style={{ position: 'relative', overflow: 'hidden' }}>
+            <Image
+              src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80"
+              alt="Cozy Family Maternity Newborn Moments"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
+            />
           </div>
         </div>
 

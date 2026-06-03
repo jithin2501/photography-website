@@ -68,49 +68,52 @@ export default function HeroSection() {
       {/* Dark overlay */}
       <div className={styles.heroOverlay} />
 
-      {/* Left hero content */}
-      <div className={styles.heroContent}>
-        <div className={styles.heroTag}>Professional Excellence</div>
-        <h1 className={styles.heroH1}>
-          Turning moments
-          <br />
-          into timeless
-          <br />
-          memories.
-        </h1>
-        <p className={styles.heroP}>
-          Curated photography across portraits, lifestyle, and events. Experience
-          storytelling through a lens of precision and creativity.
-        </p>
-        <div className={styles.ctaGroup}>
-          <Link href="#" className={styles.whatsappBtn}>
-            Get Started
-          </Link>
-          <Link href="#" className={styles.viewBtn}>
-            Full Portfolio
-          </Link>
-        </div>
-      </div>
-
-      {/* Arch / Wheel UI */}
-      <div className={styles.archSection}>
-        <div className={styles.archContainer}>
-          <ArchWheel
-            icons={archIcons}
-            activeIndex={heroState.activeIndex}
-            onIconClick={handleIconClick}
-          />
-
-          <div className={styles.archCenterText}>
-            <h2 className={textFade ? styles.fade : ''}>
-              {heroState.title}
-            </h2>
-            <p className={textFade ? styles.fade : ''}>
-              {heroState.description}
-            </p>
-            <Link href="#" className={styles.followBtn}>
-              Explore services
+      {/* Centered content container */}
+      <div className={styles.heroContainer}>
+        {/* Left hero content */}
+        <div className={styles.heroContent}>
+          <div className={styles.heroTag}>Professional Excellence</div>
+          <h1 className={styles.heroH1}>
+            Turning moments
+            <br />
+            into timeless
+            <br />
+            memories.
+          </h1>
+          <p className={styles.heroP}>
+            Curated photography across portraits, lifestyle, and events. Experience
+            storytelling through a lens of precision and creativity.
+          </p>
+          <div className={styles.ctaGroup}>
+            <Link href="#" className={styles.whatsappBtn}>
+              Get Started
             </Link>
+            <Link href="#" className={styles.viewBtn}>
+              Full Portfolio
+            </Link>
+          </div>
+        </div>
+
+        {/* Arch / Wheel UI */}
+        <div className={styles.archSection}>
+          <div className={styles.archContainer}>
+            <ArchWheel
+              icons={archIcons}
+              activeIndex={heroState.activeIndex}
+              onIconClick={handleIconClick}
+            />
+
+            <div className={styles.archCenterText}>
+              <h2 className={textFade ? styles.fade : ''}>
+                {heroState.title}
+              </h2>
+              <p className={textFade ? styles.fade : ''}>
+                {heroState.description}
+              </p>
+              <Link href="#" className={styles.followBtn}>
+                Explore services
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -3,19 +3,26 @@
   top: 0;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 5%;
   z-index: 1000;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem 0;
 }
 
 .header.scrolled {
-  padding: 1rem 5%;
+  padding: 1rem 0;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.headerContainer {
+  width: 100%;
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {

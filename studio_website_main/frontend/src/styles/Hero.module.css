@@ -2,11 +2,22 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
+  overflow: hidden;
+}
+
+.heroContainer {
+  position: absolute;
+  top: 120px;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1450px;
+  padding: 0 5%;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 120px 5% 10vh 5%;
-  overflow: hidden;
 }
 
 .heroBgLayer {
@@ -28,12 +39,10 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.5) 100%);
   z-index: 1;
 }
 
@@ -49,6 +58,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -228,6 +238,7 @@
   from {
     transform: translateY(-50%) rotate(0deg);
   }
+
   to {
     transform: translateY(-50%) rotate(360deg);
   }
@@ -252,6 +263,7 @@
   from {
     transform: translate(-50%, -50%) rotate(0deg);
   }
+
   to {
     transform: translate(-50%, -50%) rotate(-360deg);
   }
@@ -269,16 +281,55 @@
 }
 
 /* Icon positions — 10 icons at 36° increments */
-.icon1  { top: 50%;    left: 0%; }
-.icon2  { top: 20.6%;  left: 9.5%; }
-.icon3  { top: 2.4%;   left: 34.5%; }
-.icon4  { top: 2.4%;   left: 65.5%; }
-.icon5  { top: 20.6%;  left: 90.5%; }
-.icon6  { top: 50%;    left: 100%; }
-.icon7  { top: 79.4%;  left: 90.5%; }
-.icon8  { top: 97.6%;  left: 65.5%; }
-.icon9  { top: 97.6%;  left: 34.5%; }
-.icon10 { top: 79.4%;  left: 9.5%; }
+.icon1 {
+  top: 50%;
+  left: 0%;
+}
+
+.icon2 {
+  top: 20.6%;
+  left: 9.5%;
+}
+
+.icon3 {
+  top: 2.4%;
+  left: 34.5%;
+}
+
+.icon4 {
+  top: 2.4%;
+  left: 65.5%;
+}
+
+.icon5 {
+  top: 20.6%;
+  left: 90.5%;
+}
+
+.icon6 {
+  top: 50%;
+  left: 100%;
+}
+
+.icon7 {
+  top: 79.4%;
+  left: 90.5%;
+}
+
+.icon8 {
+  top: 97.6%;
+  left: 65.5%;
+}
+
+.icon9 {
+  top: 97.6%;
+  left: 34.5%;
+}
+
+.icon10 {
+  top: 79.4%;
+  left: 9.5%;
+}
 
 /* Responsive */
 @media (max-width: 1600px) and (min-width: 1201px) {
@@ -310,9 +361,22 @@
 
 @media (max-width: 1024px) {
   .hero {
+    display: flex;
     flex-direction: column;
     height: auto;
     padding-top: 120px;
+  }
+
+  .heroContainer {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    padding: 0 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .heroContent {

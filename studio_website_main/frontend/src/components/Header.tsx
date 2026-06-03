@@ -18,33 +18,35 @@ export default function Header() {
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-      <Link href="#" className={styles.logo}>
-        <div className={styles.logoCircle}>
-          <Image
-            src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=100&q=80"
-            alt="AuraLens Photography Logo"
-            width={50}
-            height={50}
-            style={{ objectFit: 'cover', borderRadius: '50%' }}
-          />
-        </div>
-        <div className={styles.logoText}>
-          <span className={styles.logoNameTop}>AuraLens</span>
-          <span className={styles.logoNameBottom}>photography</span>
-        </div>
-      </Link>
+      <div className={styles.headerContainer}>
+        <Link href="#" className={styles.logo}>
+          <div className={styles.logoCircle}>
+            <Image
+              src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=100&q=80"
+              alt="AuraLens Photography Logo"
+              width={50}
+              height={50}
+              style={{ objectFit: 'cover', borderRadius: '50%' }}
+            />
+          </div>
+          <div className={styles.logoText}>
+            <span className={styles.logoNameTop}>AuraLens</span>
+            <span className={styles.logoNameBottom}>photography</span>
+          </div>
+        </Link>
 
-      <nav className={styles.nav}>
-        {navLinks.map((link) => (
-          <Link key={link.label} href={link.href} className={styles.navLink}>
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+        <nav className={styles.nav}>
+          {navLinks.map((link) => (
+            <Link key={link.label} href={link.href} className={styles.navLink}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-      <Link href="#" id="book-now-btn" className={styles.bookBtn}>
-        Book Now
-      </Link>
+        <Link href="#" id="book-now-btn" className={styles.bookBtn}>
+          Book Now
+        </Link>
+      </div>
     </header>
   );
 }

@@ -231,7 +231,7 @@ export default function NewbornServicePageContent() {
             <h3 className={styles.bookingHighlight}>3 to 15</h3>
             <span className={styles.bookingSubtext}>days after birth</span>
             <p className={styles.bookingDesc}>
-              This is the ideal window to capture those sleepy, curled-up baby poses before they start stretching and waking up more frequently.
+              This is the ideal window to capture those sleepy, curled-up baby poses before they start stretching and waking up more frequently.stretching and waking up more frequently stretching and waking up more frequently
             </p>
           </div>
         </div>

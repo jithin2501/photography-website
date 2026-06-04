@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '@/styles/Gallery.module.css';
 
 interface GalleryColumn {
@@ -139,7 +140,9 @@ export default function GallerySection() {
 
         {/* Bottom CTA Button */}
         <div className={styles.btnContainer}>
-          <button className={styles.viewAllBtn}>View Gallery</button>
+          <Link href="/gallery" style={{ textDecoration: 'none' }}>
+            <button className={styles.viewAllBtn}>View Gallery</button>
+          </Link>
         </div>
       </div>
     </section>

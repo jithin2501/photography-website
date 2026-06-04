@@ -88,9 +88,6 @@ export default function BookingPageContent() {
               <p className={styles.heroDesc}>
                 We can't wait to capture your special moments. Fill out the form below, customize your session details, and let's plan your perfect photoshoot experience.
               </p>
-              <p className={styles.heroDesc}>
-                Whether you are planning a portrait session, capturing family memories, or creating custom
-              </p>
             </div>
 
             {/* Quick Features Row */}

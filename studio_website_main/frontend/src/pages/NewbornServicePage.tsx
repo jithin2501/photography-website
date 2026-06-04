@@ -252,7 +252,7 @@ export default function NewbornServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Basic</span>
-                <h3 className={styles.packagePrice}>$299</h3>
+                <h3 className={styles.packagePrice}>₹15,000</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -296,7 +296,7 @@ export default function NewbornServicePageContent() {
               <div className={styles.popularBadge}>Most Popular</div>
               <div>
                 <span className={styles.packageName}>Standard</span>
-                <h3 className={styles.packagePrice}>$499</h3>
+                <h3 className={styles.packagePrice}>₹25,000</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -339,7 +339,7 @@ export default function NewbornServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Premium</span>
-                <h3 className={styles.packagePrice}>$799</h3>
+                <h3 className={styles.packagePrice}>₹40,000</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

@@ -35,24 +35,24 @@ export default function Footer() {
             <ul className={styles.linksList}>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#">Home</Link>
+                <Link href="/">Home</Link>
               </li>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#">About Us</Link>
+                <Link href="/#about">About Us</Link>
               </li>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#">Services</Link>
+                <Link href="/#services">Services</Link>
               </li>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#gallery">Gallery</Link>
+                <Link href="/#gallery">Gallery</Link>
               </li>
 
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#">Contact Us</Link>
+                <Link href="/contact">Contact Us</Link>
               </li>
             </ul>
           </div>

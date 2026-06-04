@@ -39,7 +39,7 @@ const SERVICES_DATA: ServiceItem[] = [
 
 export default function ServicesSection() {
   return (
-    <section className={styles.services}>
+    <section id="services" className={styles.services}>
       <div className={styles.servicesContainer}>
         {/* Header Title Area */}
         <div className={styles.headerArea}>

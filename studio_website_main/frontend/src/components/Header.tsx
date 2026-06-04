@@ -6,12 +6,12 @@ import Image from 'next/image';
 import styles from '@/styles/Header.module.css';
 
 const navLinks = [
-  { label: 'Home', href: '#' },
-  { label: 'About', href: '#' },
-  { label: 'Services', href: '#' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Review', href: '#reviews' },
-  { label: 'Contact', href: '#' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/#about' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Gallery', href: '/#gallery' },
+  { label: 'Review', href: '/#reviews' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export default function Header() {

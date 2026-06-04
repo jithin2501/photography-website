@@ -5,7 +5,7 @@ import styles from '@/styles/About.module.css';
 
 export default function AboutSection() {
   return (
-    <section className={styles.about}>
+    <section id="about" className={styles.about}>
       <div className={styles.aboutContainer}>
         {/* Left Side: Dynamic Masonry Image Grid */}
         <div className={styles.aboutGrid}>

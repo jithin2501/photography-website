@@ -1,9 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/styles/Header.module.css';
-import { useScrolled } from '@/hooks/useScrolled';
 
 const navLinks = [
   { label: 'Home', href: '#' },
@@ -15,10 +15,27 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const scrolled = useScrolled(50);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos =
+        window.scrollY ||
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      setScrolled(scrollPos > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Call handler right away so state is updated on initial load/refresh
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+    <header className={`${styles.header} ${scrolled ? 'is-scrolled' : ''}`}>
       <div className={styles.headerContainer}>
         <Link href="#" className={styles.logo}>
           <div className={styles.logoCircle}>

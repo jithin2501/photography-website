@@ -7,7 +7,12 @@ export function useScrolled(threshold: number = 50): boolean {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > threshold);
+      const scrollPos =
+        window.scrollY ||
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      setScrolled(scrollPos > threshold);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

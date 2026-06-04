@@ -8,9 +8,10 @@
   padding: 1.5rem 0;
 }
 
-.header.scrolled {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(15px);
+.header:global(.is-scrolled) {
+  background: #000000 !important;
+  backdrop-filter: blur(15px) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6) !important;
 }
 
 .headerContainer {

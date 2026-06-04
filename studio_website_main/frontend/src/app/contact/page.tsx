@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import ContactContent from '@/components/ContactContent';
+import ContactPageContent from '@/pages/ContactPage';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <ContactContent />
+      <ContactPageContent />
       <Footer />
     </>
   );

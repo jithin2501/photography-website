@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/Contact.module.css';
 
-export default function ContactContent() {
+export default function ContactPageContent() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

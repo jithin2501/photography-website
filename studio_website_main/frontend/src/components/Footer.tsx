@@ -57,7 +57,7 @@ export default function Footer() {
           </div>
 
           {/* Services Column */}
-          <div className={styles.brandCol}>
+          <div className={`${styles.brandCol} ${styles.servicesCol}`}>
             <h3 className={styles.colTitle}>
               <span className={styles.pipe}>|</span> Services
             </h3>

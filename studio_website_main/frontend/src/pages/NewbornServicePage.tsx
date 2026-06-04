@@ -38,6 +38,9 @@ export default function NewbornServicePageContent() {
               <p className={styles.heroDesc}>
                 Capture your baby's first moments with love, care, and creativity. We create cozy, beautiful, and artistic portraits of your tiny bundle of joy that you will cherish forever.
               </p>
+              <p className={styles.heroDesc}>
+                Every session is fully customized with warm organic wraps, hand-crafted props, and soft blankets to keep your baby safe and comfortable. Relax in our specialized temperature-controlled studio while we preserve these fleeting early days.
+              </p>
             </div>
 
             <div className={styles.btnGroup}>
@@ -52,7 +55,7 @@ export default function NewbornServicePageContent() {
 
           <div className={styles.heroImageContainer}>
             <Image
-              src="https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=1200&q=80"
+              src="/images/Newborn.png"
               alt="Cozy newborn baby sleeping soundly in a warm wooden basket with a small teddy bear"
               fill
               priority
@@ -153,7 +156,7 @@ export default function NewbornServicePageContent() {
               </div>
               <div className={styles.smallImageWrapper}>
                 <Image
-                  src="https://images.unsplash.com/photo-1559599101-3097022db7c2?auto=format&fit=crop&w=600&q=80"
+                  src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80"
                   alt="Newborn session props and toys setup"
                   fill
                   className={styles.showcaseImage}

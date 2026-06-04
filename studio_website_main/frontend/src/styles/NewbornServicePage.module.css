@@ -89,6 +89,10 @@
   margin: 0;
 }
 
+.heroDesc + .heroDesc {
+  margin-top: 16px;
+}
+
 .btnGroup {
   display: flex;
   gap: 20px;

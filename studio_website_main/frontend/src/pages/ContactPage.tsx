@@ -363,14 +363,16 @@ export default function ContactPageContent() {
 
           {/* Map Description Info */}
           <div className={styles.mapTextCol}>
-            <span className={styles.mapTag}>Visit our studio</span>
-            <h2 className={styles.mapTitle}>
-              We'd Love To <span className={styles.titleHighlight}>See You!</span>
-            </h2>
-            <p className={styles.mapDesc}>
-              Our studio is located in the heart of Creative City. Feel free to
-              stop by or schedule an appointment.
-            </p>
+            <div className={styles.mapTextTop}>
+              <span className={styles.mapTag}>Visit our studio</span>
+              <h2 className={styles.mapTitle}>
+                We'd Love To <span className={styles.titleHighlight}>See You!</span>
+              </h2>
+              <p className={styles.mapDesc}>
+                Our studio is located in the heart of Creative City. Feel free to
+                stop by or schedule an appointment Our studio is located in the heart of Creative City. Feel free to stop by or schedule an appointment Our studio is located in the heart of Creative City. Feel free to stop by or schedule an appointment.
+              </p>
+            </div>
 
             <a
               href="https://maps.google.com/?q=123+Studio+Lane+Creative+City+CA+90210+USA"

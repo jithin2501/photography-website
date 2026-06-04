@@ -86,7 +86,7 @@ export default function ReviewsSection() {
   const [activeSlide, setActiveSlide] = useState(0);
 
   return (
-    <section className={styles.reviews}>
+    <section id="reviews" className={styles.reviews}>
       <div className={styles.reviewsContainer}>
         {/* Header Title Area */}
         <div className={styles.headerArea}>

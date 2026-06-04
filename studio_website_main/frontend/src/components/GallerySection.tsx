@@ -107,7 +107,7 @@ const GALLERY_DATA: GalleryColumn[] = [
 
 export default function GallerySection() {
   return (
-    <section className={styles.gallery}>
+    <section id="gallery" className={styles.gallery}>
       <div className={styles.galleryContainer}>
         {/* Header Title Area */}
         <div className={styles.headerArea}>

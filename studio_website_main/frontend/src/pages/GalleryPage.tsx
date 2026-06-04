@@ -12,6 +12,7 @@ const galleryItems = [
     category: 'Maternity',
     title: 'Serene Waiting',
     image: 'https://images.unsplash.com/photo-1590038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+    hideText: true,
   },
   {
     id: 2,
@@ -306,10 +307,7 @@ export default function GalleryPageContent() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className={styles.galleryImage}
                 />
-                <div className={styles.cardOverlay}>
-                  <span className={styles.cardCategory}>{item.category}</span>
-                  <h4 className={styles.cardTitle}>{item.title}</h4>
-                </div>
+                <div className={styles.cardOverlay} />
               </div>
             ))}
           </div>

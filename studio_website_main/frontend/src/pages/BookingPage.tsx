@@ -89,7 +89,7 @@ export default function BookingPageContent() {
                 We can't wait to capture your special moments. Fill out the form below, customize your session details, and let's plan your perfect photoshoot experience.
               </p>
               <p className={styles.heroDesc}>
-                Whether you are planning a portrait session, capturing family memories, or creating custom branding content, our professional photographers work closely with you. We customize lighting, locations, and styling to match your unique story.
+                Whether you are planning a portrait session, capturing family memories, or creating custom
               </p>
             </div>
 

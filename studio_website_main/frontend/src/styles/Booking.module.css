@@ -143,6 +143,19 @@
   outline: none !important;
 }
 
+.heroImageContainer::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  pointer-events: none;
+  background: linear-gradient(to right, #050505 0%, transparent 15%, transparent 85%, #050505 100%),
+              linear-gradient(to top, #050505 0%, transparent 15%);
+  z-index: 2;
+}
+
 .heroImage {
   object-fit: contain;
   object-position: right bottom;

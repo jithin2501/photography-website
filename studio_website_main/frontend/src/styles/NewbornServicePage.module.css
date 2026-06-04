@@ -677,19 +677,28 @@
 .viewAllLink {
   color: #FF4D00;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  transition: color 0.3s ease;
-  margin-top: 20px;
+  border: 1px solid #FF4D00;
+  padding: 14px 28px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  margin-top: 0px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .viewAllLink:hover {
+  background-color: #FF4D00;
   color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 77, 0, 0.25);
 }
 
 /* --- Responsive Media Queries --- */

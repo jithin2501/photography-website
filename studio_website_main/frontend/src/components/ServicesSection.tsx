@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from '@/styles/Services.module.css';
 
 interface ServiceItem {
@@ -13,9 +14,9 @@ interface ServiceItem {
 const SERVICES_DATA: ServiceItem[] = [
   {
     id: 1,
-    title: 'Wedding',
-    subtitle: 'Photography',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+    title: 'Newborn',
+    subtitle: 'Photoshoot',
+    image: 'https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 2,
@@ -52,32 +53,53 @@ export default function ServicesSection() {
 
         {/* Services Staggered Grid */}
         <div className={styles.servicesGrid}>
-          {SERVICES_DATA.map((service) => (
-            <div key={service.id} className={styles.card}>
-              {/* Card Image */}
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={service.image}
-                  alt={`${service.title} ${service.subtitle}`}
-                  fill
-                  sizes="(max-width: 550px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className={styles.cardImage}
-                />
-              </div>
+          {SERVICES_DATA.map((service) => {
+            const cardInner = (
+              <>
+                {/* Card Image */}
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={service.image}
+                    alt={`${service.title} ${service.subtitle}`}
+                    fill
+                    sizes="(max-width: 550px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className={styles.cardImage}
+                  />
+                </div>
 
-              {/* Dark Overlay */}
-              <div className={styles.overlay} />
+                {/* Dark Overlay */}
+                <div className={styles.overlay} />
 
-              {/* Card Content */}
-              <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>
-                  {service.title}
-                  <br />
-                  {service.subtitle}
-                </h3>
+                {/* Card Content */}
+                <div className={styles.cardContent}>
+                  <h3 className={styles.cardTitle}>
+                    {service.title}
+                    <br />
+                    {service.subtitle}
+                  </h3>
+                </div>
+              </>
+            );
+
+            if (service.id === 1) {
+              return (
+                <Link
+                  key={service.id}
+                  href="/services/newborn"
+                  className={styles.card}
+                  style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+                >
+                  {cardInner}
+                </Link>
+              );
+            }
+
+            return (
+              <div key={service.id} className={styles.card}>
+                {cardInner}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Bottom Call To Action Button */}

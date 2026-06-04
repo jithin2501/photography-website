@@ -2,14 +2,15 @@
   background-color: #050505;
   color: #ffffff;
   min-height: 100vh;
-  padding-top: 100px; /* header space */
+  padding-top: 120px;
+  /* header space */
   font-family: var(--font-family);
   overflow-x: hidden;
 }
 
 /* --- Hero Section --- */
 .hero {
-  padding: 40px 0 60px 0;
+  padding: 0 0 40px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,7 +90,7 @@
   margin: 0;
 }
 
-.heroDesc + .heroDesc {
+.heroDesc+.heroDesc {
   margin-top: 16px;
 }
 
@@ -706,35 +707,44 @@
   .heroTitle {
     font-size: 3rem;
   }
+
   .bannerContainer {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
+
   .whatsIncludedContainer {
     grid-template-columns: 1.2fr 1fr;
     gap: 40px;
   }
+
   .bookingCard {
     grid-column: span 2;
     max-width: 480px;
     margin: 0 auto;
   }
+
   .packagesGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
   }
+
   .packageCard:last-child {
     grid-column: span 2;
   }
+
   .portfolioGrid {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .processGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
   }
+
   .processGrid::before {
-    display: none; /* Hide timeline line when wrapping */
+    display: none;
+    /* Hide timeline line when wrapping */
   }
 }
 
@@ -744,20 +754,25 @@
     gap: 45px;
     text-align: center;
   }
+
   .heroContent {
     align-items: center;
     margin: 0 auto;
     gap: 20px;
   }
+
   .heroTextTop {
     align-items: center;
   }
+
   .dividerContainer {
     justify-content: center;
   }
+
   .btnGroup {
     justify-content: center;
   }
+
   .heroImageContainer {
     min-height: 380px;
   }
@@ -767,44 +782,56 @@
   .heroTitle {
     font-size: 2.5rem;
   }
+
   .bannerContainer {
     grid-template-columns: repeat(2, 1fr);
     padding: 25px;
   }
+
   .whatsIncludedContainer {
     grid-template-columns: 1fr;
     gap: 40px;
     text-align: center;
   }
+
   .inclusionsCard {
     padding-left: 0;
   }
+
   .imageShowcase {
     max-width: 500px;
     margin: 0 auto;
   }
+
   .tallImageWrapper {
     height: 280px;
   }
+
   .smallImageWrapper {
     min-height: 130px;
   }
+
   .checkList {
     align-items: center;
   }
+
   .bookingCard {
     grid-column: span 1;
     width: 100%;
   }
+
   .packagesGrid {
     grid-template-columns: 1fr;
   }
+
   .packageCard:last-child {
     grid-column: span 1;
   }
+
   .portfolioGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .processGrid {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -815,11 +842,13 @@
   .bannerContainer {
     grid-template-columns: 1fr;
   }
+
   .btnGroup {
     flex-direction: column;
     width: 100%;
     max-width: 280px;
   }
+
   .portfolioGrid {
     grid-template-columns: 1fr;
   }

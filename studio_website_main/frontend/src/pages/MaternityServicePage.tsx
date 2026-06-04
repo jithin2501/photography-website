@@ -37,9 +37,7 @@ export default function MaternityServicePageContent() {
 
               <p className={styles.heroDesc}>
                 Celebrate the most beautiful chapter of your life with timeless maternity portraits. We capture the glow, the love, and the excitement of your journey into parenthood.
-              </p>
-              <p className={styles.heroDesc}>
-                Our sessions are relaxed and comfortable, providing premium styling, guidance, and a selection of elegant gowns. We work with you in our cozy studio or at breathtaking outdoor settings.
+                Celebrate the most beautiful chapter of your life with timeless maternity portraits. We capture the glow, the love, and the excitement of your journey into parenthood.
               </p>
             </div>
 

@@ -2,14 +2,14 @@
   background-color: #050505;
   color: #ffffff;
   min-height: 100vh;
-  padding-top: 100px; /* header space */
+  padding-top: 120px; /* header space */
   font-family: var(--font-family);
   overflow-x: hidden;
 }
 
 /* --- Hero Section --- */
 .hero {
-  padding: 40px 0 60px 0;
+  padding: 0 0 40px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +96,7 @@
 .btnGroup {
   display: flex;
   gap: 20px;
-  margin-top: 35px;
+  margin-top: 15px;
 }
 
 .btnSolid {

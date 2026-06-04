@@ -141,7 +141,7 @@ export default function GalleryPageContent() {
               </div>
 
               <p className={styles.heroDesc}>
-                Every picture has a beautiful story to tell. Explore our curated photography gallery portfolios and get inspired by magical moments captured with absolute love, premium creativity, and artistic passion.
+                Every picture has a beautiful story to tell. Explore our curated photography gallery portfolios and get inspired by magical moments captured with absolute love, premium creativity, and artistic passion.Every picture has a beautiful story to tell. Explore our curated photography gallery portfolios and get inspired by magical
               </p>
             </div>
 
@@ -285,9 +285,8 @@ export default function GalleryPageContent() {
           {categories.map((category) => (
             <button
               key={category}
-              className={`${styles.filterPill} ${
-                activeCategory === category ? styles.activePill : ''
-              }`}
+              className={`${styles.filterPill} ${activeCategory === category ? styles.activePill : ''
+                }`}
               onClick={() => handleCategoryChange(category)}
             >
               {category}

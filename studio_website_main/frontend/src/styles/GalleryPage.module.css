@@ -190,10 +190,10 @@
 }
 
 .bannerContainer {
-  width: 100%;
-  max-width: 1450px;
+  width: 90%;
+  max-width: 1305px;
   padding: 30px 40px;
-  margin: 0 5%;
+  margin: 0 auto;
   background-color: #121212;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;

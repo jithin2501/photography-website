@@ -51,36 +51,41 @@ export default function ContactPageContent() {
       <section className={styles.hero}>
         <div className={styles.heroContainer}>
           <div className={styles.heroContent}>
-            <span className={styles.heroTag}>Get in touch</span>
-            <h1 className={styles.heroTitle}>
-              Contact <span className={styles.titleHighlight}>Us</span>
-            </h1>
+            <div className={styles.heroTextTop}>
+              <span className={styles.heroTag}>Get in touch</span>
+              <h1 className={styles.heroTitle}>
+                Contact <span className={styles.titleHighlight}>Us</span>
+              </h1>
 
-            <div className={styles.dividerContainer}>
-              <div className={styles.dividerLine} />
-              <div className={styles.houseIcon}>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
+              <div className={styles.dividerContainer}>
+                <div className={styles.dividerLine} />
+                <div className={styles.houseIcon}>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                </div>
+                <div className={styles.dividerLine} />
               </div>
-              <div className={styles.dividerLine} />
-            </div>
 
-            <p className={styles.heroDesc}>
-              We'd love to hear from you! Whether you have a question about our
-              services, want to book a session, or just want to say hello, feel
-              free to reach out.
-            </p>
+              <p className={styles.heroDesc}>
+                We'd love to hear from you! Whether you have a question about our
+                services, want to book a session, or just want to say hello, feel
+                free to reach out. Our team is dedicated to providing you with a tailored experience from the initial concept to the final deliverable.
+              </p>
+              <p className={styles.heroDesc}>
+                Our calendar is open for portraits, wedding captures, and custom branding shoots. If you have special concepts in mind, let's collaborate to bring them to life. Select the button below to reserve a consultation slot today.
+              </p>
+            </div>
 
             <button
               className={styles.bookBtn}
@@ -114,7 +119,7 @@ export default function ContactPageContent() {
 
           <div className={styles.heroImageContainer}>
             <Image
-              src="https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&w=800&q=80"
+              src="/images/contact.png"
               alt="Camera resting on photo prints with warm light bokeh"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

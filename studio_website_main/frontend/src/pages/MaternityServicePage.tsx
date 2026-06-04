@@ -135,37 +135,22 @@ export default function MaternityServicePageContent() {
         <div className={styles.whatsIncludedContainer}>
           {/* Polaroid Images Collage Showcase */}
           <div className={styles.imageShowcase}>
-            <div className={styles.polaroidWrapper}>
-              <div className={`${styles.polaroidCard} ${styles.polaroid1}`}>
-                <div className={styles.polaroidImageWrapper}>
-                  <Image
-                    src="https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=600&q=80"
-                    alt="Maternity model posing outdoors"
-                    fill
-                    className={styles.showcaseImage}
-                  />
-                </div>
-              </div>
-              <div className={`${styles.polaroidCard} ${styles.polaroid2}`}>
-                <div className={styles.polaroidImageWrapper}>
-                  <Image
-                    src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80"
-                    alt="Pregnant woman belly closeup"
-                    fill
-                    className={styles.showcaseImage}
-                  />
-                </div>
-              </div>
-              <div className={`${styles.polaroidCard} ${styles.polaroid3}`}>
-                <div className={styles.polaroidImageWrapper}>
-                  <Image
-                    src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80"
-                    alt="Maternity model in studio gown"
-                    fill
-                    className={styles.showcaseImage}
-                  />
-                </div>
-              </div>
+            <div className={styles.glassBacking} />
+            <div className={styles.leftFrame}>
+              <Image
+                src="https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=600&q=80"
+                alt="Maternity model posing outdoors"
+                fill
+                className={styles.showcaseImage}
+              />
+            </div>
+            <div className={styles.rightFrame}>
+              <Image
+                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80"
+                alt="Maternity model in studio gown"
+                fill
+                className={styles.showcaseImage}
+              />
             </div>
           </div>
 

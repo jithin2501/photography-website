@@ -20,9 +20,9 @@ const SERVICES_DATA: ServiceItem[] = [
   },
   {
     id: 2,
-    title: 'Portrait',
-    subtitle: 'Photography',
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80',
+    title: 'Maternity',
+    subtitle: 'Photoshoot',
+    image: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 3,
@@ -86,6 +86,19 @@ export default function ServicesSection() {
                 <Link
                   key={service.id}
                   href="/services/newborn"
+                  className={styles.card}
+                  style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+                >
+                  {cardInner}
+                </Link>
+              );
+            }
+
+            if (service.id === 2) {
+              return (
+                <Link
+                  key={service.id}
+                  href="/services/maternity"
                   className={styles.card}
                   style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
                 >

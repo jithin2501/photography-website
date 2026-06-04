@@ -135,11 +135,19 @@
   min-height: 480px;
   transform: translateX(-20px);
   overflow: visible;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
 }
 
 .heroImage {
   object-fit: contain;
-  object-position: right center;
+  object-position: right bottom;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
 }
 
 /* --- Form and Information Grid Section --- */

@@ -61,9 +61,14 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link href="/booking" id="book-now-btn" className={styles.bookBtn}>
-          Book Now
-        </Link>
+        <div className={styles.actions}>
+          <Link href="/login" className={styles.loginBtn}>
+            Login
+          </Link>
+          <Link href="/booking" id="book-now-btn" className={styles.bookBtn}>
+            Book Now
+          </Link>
+        </div>
       </div>
     </header>
   );

@@ -280,6 +280,15 @@
   z-index: 50;
 }
 
+/* Pause wheel and icon rotations when any icon card is hovered */
+.archWheel:has(.archIcon:hover) {
+  animation-play-state: paused;
+}
+
+.archWheel:has(.archIcon:hover) .archIcon {
+  animation-play-state: paused;
+}
+
 /* Icon positions — 10 icons at 36° increments */
 .icon1 {
   top: 50%;

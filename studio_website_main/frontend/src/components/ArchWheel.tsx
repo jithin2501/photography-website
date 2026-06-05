@@ -52,12 +52,8 @@ export default function ArchWheel({ icons, activeIndex, onIconClick }: ArchWheel
         const iconCenterY = rect.top + rect.height / 2;
         const distance = Math.abs(iconCenterY - centerY);
 
-        // Top cards disappear when their right edge crosses the threshold (leading edge)
-        // Bottom cards start appearing when their left edge crosses the threshold (leading edge)
-        const isTopCard = iconCenterY < centerY;
-        const shouldHide = isTopCard
-          ? rect.right > thresholdX
-          : rect.left > thresholdX;
+        // Cards disappear when their right edge crosses the threshold (aligned with Book Now button)
+        const shouldHide = rect.right > thresholdX;
 
         if (shouldHide) {
           icon.style.opacity = '0';

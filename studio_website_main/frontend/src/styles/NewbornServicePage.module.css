@@ -592,7 +592,7 @@
   left: 10%;
   right: 10%;
   height: 2px;
-  background: rgba(255, 77, 0, 0.15);
+  background: #FF4D00;
   z-index: 1;
 }
 
@@ -610,7 +610,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #050505;
+  background: #080808;
   border: 2px solid #FF4D00;
   color: #FF4D00;
   display: flex;
@@ -618,7 +618,7 @@
   justify-content: center;
   font-weight: 700;
   font-size: 0.9rem;
-  box-shadow: 0 0 15px rgba(255, 77, 0, 0.15);
+  box-shadow: 0 0 0 8px #080808, 0 0 15px rgba(255, 77, 0, 0.15);
 }
 
 .stepTitle {

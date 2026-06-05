@@ -73,7 +73,7 @@ const GALLERY_DATA: GalleryColumn[] = [
     id: 7,
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1596854407944-bf87f6fdda4b?auto=format&fit=crop&w=500&q=80',
+        src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=500&q=80',
         alt: 'Baby Nest Hanging Portrait',
         styleClass: styles.col7,
       },
@@ -83,7 +83,7 @@ const GALLERY_DATA: GalleryColumn[] = [
         styleClass: styles.col7,
       },
       {
-        src: 'https://images.unsplash.com/photo-1546167198-4f968798af4f?auto=format&fit=crop&w=500&q=80',
+        src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=500&q=80',
         alt: 'Newborn Sleeping Cozy Hammock',
         styleClass: styles.col7,
       },
@@ -93,12 +93,12 @@ const GALLERY_DATA: GalleryColumn[] = [
     id: 8,
     images: [
       {
-        src: 'https://images.unsplash.com/photo-1551972251-12cb7248e47f?auto=format&fit=crop&w=500&q=80',
+        src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=500&q=80',
         alt: 'Outdoor Blue Maternity Gown',
         styleClass: styles.col8,
       },
       {
-        src: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=500&q=80',
+        src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=500&q=80',
         alt: 'Scenic Maternity Photoshoot Forest',
         styleClass: styles.col8,
       },

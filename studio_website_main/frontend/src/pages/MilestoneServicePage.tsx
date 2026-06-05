@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/MaternityServicePage.module.css';
+import styles from '@/styles/MilestoneServicePage.module.css';
 
-export default function MaternityServicePageContent() {
+export default function MilestoneServicePageContent() {
   return (
     <main className={styles.servicePage}>
       {/* 1. Hero Section */}
@@ -12,9 +12,9 @@ export default function MaternityServicePageContent() {
         <div className={styles.heroContainer}>
           <div className={styles.heroContent}>
             <div className={styles.heroTextTop}>
-              <span className={styles.heroTag}>Celebrating The Journey</span>
+              <span className={styles.heroTag}>Capture Every Milestone</span>
               <h1 className={styles.heroTitle}>
-                Maternity <span className={styles.titleHighlight}>Photoshoot</span>
+                Milestone <span className={styles.titleHighlight}>Photoshoot</span>
               </h1>
 
               <div className={styles.dividerContainer}>
@@ -36,8 +36,7 @@ export default function MaternityServicePageContent() {
               </div>
 
               <p className={styles.heroDesc}>
-                Celebrate the most beautiful chapter of your life with timeless maternity portraits. We capture the glow, the love, and the excitement of your journey into parenthood.
-                Celebrate the most beautiful chapter of your life with timeless maternity portraits. We capture the glow, the love, and the excitement of your journey into parenthood.
+                From tiny smiles to big achievements, we capture every special milestone in your little one's journey. Timeless photos that you'll treasure forever.
               </p>
             </div>
 
@@ -53,8 +52,8 @@ export default function MaternityServicePageContent() {
 
           <div className={styles.heroImageContainer}>
             <Image
-              src="/images/Maternity Photoshoot .png"
-              alt="Maternity photoshoot close up of pregnant woman belly"
+              src="https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=800&q=80"
+              alt="Milestone photoshoot of a sweet sleeping newborn baby in a rustic basket setup"
               fill
               priority
               className={styles.heroImage}
@@ -63,56 +62,19 @@ export default function MaternityServicePageContent() {
         </div>
       </section>
 
-      {/* 2. Feature Row (Banner) */}
+      {/* 2. Features Row (Banner) */}
       <section className={styles.featuresBanner}>
         <div className={styles.bannerContainer}>
           <div className={styles.featureItem}>
             <div className={styles.featureIcon}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
               </svg>
             </div>
             <div className={styles.featureDetails}>
-              <span className={styles.featureTitle}>Professional Photographer</span>
-              <span className={styles.featureDesc}>Experienced in posing & safety direction</span>
-            </div>
-          </div>
-
-          <div className={styles.featureItem}>
-            <div className={styles.featureIcon}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </div>
-            <div className={styles.featureDetails}>
-              <span className={styles.featureTitle}>Client Closet Available</span>
-              <span className={styles.featureDesc}>Beautiful gowns & wraps for your shoot</span>
-            </div>
-          </div>
-
-          <div className={styles.featureItem}>
-            <div className={styles.featureIcon}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <path d="M9 3v18M15 3v18M3 9h18M3 15h18" />
-              </svg>
-            </div>
-            <div className={styles.featureDetails}>
-              <span className={styles.featureTitle}>Premium Equipment</span>
-              <span className={styles.featureDesc}>High-end cameras & lighting for perfect shots</span>
-            </div>
-          </div>
-
-          <div className={styles.featureItem}>
-            <div className={styles.featureIcon}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="12" cy="8" r="7" />
-                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-              </svg>
-            </div>
-            <div className={styles.featureDetails}>
-              <span className={styles.featureTitle}>In-Studio & Outdoors</span>
-              <span className={styles.featureDesc}>Flexible locations to match your creative vision</span>
+              <span className={styles.featureTitle}>Professional Photography</span>
+              <span className={styles.featureDesc}>High-quality gear & professional crew for perfect captures.</span>
             </div>
           </div>
 
@@ -123,105 +85,130 @@ export default function MaternityServicePageContent() {
               </svg>
             </div>
             <div className={styles.featureDetails}>
-              <span className={styles.featureTitle}>Safe & Cozy Experience</span>
-              <span className={styles.featureDesc}>Warm, welcoming, and relaxed environment</span>
+              <span className={styles.featureTitle}>Artistic Props</span>
+              <span className={styles.featureDesc}>Wide range of custom props to match your baby's theme.</span>
+            </div>
+          </div>
+
+          <div className={styles.featureItem}>
+            <div className={styles.featureIcon}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div className={styles.featureDetails}>
+              <span className={styles.featureTitle}>Safe Sessions</span>
+              <span className={styles.featureDesc}>Warm, friendly environment with priority on baby's safety.</span>
+            </div>
+          </div>
+
+          <div className={styles.featureItem}>
+            <div className={styles.featureIcon}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M20.37 8.91l-8.17-6.07a1 1 0 0 0-1.2 0L2.83 8.91A1 1 0 0 0 2.5 9.8v9.7a1 1 0 0 0 1 1h15a1 1 0 0 0 1-1V9.8a1 1 0 0 0-.13-.89z" />
+              </svg>
+            </div>
+            <div className={styles.featureDetails}>
+              <span className={styles.featureTitle}>Exclusive Apparels</span>
+              <span className={styles.featureDesc}>Access to beautiful studio outfits for newborn & baby shoots.</span>
+            </div>
+          </div>
+
+          <div className={styles.featureItem}>
+            <div className={styles.featureIcon}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2z" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </div>
+            <div className={styles.featureDetails}>
+              <span className={styles.featureTitle}>Online Gallery</span>
+              <span className={styles.featureDesc}>Easy access to download & share your digital collection.</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. What's Included Section */}
-      <section className={styles.whatsIncluded}>
-        <div className={styles.whatsIncludedContainer}>
-          {/* Polaroid Images Collage Showcase */}
-          <div className={styles.imageShowcase}>
-            <div className={styles.glassBacking} />
-            <div className={styles.leftFrame}>
-              <Image
-                src="https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity model posing outdoors"
-                fill
-                className={styles.showcaseImage}
-              />
-            </div>
-            <div className={styles.rightFrame}>
-              <Image
-                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity model in studio gown"
-                fill
-                className={styles.showcaseImage}
-              />
-            </div>
-          </div>
-
-          {/* List of Inclusions */}
-          <div className={styles.inclusionsCard}>
-            <span className={styles.sectionTag}>Maternity Inclusions</span>
+      {/* 3. Everything You Need Section */}
+      <section className={styles.whatsExpect}>
+        <div className={styles.whatsExpectContainer}>
+          <div className={styles.expectContent}>
+            <span className={styles.sectionTag}>What to Expect</span>
             <h2 className={styles.sectionHeading}>
               Everything You Need, <span className={styles.sectionHighlight}>Beautifully</span> Planned
             </h2>
+
             <div className={styles.checkList}>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Pre-shoot consultation & styling guidance</span>
+                <span className={styles.checkText}>Pre-shoot consultation & theme planning</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Access to our elegant maternity gown closet</span>
+                <span className={styles.checkText}>Access to outfits, props & backdrops</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Professional makeup (Optional addon)</span>
+                <span className={styles.checkText}>Professional styling and layout setup</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Guided styling & direction of your poses</span>
+                <span className={styles.checkText}>Relaxed & guided session pace</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Studio & outdoor photoshoot (1-2 hours)</span>
+                <span className={styles.checkText}>High-resolution edited images</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 <span className={styles.checkText}>Online gallery for easy viewing & sharing</span>
               </div>
               <div className={styles.checkItem}>
-                <svg className={styles.checkIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <svg className={styles.checkIcon} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                <span className={styles.checkText}>Full print release for personal use</span>
+                <span className={styles.checkText}>Print release for personal use</span>
+              </div>
+            </div>
+
+            {/* Small schedule callout card */}
+            <div className={styles.calloutCard}>
+              <div className={styles.calloutText}>
+                <span className={styles.calloutTag}>Every Moment Matters</span>
+                <h3 className={styles.calloutTitle}>Every Moment Matters</h3>
+                <p className={styles.calloutDesc}>Capture them before they grow up. Life moves fast.</p>
+              </div>
+              <div className={styles.calloutIconBox}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
               </div>
             </div>
           </div>
 
-          {/* Recommended Booking Card */}
-          <div className={styles.bookingCard}>
-            <div className={styles.bookingIcon}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                <line x1="9" y1="9" x2="9.01" y2="9" />
-                <line x1="15" y1="9" x2="15.01" y2="9" />
-              </svg>
-            </div>
-            <span className={styles.bookingTitle}>Best Time For Maternity Sessions</span>
-            <h3 className={styles.bookingHighlight}>28 to 36</h3>
-            <span className={styles.bookingSubtext}>weeks of pregnancy</span>
-            <p className={styles.bookingDesc}>
-              This is the perfect window when your baby bump is beautifully defined and round, but you are still comfortable for moving and posing.
-            </p>
+          <div className={styles.expectImageContainer}>
+            <Image
+              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80"
+              alt="Professional camera on studio table with book and lenses"
+              fill
+              className={styles.expectImage}
+            />
           </div>
         </div>
       </section>
@@ -232,7 +219,7 @@ export default function MaternityServicePageContent() {
           <div className={styles.packagesHeader}>
             <span className={styles.sectionTag}>Our Packages</span>
             <h2 className={styles.sectionHeading}>
-              Choose the <span className={styles.sectionHighlight}>Perfect Package</span> for You
+              Choose the <span className={styles.sectionHighlight}>Perfect Package</span>
             </h2>
           </div>
 
@@ -241,19 +228,19 @@ export default function MaternityServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Basic</span>
-                <h3 className={styles.packagePrice}>₹15,000</h3>
+                <h3 className={styles.packagePrice}>$299</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    1 Hour Photoshoot
+                    1 Hour Shoot Session
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    1 Gown Outfit Change
+                    1 Theme & 1 Outfit
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -265,13 +252,13 @@ export default function MaternityServicePageContent() {
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Online Gallery Delivery
+                    Online Gallery
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Full Personal Print Release
+                    Print Release
                   </li>
                 </ul>
               </div>
@@ -285,19 +272,19 @@ export default function MaternityServicePageContent() {
               <div className={styles.popularBadge}>Most Popular</div>
               <div>
                 <span className={styles.packageName}>Standard</span>
-                <h3 className={styles.packagePrice}>₹25,000</h3>
+                <h3 className={styles.packagePrice}>$499</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    2 Hours Photoshoot
+                    2 Hour Shoot Session
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    2-3 Outfit Changes
+                    2 Themes & 2 Outfits
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -309,13 +296,13 @@ export default function MaternityServicePageContent() {
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Family & Partner Included
+                    Professional Styling Setup
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Makeup Session Included
+                    Online Gallery & Print Release
                   </li>
                 </ul>
               </div>
@@ -328,37 +315,37 @@ export default function MaternityServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Premium</span>
-                <h3 className={styles.packagePrice}>₹40,000</h3>
+                <h3 className={styles.packagePrice}>$799</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    3 Hours Photoshoot
+                    3 Hour Shoot Session
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    3-4 Outfit Changes
+                    3+ Themes & Outfits
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    40 Edited High-Res Images
+                    35 Edited High-Res Images
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Makeup & Hair Styling included
+                    Professional Styling Setup & Photo Book
                   </li>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    Family + 8x8 Custom Photo Book
+                    Online Gallery & Print Release
                   </li>
                 </ul>
               </div>
@@ -374,9 +361,9 @@ export default function MaternityServicePageContent() {
       <section className={styles.process}>
         <div className={styles.processContainer}>
           <div className={styles.packagesHeader}>
-            <span className={styles.sectionTag}>Our Process</span>
+            <span className={styles.sectionTag}>Simple Process</span>
             <h2 className={styles.sectionHeading}>
-              Simple Steps to <span className={styles.sectionHighlight}>Beautiful</span> Memories
+              Simple Steps to <span className={styles.sectionHighlight}>Timeless</span> Memories
             </h2>
           </div>
 
@@ -384,31 +371,31 @@ export default function MaternityServicePageContent() {
             <div className={styles.processStep}>
               <div className={styles.stepBadge}>01</div>
               <h4 className={styles.stepTitle}>Book</h4>
-              <p className={styles.stepText}>Reserve your date based on your gestational week.</p>
+              <p className={styles.stepText}>Choose your package and request a date.</p>
             </div>
 
             <div className={styles.processStep}>
               <div className={styles.stepBadge}>02</div>
-              <h4 className={styles.stepTitle}>Consult</h4>
-              <p className={styles.stepText}>Consult style planning, gown closet & matching setup.</p>
+              <h4 className={styles.stepTitle}>Plan</h4>
+              <p className={styles.stepText}>We define themes, outfits and creative details.</p>
             </div>
 
             <div className={styles.processStep}>
               <div className={styles.stepBadge}>03</div>
-              <h4 className={styles.stepTitle}>Shoot</h4>
-              <p className={styles.stepText}>Relax, celebrate & feel beautiful during your shoot.</p>
+              <h4 className={styles.stepTitle}>Photoshoot</h4>
+              <p className={styles.stepText}>Enjoy the professional shoot in studio or outdoor.</p>
             </div>
 
             <div className={styles.processStep}>
               <div className={styles.stepBadge}>04</div>
-              <h4 className={styles.stepTitle}>Edit</h4>
-              <p className={styles.stepText}>High-end professional skin retouching & enhancement.</p>
+              <h4 className={styles.stepTitle}>Editing</h4>
+              <p className={styles.stepText}>We carefully retouch and color-grade your images.</p>
             </div>
 
             <div className={styles.processStep}>
               <div className={styles.stepBadge}>05</div>
               <h4 className={styles.stepTitle}>Delivery</h4>
-              <p className={styles.stepText}>Download & share your private gallery memories.</p>
+              <p className={styles.stepText}>Access your private online gallery for download.</p>
             </div>
           </div>
         </div>
@@ -418,57 +405,41 @@ export default function MaternityServicePageContent() {
       <section className={styles.portfolio}>
         <div className={styles.portfolioContainer}>
           <div className={styles.packagesHeader}>
-            <span className={styles.sectionTag}>Maternity Portfolio</span>
+            <span className={styles.sectionTag}>Our Work</span>
             <h2 className={styles.sectionHeading}>
-              A Glimpse of <span className={styles.sectionHighlight}>Our Work</span>
+              Little Moments, <span className={styles.sectionHighlight}>Big Memories</span>
             </h2>
           </div>
 
           <div className={styles.portfolioGrid}>
             <div className={styles.portfolioCard}>
               <Image
-                src="https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity gown portrait"
+                src="https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=600&q=80"
+                alt="Newborn sleeping on blanket"
                 fill
                 className={styles.portfolioImage}
               />
             </div>
             <div className={styles.portfolioCard}>
               <Image
-                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80"
-                alt="Pregnant woman belly profile outdoor"
+                src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80"
+                alt="Cute baby smile portrait"
                 fill
                 className={styles.portfolioImage}
               />
             </div>
             <div className={styles.portfolioCard}>
               <Image
-                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity field dress portrait"
+                src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80"
+                alt="Toddler laughing with wooden toys"
                 fill
                 className={styles.portfolioImage}
               />
             </div>
             <div className={styles.portfolioCard}>
               <Image
-                src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80"
-                alt="Partner holding baby bump outdoors"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity silhouette studio session"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=600&q=80"
-                alt="Gown back detail in outdoor wind portrait"
+                src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80"
+                alt="Cozy newborn wrapped in organic wool"
                 fill
                 className={styles.portfolioImage}
               />
@@ -476,7 +447,7 @@ export default function MaternityServicePageContent() {
           </div>
 
           <Link href="/gallery" className={styles.viewAllLink}>
-            View Full Gallery
+            Visit Full Gallery
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />

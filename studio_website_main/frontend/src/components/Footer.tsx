@@ -73,7 +73,7 @@ export default function Footer() {
               </li>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>
-                <Link href="#">Fashion Photography</Link>
+                <Link href="/services/milestone">Milestone Photoshoot</Link>
               </li>
               <li className={styles.linkItem}>
                 <span className={styles.bullet}>•</span>

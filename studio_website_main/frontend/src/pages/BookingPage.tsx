@@ -284,7 +284,7 @@ export default function BookingPageContent() {
                         <option value="wilderness">Outdoor Wilderness</option>
                         <option value="family">Family / Group Session</option>
                         <option value="couple">Couple / Engagement</option>
-                        <option value="fashion">Fashion & Editorial</option>
+                        <option value="milestone">Milestone Photoshoot</option>
                         <option value="event">Events & Commercial</option>
                       </select>
                     </div>
@@ -430,7 +430,7 @@ export default function BookingPageContent() {
                   <div className={styles.infoDetails}>
                     <span className={styles.infoLabel}>Photoshoot Types</span>
                     <span className={styles.infoValue}>
-                      Maternity, Portrait, Baby, Wilderness, Family, Couple, Fashion, Event & More
+                      Maternity, Portrait, Baby, Wilderness, Family, Couple, Milestone, Event & More
                     </span>
                   </div>
                 </div>

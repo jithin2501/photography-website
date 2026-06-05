@@ -11,9 +11,9 @@ export const archIcons: ArchIcon[] = [
   {
     id: 2,
     imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
-    title: 'Style Fashion',
+    title: 'Milestone Photoshoot',
     description:
-      'Highlighting character through style. Bold compositions for the modern aesthetic.',
+      "Capturing life's most precious milestones. Celebrating your special moments.",
   },
   {
     id: 3,

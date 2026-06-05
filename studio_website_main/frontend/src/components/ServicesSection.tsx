@@ -26,8 +26,8 @@ const SERVICES_DATA: ServiceItem[] = [
   },
   {
     id: 3,
-    title: 'Fashion',
-    subtitle: 'Photography',
+    title: 'Milestone',
+    subtitle: 'Photoshoot',
     image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -99,6 +99,19 @@ export default function ServicesSection() {
                 <Link
                   key={service.id}
                   href="/services/maternity"
+                  className={styles.card}
+                  style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+                >
+                  {cardInner}
+                </Link>
+              );
+            }
+
+            if (service.id === 3) {
+              return (
+                <Link
+                  key={service.id}
+                  href="/services/milestone"
                   className={styles.card}
                   style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
                 >

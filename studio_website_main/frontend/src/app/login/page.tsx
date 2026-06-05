@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import './Login.css';
 
@@ -9,11 +8,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', { username, password, rememberMe });
+    console.log('Login submitted:', { username, password });
     // Add login logic here
   };
 
@@ -35,7 +33,7 @@ export default function LoginPage() {
         <div className="formSection">
           <div className="header">
             <h1 className="title">
-              Welcome <span className="highlight">Back</span>
+              Welcome
             </h1>
             <p className="subtitle">Login to continue to your account</p>
           </div>
@@ -103,58 +101,11 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Options (Remember Me / Forgot Password) */}
-            <div className="formOptions">
-              <label className="rememberMe">
-                <input
-                  type="checkbox"
-                  className="checkboxInput"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                />
-                Remember me
-              </label>
-              <Link href="#" className="forgotPassword">
-                Forgot password?
-              </Link>
-            </div>
-
             {/* Login Button */}
             <button type="submit" className="loginButton">
               Login
             </button>
           </form>
-
-          {/* Divider */}
-          <div className="divider">or continue with</div>
-
-          {/* Social Sign-in Buttons */}
-          <div className="socialGroup">
-            <button type="button" className="socialButton">
-              <span className="socialIcon">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                  <path fill="#ea4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114-3.41 0-6.19-2.78-6.19-6.19 0-3.41 2.78-6.19 6.19-6.19 1.56 0 2.978.58 4.07 1.53l3.056-3.056C19.227 1.83 15.938 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c5.877 0 10.87-4.238 10.87-11.24 0-.742-.066-1.425-.195-1.955H12.24z" />
-                </svg>
-              </span>
-              Google
-            </button>
-            <button type="button" className="socialButton">
-              <span className="socialIcon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.2.67-2.92 1.49-.62.71-1.16 1.85-1.02 2.96 1.1.09 2.23-.58 2.95-1.39z" />
-                </svg>
-              </span>
-              Apple
-            </button>
-          </div>
-
-          {/* Footer Link */}
-          <p className="footerText">
-            Don't have an account?
-            <Link href="#" className="signupLink">
-              Sign up
-            </Link>
-          </p>
         </div>
       </div>
     </main>

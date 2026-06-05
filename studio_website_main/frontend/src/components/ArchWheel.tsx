@@ -50,10 +50,11 @@ export default function ArchWheel({ icons, activeIndex, onIconClick }: ArchWheel
       iconEls.forEach((icon, index) => {
         const rect = icon.getBoundingClientRect();
         const iconCenterY = rect.top + rect.height / 2;
+        const iconCenterX = rect.left + rect.width / 2;
         const distance = Math.abs(iconCenterY - centerY);
 
-        // Cards disappear when their right edge crosses the threshold (aligned with Book Now button)
-        const shouldHide = rect.right > thresholdX;
+        // Cards disappear when their center crosses the threshold (aligned with Book Now button)
+        const shouldHide = iconCenterX > thresholdX;
 
         if (shouldHide) {
           icon.style.opacity = '0';

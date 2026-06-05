@@ -11,7 +11,7 @@ const galleryItems = [
     id: 1,
     category: 'Maternity',
     title: 'Serene Waiting',
-    image: 'https://images.unsplash.com/photo-1590038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=500&q=80',
     hideText: true,
   },
   {
@@ -48,7 +48,7 @@ const galleryItems = [
     id: 7,
     category: 'Newborn',
     title: 'Sweet Simplicity',
-    image: 'https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 8,
@@ -60,13 +60,13 @@ const galleryItems = [
     id: 9,
     category: 'Milestone',
     title: 'Solid Beginnings',
-    image: 'https://images.unsplash.com/photo-1537655780520-1e392edd816a?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 10,
     category: 'Events',
     title: 'Midnight Sparkle',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 11,
@@ -78,7 +78,7 @@ const galleryItems = [
     id: 12,
     category: 'Couples',
     title: 'Sunset Whispers',
-    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
   },
 ];
 

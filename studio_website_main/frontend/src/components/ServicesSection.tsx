@@ -120,6 +120,19 @@ export default function ServicesSection() {
               );
             }
 
+            if (service.id === 4) {
+              return (
+                <Link
+                  key={service.id}
+                  href="/services/classes"
+                  className={styles.card}
+                  style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+                >
+                  {cardInner}
+                </Link>
+              );
+            }
+
             return (
               <div key={service.id} className={styles.card}>
                 {cardInner}

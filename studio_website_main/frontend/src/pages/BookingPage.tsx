@@ -285,6 +285,7 @@ export default function BookingPageContent() {
                         <option value="family">Family / Group Session</option>
                         <option value="couple">Couple / Engagement</option>
                         <option value="milestone">Milestone Photoshoot</option>
+                        <option value="classes">Photoshoot Classes</option>
                         <option value="event">Events & Commercial</option>
                       </select>
                     </div>

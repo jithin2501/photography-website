@@ -444,14 +444,6 @@ export default function MaternityServicePageContent() {
             </div>
             <div className={styles.portfolioCard}>
               <Image
-                src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=600&q=80"
-                alt="Maternity field dress portrait"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
                 src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80"
                 alt="Partner holding baby bump outdoors"
                 fill
@@ -462,14 +454,6 @@ export default function MaternityServicePageContent() {
               <Image
                 src="https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?auto=format&fit=crop&w=600&q=80"
                 alt="Maternity silhouette studio session"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=600&q=80"
-                alt="Gown back detail in outdoor wind portrait"
                 fill
                 className={styles.portfolioImage}
               />

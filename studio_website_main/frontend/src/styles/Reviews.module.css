@@ -62,75 +62,124 @@
   grid-template-columns: 4.5fr 5.5fr;
   gap: 60px;
   width: 100%;
-  align-items: center;
+  align-items: start;
 }
 
-/* Left Column: Unique Polaroid Collage */
+/* Left Column: Premium Image Grid */
 .leftCol {
-  position: relative;
-  height: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
 }
 
-.polaroid {
-  background: #ffffff;
-  padding: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
-  position: absolute;
-  width: 170px;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0.4s ease, box-shadow 0.4s ease;
-  cursor: pointer;
-}
-
-.polaroidImageWrapper {
+.mainImageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/5;
-  background-color: #eaeaea;
+  aspect-ratio: 1.5/ 1;
+  border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
-.polaroidImg {
+.mainImage {
   object-fit: cover;
 }
 
-.polaroid:hover {
-  transform: scale(1.1) rotate(0deg) translateY(-10px);
-  z-index: 10;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* Individual Polaroid Placements */
-.pol1 {
-  top: 40px;
+.badgeOverlay {
+  position: absolute;
+  bottom: 20px;
   left: 20px;
-  transform: rotate(-10deg);
+  background-color: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 5;
 }
 
-.pol2 {
-  top: 30px;
-  right: 110px;
-  transform: rotate(8deg);
+.avatarStack {
+  display: flex;
+  align-items: center;
 }
 
-.pol3 {
-  top: 190px;
-  left: 140px;
-  transform: rotate(-3deg);
-  z-index: 3;
+.stackAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #121212;
+  position: relative;
+  margin-right: -10px;
 }
 
-.pol4 {
-  bottom: 60px;
-  left: 10px;
-  transform: rotate(6deg);
+.stackMore {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #FF4D00;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #121212;
+  z-index: 2;
+  position: relative;
 }
 
-.pol5 {
-  bottom: 40px;
-  right: 100px;
-  transform: rotate(-8deg);
+.badgeText {
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.bottomRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.subImageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.subImageContainer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #FF4D00, transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.subImageContainer:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(255, 77, 0, 0.25);
+}
+
+.subImageContainer:hover::after {
+  opacity: 1;
+}
+
+.subImage {
+  object-fit: cover;
 }
 
 /* Right Column: Statistics & Reviews Slider */
@@ -142,7 +191,8 @@
 
 /* Stats Board */
 .statsBoard {
-  background-color: #ffffff;
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   padding: 30px 20px;
   display: grid;
@@ -151,7 +201,7 @@
   align-items: center;
   text-align: center;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  color: #121212;
+  color: #ffffff;
 }
 
 .statCol {
@@ -163,7 +213,7 @@
 }
 
 .statCol:not(:last-child) {
-  border-right: 1px solid #eaeaea;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .statIcon {
@@ -178,7 +228,7 @@
   font-size: 1.8rem;
   font-weight: 900;
   line-height: 1.1;
-  color: #121212;
+  color: #ffffff;
 }
 
 .ratingNumber {
@@ -192,7 +242,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #777777;
+  color: #888888;
 }
 
 .starsMini {
@@ -214,11 +264,12 @@
 }
 
 .reviewCard {
-  background-color: #ffffff;
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 24px;
   padding: 32px 20px;
   text-align: center;
-  color: #121212;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -245,7 +296,7 @@
 .clientName {
   font-size: 0.9rem;
   font-weight: 800;
-  color: #121212;
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 4px;
@@ -258,10 +309,29 @@
 }
 
 .reviewText {
-  color: #555555;
+  color: #a0a0a0;
   font-size: 0.88rem;
   line-height: 1.6;
   font-style: italic;
+  position: relative;
+}
+
+.reviewText::before {
+  content: '“';
+  font-size: 1.4rem;
+  color: rgba(255, 77, 0, 0.4);
+  font-weight: 900;
+  margin-right: 4px;
+  font-family: serif;
+}
+
+.reviewText::after {
+  content: '”';
+  font-size: 1.4rem;
+  color: rgba(255, 77, 0, 0.4);
+  font-weight: 900;
+  margin-left: 4px;
+  font-family: serif;
 }
 
 /* Slider Controls */
@@ -326,19 +396,9 @@
 
   .leftCol {
     max-width: 500px;
-    height: 480px;
+    height: auto;
     margin: 0 auto;
   }
-
-  .polaroid {
-    width: 140px;
-  }
-
-  .pol1 { top: 40px; left: 10px; }
-  .pol2 { top: 25px; right: 50px; }
-  .pol3 { top: 150px; left: 100px; }
-  .pol4 { bottom: 50px; left: 0; }
-  .pol5 { bottom: 35px; right: 40px; }
 }
 
 @media (max-width: 768px) {

@@ -52,7 +52,7 @@ export default function MilestoneServicePageContent() {
 
           <div className={styles.heroImageContainer}>
             <Image
-              src="https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=800&q=80"
+              src="/images/Milestone.png"
               alt="Milestone photoshoot of a sweet sleeping newborn baby in a rustic basket setup"
               fill
               priority
@@ -188,7 +188,7 @@ export default function MilestoneServicePageContent() {
 
           <div className={styles.expectImageContainer}>
             <Image
-              src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80"
+              src="/images/milstonephoto.png"
               alt="Professional camera on studio table with book and lenses"
               fill
               className={styles.expectImage}

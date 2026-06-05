@@ -38,6 +38,8 @@ export default function ClassesServicePageContent() {
 
               <p className={styles.heroDesc}>
                 Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
+                Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
+                Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
               </p>
             </div>
 
@@ -196,9 +198,8 @@ export default function ClassesServicePageContent() {
               </div>
             </div>
 
-            {/* Course 3 (Highlighted) */}
-            <div className={`${styles.courseCard} ${styles.highlightedCourseCard}`}>
-              <span className={styles.popularBadge}>Most Popular</span>
+            {/* Course 3 */}
+            <div className={styles.courseCard}>
               <div className={styles.courseHeader}>
                 <h3 className={styles.courseName}>Studio Lighting</h3>
                 <p className={styles.courseDesc}>
@@ -216,7 +217,7 @@ export default function ClassesServicePageContent() {
                     <span className={styles.metaVal}>Intermediate</span>
                   </div>
                 </div>
-                <button className={styles.detailsBtnSolid}>View Details</button>
+                <button className={styles.detailsBtn}>View Details</button>
               </div>
             </div>
 

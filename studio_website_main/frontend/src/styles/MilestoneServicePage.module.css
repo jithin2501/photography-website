@@ -551,7 +551,7 @@
 .processGrid::before {
   content: '';
   position: absolute;
-  top: 36px;
+  top: 22px;
   left: 10%;
   right: 10%;
   height: 2px;

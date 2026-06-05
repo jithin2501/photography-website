@@ -37,9 +37,10 @@ export default function ClassesServicePageContent() {
               </div>
 
               <p className={styles.heroDesc}>
-                Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
-                Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
-                Learn photography from professionals and turn your passion into stunning visual stories. Whether you're a beginner or an enthusiast, we have the right class for you.
+                Master the art of photography with hands-on classes taught by industry professionals. Whether you are just picking up a camera for the first time or looking to refine your advanced creative skills, our courses are designed to help you understand your gear, control lighting, and master composition.
+              </p>
+              <p className={styles.heroDesc}>
+                Step beyond auto mode and learn to capture emotions, movement, and light in ways that tell powerful visual stories. Join a vibrant community of passionate learners and gain the confidence to create stunning, exhibition-worthy portraits and landscape frames.
               </p>
             </div>
 
@@ -55,7 +56,7 @@ export default function ClassesServicePageContent() {
 
           <div className={styles.heroImageContainer}>
             <Image
-              src="/images/milstonephoto.png"
+              src="/images/Photography classes.png"
               alt="DSLR Camera on wooden desk with notebooks, lens, and stationery"
               fill
               priority

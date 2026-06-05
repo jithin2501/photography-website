@@ -87,7 +87,11 @@
   color: #a0a0a0;
   font-size: 1.1rem;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 0 16px 0;
+}
+
+.heroDesc:last-of-type {
+  margin-bottom: 0;
 }
 
 .btnGroup {
@@ -149,11 +153,18 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
+  overflow: visible !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .heroImage {
   object-fit: cover;
   object-position: center;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
 }
 
 /* --- Features Banner --- */

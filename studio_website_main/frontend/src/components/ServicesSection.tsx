@@ -16,7 +16,7 @@ const SERVICES_DATA: ServiceItem[] = [
     id: 1,
     title: 'Newborn',
     subtitle: 'Photoshoot',
-    image: 'https://images.unsplash.com/photo-1544126592-807daf215a3c?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 2,
@@ -32,8 +32,8 @@ const SERVICES_DATA: ServiceItem[] = [
   },
   {
     id: 4,
-    title: 'Travel',
-    subtitle: 'Photography',
+    title: 'Photoshoot',
+    subtitle: 'Classes',
     image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80',
   },
 ];

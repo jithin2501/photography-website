@@ -18,7 +18,7 @@
 
 .heroContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
@@ -184,14 +184,17 @@
 
 /* --- Features Banner (Horizontal Dark Card) --- */
 .featuresBanner {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 40px 5%;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
 }
 
 .bannerContainer {
-  width: 90%;
-  max-width: 1305px;
+  width: 100%;
+  max-width: 1350px;
   padding: 30px 40px;
   margin: 0 auto;
   background-color: #121212;
@@ -257,7 +260,7 @@
   margin-bottom: 50px;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
 }
 
@@ -289,7 +292,7 @@
 /* Gallery Grid */
 .gridContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   margin-bottom: 60px;
 }
@@ -386,7 +389,7 @@
 /* --- Instagram Promo Banner --- */
 .instagramBanner {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   margin: 40px auto 100px auto;
 }

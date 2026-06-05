@@ -10,7 +10,7 @@
 
 .aboutContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;

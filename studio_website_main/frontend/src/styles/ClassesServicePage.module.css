@@ -18,7 +18,7 @@
 
 .heroContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1.12fr 1fr;
@@ -169,14 +169,17 @@
 
 /* --- Features Banner --- */
 .featuresBanner {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 40px 5%;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
 }
 
 .bannerContainer {
-  width: 90%;
-  max-width: 1300px;
+  width: 100%;
+  max-width: 1350px;
   padding: 30px 40px;
   background-color: #121212;
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -238,7 +241,7 @@
 
 .coursesContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -424,7 +427,7 @@
 
 .packagesContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;

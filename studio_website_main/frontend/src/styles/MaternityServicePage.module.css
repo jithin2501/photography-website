@@ -18,7 +18,7 @@
 
 .heroContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
@@ -166,14 +166,17 @@
 
 /* --- Features Banner --- */
 .featuresBanner {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 40px 5%;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
 }
 
 .bannerContainer {
-  width: 90%;
-  max-width: 1305px;
+  width: 100%;
+  max-width: 1350px;
   padding: 30px 40px;
   margin: 0 auto;
   background-color: #121212;
@@ -233,18 +236,18 @@
 
 .whatsIncludedContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1.2fr 1fr 0.9fr;
   gap: 50px;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* Left Showcase - Split Frame Parallax Styles */
 .imageShowcase {
   position: relative;
-  height: 460px;
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -267,7 +270,7 @@
   width: 58%;
   height: 80%;
   left: 0;
-  top: 5%;
+  top: 0;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -281,7 +284,7 @@
   width: 54%;
   height: 65%;
   right: 0;
-  bottom: 5%;
+  bottom: 0;
   border-radius: 16px;
   overflow: hidden;
   border: 1.5px solid #FF4D00;
@@ -416,7 +419,7 @@
 
 .packagesContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -579,7 +582,7 @@
 
 .processContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -656,7 +659,7 @@
 
 .portfolioContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;

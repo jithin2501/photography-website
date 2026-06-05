@@ -18,7 +18,7 @@
 
 .heroContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -157,14 +157,17 @@
 
 /* --- Features Banner --- */
 .featuresBanner {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 40px 5%;
   display: flex;
   justify-content: center;
-  padding: 40px 0;
 }
 
 .bannerContainer {
-  width: 90%;
-  max-width: 1300px;
+  width: 100%;
+  max-width: 1350px;
   padding: 30px 40px;
   background-color: #121212;
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -226,12 +229,12 @@
 
 .whatsExpectContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 80px;
-  align-items: center;
+  align-items: stretch;
 }
 
 .expectContent {
@@ -344,7 +347,7 @@
 .expectImageContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
@@ -365,7 +368,7 @@
 
 .packagesContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -527,7 +530,7 @@
 
 .processContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -604,7 +607,7 @@
 
 .portfolioContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   flex-direction: column;
@@ -680,6 +683,8 @@
   .expectImageContainer {
     max-width: 650px;
     margin: 0 auto;
+    aspect-ratio: 4 / 3;
+    height: auto;
   }
   .packagesGrid {
     grid-template-columns: repeat(2, 1fr);

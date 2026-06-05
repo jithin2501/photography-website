@@ -18,7 +18,7 @@
 
 .heroContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
@@ -174,7 +174,7 @@
 
 .bookingContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
@@ -467,7 +467,7 @@
 
 .processContainer {
   width: 100%;
-  max-width: 1450px;
+  max-width: 1350px;
   padding: 0 5%;
   display: flex;
   justify-content: space-between;

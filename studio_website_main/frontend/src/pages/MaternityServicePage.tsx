@@ -221,6 +221,7 @@ export default function MaternityServicePageContent() {
             <span className={styles.bookingSubtext}>weeks of pregnancy</span>
             <p className={styles.bookingDesc}>
               This is the perfect window when your baby bump is beautifully defined and round, but you are still comfortable for moving and posing.
+              This is the perfect window when your baby bump is beautifully defined and round, but you are still comfortable for moving and posing.
             </p>
           </div>
         </div>

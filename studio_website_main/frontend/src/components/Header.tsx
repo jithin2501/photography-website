@@ -42,8 +42,8 @@ export default function Header() {
             <Image
               src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=100&q=80"
               alt="AuraLens Photography Logo"
-              width={50}
-              height={50}
+              width={48}
+              height={48}
               style={{ objectFit: 'cover', borderRadius: '50%' }}
             />
           </div>

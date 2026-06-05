@@ -34,29 +34,52 @@
 
 .logoArea {
   margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  flex-shrink: 0;
 }
 
 .logoText {
   display: flex;
   flex-direction: column;
-  font-family: var(--font-logo);
-  text-transform: uppercase;
   color: #ffffff;
-  line-height: 1.0;
-  gap: 4px;
+  line-height: 0.95;
+  gap: 2px;
 }
 
 .logoNameTop {
-  font-size: 1.8rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-transform: none;
 }
 
 .logoNameBottom {
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #FF4D00;
-  letter-spacing: 0.5px;
+  font-family: var(--font-family);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #fff;
+  opacity: 0.9;
+  line-height: 1.0;
+  margin-top: 1px;
 }
 
 .brandDivider {

@@ -33,8 +33,8 @@
 }
 
 .logoCircle {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
@@ -43,35 +43,38 @@
   justify-content: center;
   border: 2px solid rgba(255, 255, 255, 0.2);
   position: relative;
+  flex-shrink: 0;
 }
 
 .logoText {
-  font-family: var(--font-logo);
-  text-transform: uppercase;
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  line-height: 1.0;
-  gap: 4px;
+  line-height: 0.95;
+  gap: 2px;
   text-align: left;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logoNameTop {
-  font-size: 1.6rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
   color: #fff;
+  letter-spacing: -0.5px;
+  text-transform: none;
 }
 
 .logoNameBottom {
-  font-size: 1.1rem;
-  font-weight: 900;
+  font-family: var(--font-family);
+  font-size: 0.68rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.22em;
   color: #fff;
-  opacity: 1;
+  opacity: 0.9;
+  line-height: 1.0;
+  margin-top: 1px;
 }
 
 .nav {
@@ -135,11 +138,17 @@
     display: none;
   }
 
+  .logoCircle {
+    width: 38px;
+    height: 38px;
+  }
+
   .logoNameTop {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .logoNameBottom {
-    font-size: 0.9rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
   }
 }

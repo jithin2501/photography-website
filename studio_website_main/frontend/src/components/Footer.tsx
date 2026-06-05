@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@/styles/Footer.module.css';
-
+ 
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -12,6 +13,15 @@ export default function Footer() {
           {/* Brand/Logo Column */}
           <div className={styles.brandCol}>
             <div className={styles.logoArea}>
+              <div className={styles.logoCircle}>
+                <Image
+                  src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=100&q=80"
+                  alt="AuraLens Photography Logo"
+                  width={40}
+                  height={40}
+                  style={{ objectFit: 'cover', borderRadius: '50%' }}
+                />
+              </div>
               <div className={styles.logoText}>
                 <span className={styles.logoNameTop}>AuraLens</span>
                 <span className={styles.logoNameBottom}>photography</span>

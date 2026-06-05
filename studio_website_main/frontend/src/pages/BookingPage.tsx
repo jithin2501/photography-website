@@ -278,15 +278,10 @@ export default function BookingPageContent() {
                         className={styles.formSelect}
                       >
                         <option value="" disabled>Select photoshoot type</option>
-                        <option value="maternity">Maternity Shoot</option>
-                        <option value="portrait">Portrait Session</option>
-                        <option value="baby">Newborn / Baby Shoot</option>
-                        <option value="wilderness">Outdoor Wilderness</option>
-                        <option value="family">Family / Group Session</option>
-                        <option value="couple">Couple / Engagement</option>
+                        <option value="maternity">Maternity Photoshoot</option>
+                        <option value="newborn">Newborn Photoshoot</option>
                         <option value="milestone">Milestone Photoshoot</option>
                         <option value="classes">Photoshoot Classes</option>
-                        <option value="event">Events & Commercial</option>
                       </select>
                     </div>
                   </div>
@@ -354,10 +349,9 @@ export default function BookingPageContent() {
                         className={styles.formSelect}
                       >
                         <option value="">Select package tier</option>
-                        <option value="silver">Silver Package</option>
-                        <option value="gold">Gold Package</option>
-                        <option value="platinum">Platinum Package</option>
-                        <option value="custom">Custom Request</option>
+                        <option value="basic">Basic Package</option>
+                        <option value="standard">Standard Package</option>
+                        <option value="premium">Premium Package</option>
                       </select>
                     </div>
                   </div>
@@ -431,7 +425,7 @@ export default function BookingPageContent() {
                   <div className={styles.infoDetails}>
                     <span className={styles.infoLabel}>Photoshoot Types</span>
                     <span className={styles.infoValue}>
-                      Maternity, Portrait, Baby, Wilderness, Family, Couple, Milestone, Event & More
+                      Maternity, Newborn, Milestone, and Photoshoot Classes
                     </span>
                   </div>
                 </div>

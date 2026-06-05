@@ -194,7 +194,7 @@
   background-color: #121212;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
-  padding: 30px 20px;
+  padding: 23px 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -232,9 +232,11 @@
 }
 
 .ratingNumber {
+  font-family: var(--font-logo);
   color: #FF4D00;
   font-size: 1.8rem;
   font-weight: 900;
+  line-height: 1.1;
 }
 
 .statLabel {
@@ -413,7 +415,7 @@
   .statsBoard {
     grid-template-columns: repeat(2, 2fr);
     gap: 20px;
-    padding: 30px;
+    padding: 20px 15px;
   }
 
   .statCol:nth-child(2) {

@@ -1,35 +1,25 @@
-/* Controls / Search */
+/* Controls / Header Row */
 .controlsRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   gap: 20px;
   flex-wrap: wrap;
 }
 
 .sectionTitle {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  color: #1a202c;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sectionTitle::after {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background-color: #FF4D00;
-  border-radius: 50%;
+  letter-spacing: -0.5px;
 }
 
 .searchWrapper {
   position: relative;
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
 }
 
 .searchIcon {
@@ -37,101 +27,96 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666666;
+  color: #718096;
   pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 
 .searchInput {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 10px 16px 10px 42px;
-  color: #ffffff;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 16px 10px 40px;
+  color: #1a202c;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
 }
 
 .searchInput:focus {
   outline: none;
-  background-color: rgba(255, 255, 255, 0.04);
   border-color: #FF4D00;
   box-shadow: 0 0 0 1px #FF4D00;
 }
 
-/* Messages Section */
+/* Empty State (Matches Image Card) */
+.emptyStateCard {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  color: #718096;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* Messages Grid & Cards */
 .messagesGrid {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .messageCard {
-  background: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
   padding: 24px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.messageCard::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background-color: #FF4D00;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .messageCard:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.06);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.messageCard:hover::before {
-  opacity: 1;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
 }
 
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .senderInfo h4 {
   font-size: 1.15rem;
   font-weight: 600;
   margin: 0;
-  color: #ffffff;
+  color: #1a202c;
 }
 
 .senderMeta {
   display: flex;
-  gap: 15px;
+  gap: 16px;
   margin-top: 6px;
-  font-size: 0.82rem;
-  color: #888888;
+  font-size: 0.85rem;
+  color: #718096;
   flex-wrap: wrap;
 }
 
 .metaItem {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .metaItem a {
-  color: #888888;
+  color: #4a5568;
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -142,19 +127,19 @@
 
 .timestamp {
   font-size: 0.8rem;
-  color: #555555;
-  background-color: rgba(255, 255, 255, 0.03);
+  color: #a0aec0;
+  background-color: #f7fafc;
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  border: 1px solid #edf2f7;
 }
 
 .subjectBadge {
-  background-color: rgba(255, 77, 0, 0.08);
-  color: #FF4D00;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 4px 10px;
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
   border-radius: 6px;
   display: inline-block;
   margin-bottom: 12px;
@@ -163,27 +148,27 @@
 }
 
 .messageText {
-  color: #cccccc;
+  color: #2d3748;
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.15);
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.01);
+  background-color: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
   white-space: pre-wrap;
 }
 
-/* Card Actions (e.g. Delete) */
+/* Card Actions */
 .cardActions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 15px;
+  margin-top: 16px;
 }
 
 .deleteBtn {
   background: transparent;
-  color: #555555;
+  color: #e53e3e;
   border: none;
   padding: 6px 12px;
   font-size: 0.85rem;
@@ -191,32 +176,31 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   border-radius: 6px;
   transition: all 0.2s ease;
 }
 
 .deleteBtn:hover {
-  color: #ff5555;
-  background-color: rgba(255, 85, 85, 0.08);
+  background-color: #fff5f5;
 }
 
-/* Loading & Empty States */
-.loadingWrapper, .emptyState {
+/* Loading Spinner */
+.loadingWrapper {
   text-align: center;
-  padding: 80px 20px;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  border-radius: 16px;
+  padding: 60px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border: 3px solid rgba(255, 77, 0, 0.1);
   border-top-color: #FF4D00;
   border-radius: 50%;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 12px auto;
   animation: spin 1s infinite linear;
 }
 
@@ -224,24 +208,6 @@
   to { transform: rotate(360deg); }
 }
 
-.emptyState svg {
-  color: rgba(255, 77, 0, 0.2);
-  margin-bottom: 20px;
-}
-
-.emptyState h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 10px 0;
-}
-
-.emptyState p {
-  color: #666666;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .controlsRow {
     flex-direction: column;

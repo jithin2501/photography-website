@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/MaternityServicePage.module.css';
+import styles from '@/styles/MaternityServicePage.css';
 
 export default function MaternityServicePageContent() {
   return (

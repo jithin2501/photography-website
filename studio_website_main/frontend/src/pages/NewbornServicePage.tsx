@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/NewbornServicePage.module.css';
+import styles from '@/styles/NewbornServicePage.css';
 
 export default function NewbornServicePageContent() {
   return (

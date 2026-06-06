@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
-import styles from '@/styles/Hero.module.css';
+import styles from '@/styles/Hero.css';
 import ArchWheel from './ArchWheel';
 import { archIcons } from '@/data/archIcons';
 import { ArchIcon, HeroState } from '@/types';

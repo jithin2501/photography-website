@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from '@/styles/About.module.css';
+import styles from '@/styles/About.css';
 
 export default function AboutSection() {
   return (

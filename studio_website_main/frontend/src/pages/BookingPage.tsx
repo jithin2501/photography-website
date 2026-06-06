@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/Booking.module.css';
+import styles from '@/styles/Booking.css';
 
 export default function BookingPageContent() {
   const [formData, setFormData] = useState({

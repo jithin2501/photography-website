@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import styles from '@/styles/Footer.module.css';
+import styles from '@/styles/Footer.css';
  
 export default function Footer() {
   return (

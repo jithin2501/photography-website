@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/MilestoneServicePage.module.css';
+import styles from '@/styles/MilestoneServicePage.css';
 
 export default function MilestoneServicePageContent() {
   return (

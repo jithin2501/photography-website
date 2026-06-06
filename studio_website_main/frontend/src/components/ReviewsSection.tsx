@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import styles from '@/styles/Reviews.module.css';
+import styles from '@/styles/Reviews.css';
 
 interface ReviewItem {
   id: number;

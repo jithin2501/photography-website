@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import styles from '@/styles/Hero.module.css';
+import styles from '@/styles/Hero.css';
 import { ArchIcon } from '@/types';
 
 interface ArchWheelProps {

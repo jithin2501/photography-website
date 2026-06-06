@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from '@/styles/Contact.module.css';
+import styles from '@/styles/Contact.css';
 
 export default function ContactPageContent() {
   const [formData, setFormData] = useState({

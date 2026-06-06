@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from '@/styles/WhyChooseUs.module.css';
+import styles from '@/styles/WhyChooseUs.css';
 
 interface FeatureItem {
   id: number;

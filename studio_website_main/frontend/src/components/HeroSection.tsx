@@ -1,28 +1,47 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '@/styles/Hero.css';
 import ArchWheel from './ArchWheel';
-import { archIcons } from '@/data/archIcons';
 import { ArchIcon, HeroState } from '@/types';
 
 export default function HeroSection() {
-  const [heroState, setHeroState] = useState<HeroState>({
-    activeIndex: 0,
-    title: archIcons[0].title,
-    description: archIcons[0].description,
-    bgImageUrl: archIcons[0].imageUrl,
-  });
+  const [icons, setIcons] = useState<ArchIcon[]>([]);
+  const [heroState, setHeroState] = useState<HeroState | null>(null);
 
-  const [layer1Url, setLayer1Url] = useState<string>(archIcons[0].imageUrl);
+  const [layer1Url, setLayer1Url] = useState<string>('');
   const [layer2Url, setLayer2Url] = useState<string>('');
   const [activeLayer, setActiveLayer] = useState<1 | 2>(1);
   const [textFade, setTextFade] = useState<boolean>(false);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/api/wheel-images')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 'success' && data.data && data.data.length > 0) {
+          const mapped = data.data.map((item: any) => ({
+            id: item.slot,
+            imageUrl: item.imageUrl,
+            title: item.title,
+            description: item.description,
+          }));
+          setIcons(mapped);
+          setHeroState({
+            activeIndex: 0,
+            title: mapped[0].title,
+            description: mapped[0].description,
+            bgImageUrl: mapped[0].imageUrl,
+          });
+          setLayer1Url(mapped[0].imageUrl);
+        }
+      })
+      .catch((err) => console.error('Error fetching dynamic wheel images:', err));
+  }, []);
+
   const handleIconClick = useCallback(
     (index: number, icon: ArchIcon) => {
-      if (index === heroState.activeIndex) return;
+      if (!heroState || index === heroState.activeIndex) return;
 
       // Fade text out
       setTextFade(true);
@@ -50,20 +69,24 @@ export default function HeroSection() {
         setTextFade(false);
       }, 300);
     },
-    [heroState.activeIndex, activeLayer]
+    [heroState, activeLayer]
   );
 
   return (
     <section className={styles.hero}>
       {/* Background layers */}
-      <div
-        className={`${styles.heroBgLayer} ${activeLayer !== 1 ? styles.hidden : ''}`}
-        style={{ backgroundImage: layer1Url ? `url('${layer1Url}')` : undefined }}
-      />
-      <div
-        className={`${styles.heroBgLayer} ${activeLayer !== 2 ? styles.hidden : ''}`}
-        style={{ backgroundImage: layer2Url ? `url('${layer2Url}')` : undefined }}
-      />
+      {layer1Url && (
+        <div
+          className={`${styles.heroBgLayer} ${activeLayer !== 1 ? styles.hidden : ''}`}
+          style={{ backgroundImage: `url('${layer1Url}')` }}
+        />
+      )}
+      {layer2Url && (
+        <div
+          className={`${styles.heroBgLayer} ${activeLayer !== 2 ? styles.hidden : ''}`}
+          style={{ backgroundImage: `url('${layer2Url}')` }}
+        />
+      )}
 
       {/* Dark overlay */}
       <div className={styles.heroOverlay} />
@@ -94,28 +117,30 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Arch / Wheel UI */}
-        <div className={styles.archSection}>
-          <div className={styles.archContainer}>
-            <ArchWheel
-              icons={archIcons}
-              activeIndex={heroState.activeIndex}
-              onIconClick={handleIconClick}
-            />
+        {/* Arch / Wheel UI (Only rendered when dynamic icons are loaded) */}
+        {icons.length > 0 && heroState && (
+          <div className={styles.archSection}>
+            <div className={styles.archContainer}>
+              <ArchWheel
+                icons={icons}
+                activeIndex={heroState.activeIndex}
+                onIconClick={handleIconClick}
+              />
 
-            <div className={styles.archCenterText}>
-              <h2 className={textFade ? styles.fade : ''}>
-                {heroState.title}
-              </h2>
-              <p className={textFade ? styles.fade : ''}>
-                {heroState.description}
-              </p>
-              <Link href="#" className={styles.followBtn}>
-                Explore services
-              </Link>
+              <div className={styles.archCenterText}>
+                <h2 className={textFade ? styles.fade : ''}>
+                  {heroState.title}
+                </h2>
+                <p className={textFade ? styles.fade : ''}>
+                  {heroState.description}
+                </p>
+                <Link href="#" className={styles.followBtn}>
+                  Explore services
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

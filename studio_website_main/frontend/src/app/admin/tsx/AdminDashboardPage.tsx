@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import '../css/Admin.css';
 import AdminLayout from './AdminLayout';
 import MessageSection from './MessageSection';
+import WheelSection from './WheelSection';
 
 interface ContactMessage {
   _id: string;
@@ -22,6 +23,7 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [adminUser, setAdminUser] = useState('');
+  const [activeTab, setActiveTab] = useState('contacts');
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -115,13 +117,19 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminLayout
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
       onLogout={handleLogout}
     >
-      <MessageSection
-        messages={messages}
-        loading={loading}
-        onDeleteMessage={handleDelete}
-      />
+      {activeTab === 'contacts' ? (
+        <MessageSection
+          messages={messages}
+          loading={loading}
+          onDeleteMessage={handleDelete}
+        />
+      ) : (
+        <WheelSection />
+      )}
     </AdminLayout>
   );
 }

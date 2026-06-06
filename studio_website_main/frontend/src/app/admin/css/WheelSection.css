@@ -1,0 +1,350 @@
+/* Header / Title Row - aligned in height with sidebar brand */
+.controlsRow {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+/* Cloudinary Config Card */
+.cloudinaryConfigCard {
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.configHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.configHeader h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.configToggleIcon {
+  font-size: 0.85rem;
+  color: #FF4D00;
+  font-weight: 600;
+}
+
+.configBody {
+  margin-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 15px;
+}
+
+.configTip {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 15px 0;
+  line-height: 1.5;
+}
+
+.configTip strong {
+  color: #ffffff;
+}
+
+.configFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.configGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.configGroup label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.configGroup input {
+  background-color: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.configGroup input:focus {
+  outline: none;
+  border-color: #FF4D00;
+}
+
+/* Grid & Cards */
+.wheelGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.wheelCard {
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.wheelCard.editing {
+  border-color: #FF4D00;
+}
+
+/* Badges */
+.wheelSlotBadge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(255, 77, 0, 0.15);
+  color: #FF4D00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Card Content Mode */
+.wheelCardContent {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 22px; /* Space for the absolute-positioned slot badge */
+}
+
+.wheelThumbnail {
+  width: 72px;
+  height: 72px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.wheelInfo {
+  flex-grow: 1;
+}
+
+.wheelInfo h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+}
+
+.wheelInfo p {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.editSlotBtn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editSlotBtn:hover {
+  border-color: #FF4D00;
+  background-color: rgba(255, 77, 0, 0.1);
+  color: #FF4D00;
+}
+
+/* Edit Form Mode */
+.editForm {
+  margin-top: 22px; /* Space for badge */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formGroup label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  background-color: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: #FF4D00;
+}
+
+.formGroup input[type="file"] {
+  background-color: transparent;
+  border: none;
+  padding: 4px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.uploadStatus {
+  font-size: 0.85rem;
+  color: #FF4D00;
+  font-weight: 600;
+}
+
+.configWarning {
+  font-size: 0.8rem;
+  color: #dd6b20;
+  font-weight: 500;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.saveBtn {
+  background-color: #FF4D00;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background-color: #e04400;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.cancelBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading Spinner */
+.loadingWrapper {
+  text-align: center;
+  padding: 60px 20px;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 77, 0, 0.1);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  margin: 0 auto 12px auto;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.editPreviewThumbnail {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .configFormGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .wheelCardContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .editSlotBtn {
+    width: 100%;
+    text-align: center;
+  }
+}

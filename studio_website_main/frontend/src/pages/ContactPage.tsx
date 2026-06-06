@@ -32,18 +32,35 @@ export default function ContactPageContent() {
     setIsSubmitting(true);
     setSubmitMessage('');
 
-    // Mock API call delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitMessage('Thank you! Your message has been sent successfully.');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        phone: '',
-        message: '',
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitMessage('Thank you! Your message has been sent successfully.');
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          phone: '',
+          message: '',
+        });
+      } else {
+        setSubmitMessage(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitMessage('Failed to connect to the server. Please check if the backend is running.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

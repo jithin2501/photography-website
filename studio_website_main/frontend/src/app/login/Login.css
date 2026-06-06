@@ -311,3 +311,27 @@
     padding: 20px 0;
   }
 }
+
+.errorBox {
+  background-color: rgba(255, 77, 0, 0.1);
+  border: 1px solid #FF4D00;
+  color: #ff8855;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

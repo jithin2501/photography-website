@@ -1,0 +1,65 @@
+/* Access Denied Page Styles */
+.deniedContainer {
+  min-height: 100vh;
+  background-color: #080808;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.deniedCard {
+  text-align: center;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 40px 30px;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.deniedIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(255, 85, 85, 0.1);
+  color: #ff5555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px auto;
+}
+
+.deniedCard h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+}
+
+.deniedCard p {
+  color: #888888;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.loginRedirectBtn {
+  background-color: #FF4D00;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.loginRedirectBtn:hover {
+  background-color: #e04400;
+  transform: translateY(-1px);
+}

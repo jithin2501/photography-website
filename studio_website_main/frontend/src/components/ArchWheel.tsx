@@ -20,7 +20,6 @@ const iconPositionClasses: string[] = [
   styles.icon7,
   styles.icon8,
   styles.icon9,
-  styles.icon10,
 ];
 
 export default function ArchWheel({ icons, activeIndex, onIconClick }: ArchWheelProps) {

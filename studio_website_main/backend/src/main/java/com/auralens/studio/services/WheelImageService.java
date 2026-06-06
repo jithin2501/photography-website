@@ -66,7 +66,7 @@ public class WheelImageService {
             "Precision lighting and professional backdrops for high-end studio work."
         };
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 9; i++) {
             WheelImage img = new WheelImage(i + 1, defaultUrls[i], defaultTitles[i], defaultDescriptions[i]);
             img.setId("fallback-id-" + (i + 1));
             inMemoryFallback.add(img);
@@ -74,18 +74,21 @@ public class WheelImageService {
 
         // Try to initialize MongoDB with default values if empty
         try {
+            // Delete slot 10 if it exists in DB
+            wheelImageRepository.findBySlot(10).ifPresent(wheelImageRepository::delete);
+
             long count = wheelImageRepository.count();
             if (count == 0) {
                 List<WheelImage> dbImages = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 9; i++) {
                     WheelImage img = new WheelImage(i + 1, defaultUrls[i], defaultTitles[i], defaultDescriptions[i]);
                     dbImages.add(img);
                 }
                 wheelImageRepository.saveAll(dbImages);
-                System.out.println("Initialized MongoDB with 10 default wheel images.");
+                System.out.println("Initialized MongoDB with 9 default wheel images.");
             }
         } catch (Exception e) {
-            System.err.println("Failed to count or save to MongoDB on init. Using in-memory fallback. Error: " + e.getMessage());
+            System.err.println("Failed to count, save, or clean MongoDB on init. Using in-memory fallback. Error: " + e.getMessage());
             useFallback = true;
         }
     }

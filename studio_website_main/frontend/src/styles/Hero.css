@@ -289,55 +289,50 @@
   animation-play-state: paused;
 }
 
-/* Icon positions — 10 icons at 36° increments */
+/* Icon positions — 9 icons at 40° increments */
 .icon1 {
   top: 50%;
   left: 0%;
 }
 
 .icon2 {
-  top: 20.6%;
-  left: 9.5%;
+  top: 17.9%;
+  left: 11.7%;
 }
 
 .icon3 {
-  top: 2.4%;
-  left: 34.5%;
+  top: 0.8%;
+  left: 41.3%;
 }
 
 .icon4 {
-  top: 2.4%;
-  left: 65.5%;
+  top: 6.7%;
+  left: 75%;
 }
 
 .icon5 {
-  top: 20.6%;
-  left: 90.5%;
+  top: 32.9%;
+  left: 97%;
 }
 
 .icon6 {
-  top: 50%;
-  left: 100%;
+  top: 67.1%;
+  left: 97%;
 }
 
 .icon7 {
-  top: 79.4%;
-  left: 90.5%;
+  top: 93.3%;
+  left: 75%;
 }
 
 .icon8 {
-  top: 97.6%;
-  left: 65.5%;
+  top: 99.2%;
+  left: 41.3%;
 }
 
 .icon9 {
-  top: 97.6%;
-  left: 34.5%;
-}
-
-.icon10 {
-  top: 79.4%;
-  left: 9.5%;
+  top: 82.2%;
+  left: 11.7%;
 }
 
 /* Responsive */

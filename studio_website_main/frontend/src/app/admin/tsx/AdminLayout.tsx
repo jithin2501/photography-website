@@ -23,7 +23,7 @@ export default function AdminLayout({
         <div className="sidebarBrand">
           <h2>Admin Dashboard</h2>
         </div>
-        
+
         <nav className="sidebarNav">
           <ul>
             <li className={activeTab === 'contacts' ? 'active' : ''} onClick={() => onTabChange('contacts')}>
@@ -49,7 +49,7 @@ export default function AdminLayout({
             </li>
           </ul>
         </nav>
-        
+
         <div className="sidebarFooter">
           <button className="signOutBtn" onClick={onLogout}>
             Sign Out

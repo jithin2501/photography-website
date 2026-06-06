@@ -20,12 +20,14 @@ export default function HeroSection() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 'success' && data.data && data.data.length > 0) {
-          const mapped = data.data.map((item: any) => ({
-            id: item.slot,
-            imageUrl: item.imageUrl,
-            title: item.title,
-            description: item.description,
-          }));
+          const mapped = data.data
+            .filter((item: any) => item.slot >= 1 && item.slot <= 9)
+            .map((item: any) => ({
+              id: item.slot,
+              imageUrl: item.imageUrl,
+              title: item.title,
+              description: item.description,
+            }));
           setIcons(mapped);
           setHeroState({
             activeIndex: 0,

@@ -37,11 +37,11 @@ public class WheelImageController {
 
     @PutMapping
     public ResponseEntity<Map<String, Object>> updateWheelImage(@RequestBody WheelImage updatedImage) {
-        // Validation: slot must be between 1 and 10
-        if (updatedImage.getSlot() < 1 || updatedImage.getSlot() > 10) {
+        // Validation: slot must be between 1 and 9
+        if (updatedImage.getSlot() < 1 || updatedImage.getSlot() > 9) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("status", "error");
-            errorResponse.put("error", "Slot index must be between 1 and 10.");
+            errorResponse.put("error", "Slot index must be between 1 and 9.");
             return ResponseEntity.badRequest().body(errorResponse);
         }
 

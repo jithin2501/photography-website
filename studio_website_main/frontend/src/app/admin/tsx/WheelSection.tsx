@@ -177,10 +177,6 @@ export default function WheelSection() {
                   >
                     <div className="slotCardBadge">Slot {item.slot}</div>
 
-                    <div className="slotCardContent">
-                      <h3 className="slotCardTitle">{item.title || `Slot ${item.slot}`}</h3>
-                      <p className="slotCardDesc">{item.description || 'No description provided.'}</p>
-                    </div>
 
                     <div className="slotCardHoverOverlay">
                       <div className="editIconWrapper">

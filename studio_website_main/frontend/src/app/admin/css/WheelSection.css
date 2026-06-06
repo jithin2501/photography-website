@@ -33,7 +33,7 @@
 .wheelDashboard {
   display: flex;
   gap: 30px;
-  align-items: flex-start;
+  align-items: stretch;
   margin-top: 10px;
   position: relative;
 }
@@ -200,6 +200,14 @@
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorPanelContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 /* Editor Header */
@@ -487,6 +495,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-grow: 1;
   min-height: 320px;
   color: rgba(255, 255, 255, 0.4);
 }

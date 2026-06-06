@@ -4,13 +4,11 @@ import React from 'react';
 import '../css/AdminLayout.css';
 
 interface AdminLayoutProps {
-  adminUser: string;
   onLogout: () => void;
   children: React.ReactNode;
 }
 
 export default function AdminLayout({
-  adminUser,
   onLogout,
   children,
 }: AdminLayoutProps) {
@@ -44,11 +42,6 @@ export default function AdminLayout({
 
       {/* Main Content Area */}
       <div className="adminMain">
-        <header className="mainHeader">
-          <div className="userWelcome">
-            Welcome, <strong>{adminUser}</strong>
-          </div>
-        </header>
         <main className="mainContent">
           {children}
         </main>

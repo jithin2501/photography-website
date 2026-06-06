@@ -21,7 +21,6 @@ export default function AdminDashboardPage() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [adminUser, setAdminUser] = useState('');
 
   useEffect(() => {
@@ -116,15 +115,11 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminLayout
-      adminUser={adminUser}
-      totalMessages={messages.length}
       onLogout={handleLogout}
     >
       <MessageSection
         messages={messages}
         loading={loading}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
         onDeleteMessage={handleDelete}
       />
     </AdminLayout>

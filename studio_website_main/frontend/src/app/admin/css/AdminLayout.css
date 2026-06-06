@@ -2,15 +2,15 @@
 .adminContainer {
   display: flex;
   min-height: 100vh;
-  background-color: #f6f8fb;
+  background-color: #0d0d0d;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #333333;
+  color: #ffffff;
 }
 
 /* Sidebar Styling */
 .adminSidebar {
   width: 260px;
-  background-color: #233044;
+  background-color: #121212;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -19,19 +19,22 @@
   left: 0;
   top: 0;
   z-index: 100;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebarBrand {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebarBrand h2 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin: 0;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
   color: #ffffff;
 }
 
@@ -55,7 +58,7 @@
   align-items: center;
   gap: 12px;
   padding: 14px 24px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.95rem;
   font-weight: 500;
   cursor: default;
@@ -63,7 +66,7 @@
 }
 
 .sidebarNav li.active .navLink {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.03);
   color: #ffffff;
   font-weight: 600;
   border-left: 4px solid #FF4D00;
@@ -72,7 +75,10 @@
 
 .sidebarFooter {
   padding: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .signOutBtn {
@@ -103,30 +109,12 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.mainHeader {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 16px 40px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.userWelcome {
-  font-size: 0.9rem;
-  color: #4b5563;
-}
-
-.userWelcome strong {
-  color: #1f2937;
+  background-color: #0d0d0d;
 }
 
 .mainContent {
-  padding: 40px;
+  padding: 0 40px 40px 40px; /* Top padding is 0, since controlsRow handles header alignment */
   flex-grow: 1;
-  background-color: #f6f8fb;
 }
 
 /* Responsive sidebar */
@@ -147,11 +135,8 @@
   .adminMain {
     margin-left: 70px;
   }
-  .mainHeader {
-    padding: 16px 20px;
-  }
   .mainContent {
-    padding: 20px;
+    padding: 0 20px 20px 20px;
   }
   .signOutBtn {
     font-size: 0.75rem;

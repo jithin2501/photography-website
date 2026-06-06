@@ -1,66 +1,29 @@
-/* Controls / Header Row */
+/* Header / Title Row - aligned in height with sidebar brand */
 .controlsRow {
+  height: 70px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  gap: 20px;
-  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sectionTitle {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: #1a202c;
+  color: #ffffff;
   margin: 0;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
-.searchWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 300px;
-}
-
-.searchIcon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #718096;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-}
-
-.searchInput {
-  width: 100%;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 10px 16px 10px 40px;
-  color: #1a202c;
-  font-size: 0.9rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: all 0.2s ease;
-}
-
-.searchInput:focus {
-  outline: none;
-  border-color: #FF4D00;
-  box-shadow: 0 0 0 1px #FF4D00;
-}
-
-/* Empty State (Matches Image Card) */
+/* Empty State Card (Matches Image Card layout but styled dark) */
 .emptyStateCard {
-  background-color: #ffffff;
+  background-color: #121212;
   padding: 24px;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
-  color: #718096;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.95rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 /* Messages Grid & Cards */
@@ -71,17 +34,10 @@
 }
 
 .messageCard {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.messageCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
 }
 
 .cardHeader {
@@ -93,11 +49,18 @@
   gap: 12px;
 }
 
+.cardRightCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
 .senderInfo h4 {
   font-size: 1.15rem;
   font-weight: 600;
   margin: 0;
-  color: #1a202c;
+  color: #ffffff;
 }
 
 .senderMeta {
@@ -105,7 +68,7 @@
   gap: 16px;
   margin-top: 6px;
   font-size: 0.85rem;
-  color: #718096;
+  color: rgba(255, 255, 255, 0.4);
   flex-wrap: wrap;
 }
 
@@ -115,8 +78,12 @@
   gap: 6px;
 }
 
+.metaItem svg {
+  color: #FF4D00;
+}
+
 .metaItem a {
-  color: #4a5568;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -127,16 +94,16 @@
 
 .timestamp {
   font-size: 0.8rem;
-  color: #a0aec0;
-  background-color: #f7fafc;
+  color: rgba(255, 255, 255, 0.4);
+  background-color: #1a1a1a;
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1px solid #edf2f7;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .subjectBadge {
-  background-color: #ebf8ff;
-  color: #2b6cb0;
+  background-color: rgba(255, 77, 0, 0.15);
+  color: #FF4D00;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 4px 8px;
@@ -148,27 +115,20 @@
 }
 
 .messageText {
-  color: #2d3748;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
   line-height: 1.6;
   margin: 0;
-  background-color: #f8fafc;
+  background-color: #0d0d0d;
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid #edf2f7;
+  border: 1px solid rgba(255, 255, 255, 0.02);
   white-space: pre-wrap;
-}
-
-/* Card Actions */
-.cardActions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
 }
 
 .deleteBtn {
   background: transparent;
-  color: #e53e3e;
+  color: #ef4444;
   border: none;
   padding: 6px 12px;
   font-size: 0.85rem;
@@ -182,16 +142,17 @@
 }
 
 .deleteBtn:hover {
-  background-color: #fff5f5;
+  background-color: rgba(239, 68, 68, 0.1);
 }
 
 /* Loading Spinner */
 .loadingWrapper {
   text-align: center;
   padding: 60px 20px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .spinner {
@@ -210,11 +171,9 @@
 
 @media (max-width: 768px) {
   .controlsRow {
+    height: auto;
+    padding: 16px 0;
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .searchWrapper {
-    max-width: 100%;
   }
 }

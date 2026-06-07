@@ -1,0 +1,273 @@
+/* Pricing Settings Layout */
+.pricingSectionContainer {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pricingLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.pricingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 77, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #FF4D00;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pricingDashboard {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+  margin-top: 10px;
+  position: relative;
+}
+
+.servicesContainer {
+  flex: 1;
+}
+
+/* Services pricing cards grid */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.servicePriceCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.servicePriceCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 77, 0, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 12px 30px rgba(255, 77, 0, 0.08), 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.servicePriceCard.active {
+  background: rgba(255, 77, 0, 0.04);
+  border-color: #FF4D00;
+  box-shadow: 0 0 0 1px #FF4D00, 0 12px 30px rgba(255, 77, 0, 0.15);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.serviceIcon {
+  font-size: 1.8rem;
+}
+
+.cardHeader h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.packageTiersPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tierPreviewItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tierLabel {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tierValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.cardActionIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+.servicePriceCard:hover .cardActionIndicator {
+  color: #FF4D00;
+}
+
+.servicePriceCard.active .cardActionIndicator {
+  color: #FF4D00;
+}
+
+/* Side panel container */
+.pricingSidePanel {
+  width: 380px;
+  flex-shrink: 0;
+}
+
+.pricingPanelCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.panelHeader {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.panelIcon {
+  font-size: 1.5rem;
+}
+
+.panelHeader h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.panelHeader p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.panelForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.formGroup input {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus {
+  border-color: #FF4D00;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.15);
+}
+
+.formHelperText {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.3;
+}
+
+.panelActions {
+  margin-top: 10px;
+}
+
+.saveBtn {
+  width: 100%;
+  background: #FF4D00;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: #ff621f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
+}
+
+.saveBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pricingNoSelection {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+}

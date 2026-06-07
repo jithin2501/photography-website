@@ -1,10 +1,39 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/ClassesServicePage.css';
 
 export default function ClassesServicePageContent() {
+  const [prices, setPrices] = useState({
+    basic: '₹14,999',
+    standard: '₹24,999',
+    premium: '₹39,999',
+  });
+
+  useEffect(() => {
+    async function fetchPrices() {
+      try {
+        const response = await fetch('http://localhost:5000/api/service-package-prices', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          const item = data.data.find((p: any) => p.id === 'classes');
+          if (item) {
+            setPrices({
+              basic: item.basicPrice || '₹14,999',
+              standard: item.standardPrice || '₹24,999',
+              premium: item.premiumPrice || '₹39,999',
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching prices:', err);
+      }
+    }
+    fetchPrices();
+  }, []);
+
   return (
     <main className={styles.servicePage}>
       {/* 1. Hero Section */}
@@ -263,7 +292,7 @@ export default function ClassesServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Basic</span>
-                <div className={styles.packagePrice}>₹14,999</div>
+                <div className={styles.packagePrice}>{prices.basic}</div>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -307,7 +336,7 @@ export default function ClassesServicePageContent() {
               <span className={styles.popularBadge}>Most Popular</span>
               <div>
                 <span className={styles.packageName}>Standard</span>
-                <div className={styles.packagePrice}>₹24,999</div>
+                <div className={styles.packagePrice}>{prices.standard}</div>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -356,7 +385,7 @@ export default function ClassesServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Premium</span>
-                <div className={styles.packagePrice}>₹39,999</div>
+                <div className={styles.packagePrice}>{prices.premium}</div>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

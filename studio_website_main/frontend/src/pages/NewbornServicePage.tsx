@@ -1,10 +1,39 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/NewbornServicePage.css';
 
 export default function NewbornServicePageContent() {
+  const [prices, setPrices] = useState({
+    basic: '₹15,000',
+    standard: '₹25,000',
+    premium: '₹40,000',
+  });
+
+  useEffect(() => {
+    async function fetchPrices() {
+      try {
+        const response = await fetch('http://localhost:5000/api/service-package-prices', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          const item = data.data.find((p: any) => p.id === 'newborn');
+          if (item) {
+            setPrices({
+              basic: item.basicPrice || '₹15,000',
+              standard: item.standardPrice || '₹25,000',
+              premium: item.premiumPrice || '₹40,000',
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching prices:', err);
+      }
+    }
+    fetchPrices();
+  }, []);
+
   return (
     <main className={styles.servicePage}>
       {/* 1. Hero Section */}
@@ -252,7 +281,7 @@ export default function NewbornServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Basic</span>
-                <h3 className={styles.packagePrice}>₹15,000</h3>
+                <h3 className={styles.packagePrice}>{prices.basic}</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -296,7 +325,7 @@ export default function NewbornServicePageContent() {
               <div className={styles.popularBadge}>Most Popular</div>
               <div>
                 <span className={styles.packageName}>Standard</span>
-                <h3 className={styles.packagePrice}>₹25,000</h3>
+                <h3 className={styles.packagePrice}>{prices.standard}</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -339,7 +368,7 @@ export default function NewbornServicePageContent() {
             <div className={styles.packageCard}>
               <div>
                 <span className={styles.packageName}>Premium</span>
-                <h3 className={styles.packagePrice}>₹40,000</h3>
+                <h3 className={styles.packagePrice}>{prices.premium}</h3>
                 <ul className={styles.packageInclusionsList}>
                   <li className={styles.inclusionItem}>
                     <svg className={styles.inclusionCheck} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">

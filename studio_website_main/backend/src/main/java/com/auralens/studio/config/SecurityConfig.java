@@ -38,11 +38,13 @@ public class SecurityConfig {
                 .requestMatchers("/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/wheel-images").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/gallery-images").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/service-package-prices").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/api/wheel-images").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/wheel-images/upload").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/gallery-images").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/gallery-images/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/gallery-images/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/service-package-prices/**").hasRole("ADMIN")
                 .requestMatchers("/api/contact/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             );

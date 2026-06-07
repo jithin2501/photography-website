@@ -9,6 +9,7 @@ import WheelSection from './WheelSection';
 // Dynamic admin panel section for managing gallery photo uploads
 import GallerySection from './GallerySection';
 import PricingSection from './PricingSection';
+import BookingSection from './BookingSection';
 
 interface ContactMessage {
   _id: string;
@@ -130,6 +131,8 @@ export default function AdminDashboardPage() {
           loading={loading}
           onDeleteMessage={handleDelete}
         />
+      ) : activeTab === 'bookings' ? (
+        <BookingSection />
       ) : activeTab === 'gallery' ? (
         <GallerySection />
       ) : activeTab === 'pricing' ? (

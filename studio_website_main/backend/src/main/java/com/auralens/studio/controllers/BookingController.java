@@ -1,0 +1,78 @@
+package com.auralens.studio.controllers;
+
+import com.auralens.studio.models.Booking;
+import com.auralens.studio.services.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/bookings")
+public class BookingController {
+
+    private final BookingService bookingService;
+
+    @Autowired
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+        // Name, Phone, Photoshoot Type, Photoshoot Date, Packages, Location Preference are required
+        if (booking.getFullName() == null || booking.getFullName().trim().isEmpty() ||
+            booking.getPhone() == null || booking.getPhone().trim().isEmpty() ||
+            booking.getPhotoshootType() == null || booking.getPhotoshootType().trim().isEmpty() ||
+            booking.getDate() == null || booking.getDate().trim().isEmpty() ||
+            booking.getLocationPreference() == null || booking.getLocationPreference().trim().isEmpty() ||
+            booking.getPackageName() == null || booking.getPackageName().trim().isEmpty()) {
+            
+            Map<String, String> err = new HashMap<>();
+            err.put("error", "Name, Phone, Photoshoot Type, Photoshoot Date, Packages, and Location Preference are required fields.");
+            return ResponseEntity.badRequest().body(err);
+        }
+
+        Booking savedBooking = bookingService.createBooking(booking);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Booking requested successfully.");
+        response.put("data", savedBooking);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<?> getBookings() {
+        List<Booking> bookings = bookingService.getAllBookings();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", bookings);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable @NonNull String id) {
+        boolean deleted = bookingService.deleteBooking(id);
+
+        if (!deleted) {
+            Map<String, String> err = new HashMap<>();
+            err.put("error", "Booking not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Booking deleted successfully");
+
+        return ResponseEntity.ok(response);
+    }
+}

@@ -35,6 +35,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/bookings").permitAll()
                 .requestMatchers("/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/wheel-images").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/gallery-images").permitAll()
@@ -46,6 +47,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/gallery-images/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/service-package-prices/**").hasRole("ADMIN")
                 .requestMatchers("/api/contact/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/bookings/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             );
 

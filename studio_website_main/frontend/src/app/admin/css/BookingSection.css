@@ -1,0 +1,372 @@
+/* Booking section dashboard container and headers */
+.bookingSectionContainer {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+}
+
+.controlsRow {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.sectionSubtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 4px 0 0 0;
+}
+
+/* Loading & Empty States */
+.loadingWrapper {
+  text-align: center;
+  padding: 60px 20px;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 77, 0, 0.1);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  margin: 0 auto 12px auto;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.emptyStateCard {
+  background-color: #121212;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+}
+
+/* Grid Layout */
+.bookingDashboardGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  height: calc(100vh - 150px);
+  overflow: hidden;
+  align-items: stretch;
+}
+
+/* Left panel style */
+.bookingsListPanel {
+  display: flex;
+  flex-direction: column;
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.filterControls {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0d0d0d;
+}
+
+.searchBar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchBar:focus {
+  border-color: #FF4D00;
+}
+
+.filterSelect {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.filterSelect option {
+  background-color: #121212;
+  color: #fff;
+}
+
+.bookingsScrollList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookingsScrollList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bookingsScrollList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.bookingListItem {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bookingListItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.bookingListItem.active {
+  background: rgba(255, 77, 0, 0.08);
+  border-color: #FF4D00;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.listHeader h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+}
+
+.listDetails {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.noResults {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+
+/* Right Detail View Panel */
+.bookingDetailPanel {
+  background: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.bookingDetailPanel::-webkit-scrollbar {
+  width: 4px;
+}
+
+.bookingDetailPanel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.noSelectionState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.95rem;
+}
+
+/* Detail Card and Grid */
+.detailCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.detailCardHeader h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.submittedAt {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.deleteBookingBtn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBookingBtn:hover {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.detailField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detailField.fullWidth {
+  grid-column: span 2;
+}
+
+.fieldLabel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+.fieldValue {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.fieldValue.highlightedVal {
+  color: #FF4D00;
+}
+
+.fieldValue.capitalized {
+  text-transform: capitalize;
+}
+
+.fieldValue.textMuted {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.link {
+  color: #FF4D00;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+/* Badges */
+.packageBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.packageBadge.basic {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+.packageBadge.standard {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+}
+
+.packageBadge.premium {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+/* Session details text box */
+.detailsBox {
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 100px;
+}
+
+.detailsBox p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: pre-wrap;
+}
+
+.noDetailsText {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-style: italic;
+}
+
+/* Responsive queries */
+@media (max-width: 900px) {
+  .bookingDashboardGrid {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+  
+  .bookingDetailPanel {
+    min-height: 400px;
+  }
+}

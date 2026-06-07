@@ -31,13 +31,24 @@ export default function BookingPageContent() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch('http://localhost:5000/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.error || 'Failed to submit booking request.');
+      }
+
       setIsSubmitted(true);
       setFormData({
         fullName: '',
@@ -50,7 +61,12 @@ export default function BookingPageContent() {
         packageName: '',
         details: '',
       });
-    }, 1500);
+    } catch (error: any) {
+      console.error('Submission error:', error);
+      alert(error.message || 'Failed to submit booking request. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

@@ -20,6 +20,10 @@ public class Booking {
     private String locationPreference;
     private String packageName;
     private String details;
+    private String paymentStatus = "pending"; 
+    private String paymentMethod;             
+    private String paymentId;                 
+    private String razorpayOrderId;           
 
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -117,6 +121,38 @@ public class Booking {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public String getRazorpayOrderId() {
+        return razorpayOrderId;
+    }
+
+    public void setRazorpayOrderId(String razorpayOrderId) {
+        this.razorpayOrderId = razorpayOrderId;
     }
 
     public LocalDateTime getCreatedAt() {

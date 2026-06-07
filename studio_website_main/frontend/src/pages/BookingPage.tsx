@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/Booking.css';
@@ -20,6 +20,22 @@ export default function BookingPageContent() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [paymentActive, setPaymentActive] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState<'success' | 'failure' | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMockCheckoutOpen, setIsMockCheckoutOpen] = useState(false);
+  const [mockPaymentData, setMockPaymentData] = useState<any>(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -31,12 +47,67 @@ export default function BookingPageContent() {
     }));
   };
 
+  const handleMockPayment = async (success: boolean) => {
+    setIsMockCheckoutOpen(false);
+    if (!mockPaymentData) return;
+
+    if (success) {
+      try {
+        const verifyRes = await fetch('http://localhost:5000/api/bookings/razorpay/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            razorpayPaymentId: 'pay_mock_' + Math.random().toString(36).substring(2, 11),
+            razorpayOrderId: mockPaymentData.orderId,
+            razorpaySignature: 'mock_signature_approved',
+            bookingId: mockPaymentData.bookingId,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+        if (verifyRes.ok) {
+          setModalMessage('Booking Requested! Thank you for requesting a session. Our team will review your preferred date and contact you within 24 hours to confirm your booking and plan details.');
+          setModalType('success');
+          setIsModalOpen(true);
+          setFormData({
+            fullName: '',
+            email: '',
+            phone: '',
+            photoshootType: '',
+            date: '',
+            time: '',
+            locationPreference: '',
+            packageName: '',
+            details: '',
+          });
+        } else {
+          setModalMessage(verifyData.error || 'Payment verification failed. Please contact support.');
+          setModalType('failure');
+          setIsModalOpen(true);
+        }
+      } catch (error) {
+        setModalMessage('Payment verification failed due to a network error.');
+        setModalType('failure');
+        setIsModalOpen(true);
+      } finally {
+        setPaymentActive(false);
+      }
+    } else {
+      setModalMessage('Payment failed or was cancelled by user. Your booking was not placed.');
+      setModalType('failure');
+      setIsModalOpen(true);
+      setPaymentActive(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('http://localhost:5000/api/bookings/razorpay/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,21 +117,91 @@ export default function BookingPageContent() {
 
       if (!response.ok) {
         const errData = await response.json();
-        throw new Error(errData.error || 'Failed to submit booking request.');
+        throw new Error(errData.error || 'Failed to initiate booking payment.');
       }
 
-      setIsSubmitted(true);
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        photoshootType: '',
-        date: '',
-        time: '',
-        locationPreference: '',
-        packageName: '',
-        details: '',
-      });
+      const data = await response.json();
+
+      if (data.isMock) {
+        // Razorpay keys are placeholders. Use mock modal overlay
+        setMockPaymentData(data);
+        setPaymentActive(true);
+        setIsMockCheckoutOpen(true);
+      } else {
+        // Open live Razorpay popup
+        setPaymentActive(true);
+        const options = {
+          key: data.keyId,
+          amount: data.amount,
+          currency: data.currency,
+          name: 'AuraLens Studio',
+          description: `${formData.photoshootType} - ${formData.packageName} Package Booking`,
+          order_id: data.orderId,
+          handler: async function (response: any) {
+            try {
+              const verifyRes = await fetch('http://localhost:5000/api/bookings/razorpay/verify', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpayOrderId: response.razorpay_order_id,
+                  razorpaySignature: response.razorpay_signature,
+                  bookingId: data.bookingId,
+                }),
+              });
+
+              const verifyData = await verifyRes.json();
+              if (verifyRes.ok) {
+                setModalMessage('Booking Requested! Thank you for requesting a session. Our team will review your preferred date and contact you within 24 hours to confirm your booking and plan details.');
+                setModalType('success');
+                setIsModalOpen(true);
+                setFormData({
+                  fullName: '',
+                  email: '',
+                  phone: '',
+                  photoshootType: '',
+                  date: '',
+                  time: '',
+                  locationPreference: '',
+                  packageName: '',
+                  details: '',
+                });
+              } else {
+                setModalMessage(verifyData.error || 'Payment verification failed. Please contact support.');
+                setModalType('failure');
+                setIsModalOpen(true);
+              }
+            } catch (error) {
+              setModalMessage('Payment verification failed due to a network error.');
+              setModalType('failure');
+              setIsModalOpen(true);
+            } finally {
+              setPaymentActive(false);
+            }
+          },
+          prefill: {
+            name: formData.fullName,
+            email: formData.email,
+            contact: formData.phone,
+          },
+          theme: {
+            color: '#FF4D00',
+          },
+          modal: {
+            ondismiss: function () {
+              setModalMessage('Payment cancelled. Your booking was not completed.');
+              setModalType('failure');
+              setIsModalOpen(true);
+              setPaymentActive(false);
+            },
+          },
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.open();
+      }
     } catch (error: any) {
       console.error('Submission error:', error);
       alert(error.message || 'Failed to submit booking request. Please check your connection and try again.');
@@ -645,6 +786,88 @@ export default function BookingPageContent() {
           </div>
         </div>
       </section>
+
+      {/* 4. Payment Active & Dialog Overlays */}
+      {paymentActive && (
+        <div className={styles.blurOverlay}>
+          {isMockCheckoutOpen && mockPaymentData ? (
+            <div className={styles.mockPaymentModal}>
+              <div className={styles.mockHeader}>
+                <h3 className={styles.mockHeaderTitle}>Razorpay Sandbox</h3>
+                <span className={styles.mockHeaderBadge}>Test Mode</span>
+              </div>
+              <div className={styles.mockBody}>
+                <div className={styles.mockDetailItem}>
+                  <span className={styles.mockDetailLabel}>Booking ID</span>
+                  <span className={styles.mockDetailValue}>{mockPaymentData.bookingId}</span>
+                </div>
+                <div className={styles.mockDetailItem}>
+                  <span className={styles.mockDetailLabel}>Order ID</span>
+                  <span className={styles.mockDetailValue}>{mockPaymentData.orderId}</span>
+                </div>
+                <div className={styles.mockDetailItem}>
+                  <span className={styles.mockDetailLabel}>Amount</span>
+                  <span className={styles.mockDetailValue}>₹{mockPaymentData.amount / 100}</span>
+                </div>
+                
+                <div className={styles.mockActionRow}>
+                  <button 
+                    onClick={() => handleMockPayment(true)} 
+                    className={`${styles.mockPayBtn} ${styles.success}`}
+                  >
+                    Simulate Success
+                  </button>
+                  <button 
+                    onClick={() => handleMockPayment(false)} 
+                    className={`${styles.mockPayBtn} ${styles.fail}`}
+                  >
+                    Simulate Failure
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className={styles.spinnerLarge}></div>
+              <p className={styles.overlayText}>Processing payment request. Do not refresh...</p>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Floating Alert Modal */}
+      {isModalOpen && (
+        <div className={styles.blurOverlay}>
+          <div className={styles.modalFloating}>
+            <div className={styles.successIcon} style={{ 
+              borderColor: modalType === 'success' ? '#22c55e' : '#ef4444',
+              color: modalType === 'success' ? '#22c55e' : '#ef4444',
+              background: modalType === 'success' ? 'rgba(34, 197, 94, 0.05)' : 'rgba(239, 68, 68, 0.05)'
+            }}>
+              {modalType === 'success' ? (
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              )}
+            </div>
+            <h3 className={styles.successTitle}>
+              {modalType === 'success' ? 'Booking Placed!' : 'Payment Failed'}
+            </h3>
+            <p className={styles.modalMessageText}>{modalMessage}</p>
+            <button 
+              className={styles.modalCloseBtn}
+              onClick={() => setIsModalOpen(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/bookings").permitAll()
+                .requestMatchers("/api/bookings/razorpay/**").permitAll()
                 .requestMatchers("/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/wheel-images").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/gallery-images").permitAll()

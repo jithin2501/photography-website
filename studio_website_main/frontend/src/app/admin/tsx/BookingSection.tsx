@@ -15,6 +15,10 @@ interface Booking {
   packageName: string;
   details?: string;
   createdAt: string;
+  paymentStatus?: string;
+  paymentMethod?: string;
+  paymentId?: string;
+  razorpayOrderId?: string;
 }
 
 export default function BookingSection() {
@@ -202,6 +206,11 @@ export default function BookingSection() {
                       <span>{getPhotoshootTypeLabel(b.photoshootType)}</span>
                       <span>📅 {b.date}</span>
                     </div>
+                    <div className="listPaymentDetails">
+                      <span className={`paymentStatusBadge ${b.paymentStatus || 'pending'}`}>
+                        {b.paymentStatus === 'paid' ? '● Paid' : b.paymentStatus === 'failed' ? '● Failed' : '○ Pending'}
+                      </span>
+                    </div>
                   </div>
                 ))
               )}
@@ -267,6 +276,29 @@ export default function BookingSection() {
                       📞 <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
                     </span>
                   </div>
+
+                  <div className="detailField">
+                    <span className="fieldLabel">Payment Status</span>
+                    <span className="fieldValue">
+                      <span className={`paymentStatusBadge large ${selectedBooking.paymentStatus || 'pending'}`}>
+                        {(selectedBooking.paymentStatus || 'pending').toUpperCase()}
+                      </span>
+                    </span>
+                  </div>
+
+                  <div className="detailField">
+                    <span className="fieldLabel">Payment Method</span>
+                    <span className="fieldValue">
+                      💳 {selectedBooking.paymentMethod || 'N/A'}
+                    </span>
+                  </div>
+
+                  {selectedBooking.paymentId && (
+                    <div className="detailField fullWidth">
+                      <span className="fieldLabel">Razorpay Payment ID</span>
+                      <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
+                    </div>
+                  )}
 
                   <div className="detailField fullWidth">
                     <span className="fieldLabel">Email Address</span>

@@ -370,3 +370,49 @@
     min-height: 400px;
   }
 }
+
+/* Payment status badges */
+.listPaymentDetails {
+  margin-top: 8px;
+  display: flex;
+}
+
+.paymentStatusBadge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.paymentStatusBadge.pending {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+}
+
+.paymentStatusBadge.paid {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.15);
+}
+
+.paymentStatusBadge.failed {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.paymentStatusBadge.large {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.textCode {
+  font-family: monospace;
+  background: #0d0d0d;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  word-break: break-all;
+}

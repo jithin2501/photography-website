@@ -34,6 +34,9 @@ dependencies {
 	// Cloudinary SDK
 	implementation 'com.cloudinary:cloudinary-http45:1.39.0'
 
+	// Razorpay SDK
+	implementation 'com.razorpay:razorpay-java:1.4.3'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

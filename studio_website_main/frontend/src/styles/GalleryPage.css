@@ -555,3 +555,30 @@
     font-size: 0.85rem;
   }
 }
+
+/* Loading Spinner and Wrapper */
+.loadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(255, 77, 0, 0.15);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

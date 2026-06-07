@@ -1,86 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/GalleryPage.css';
-
-// Gallery Items Dataset
-const galleryItems = [
-  {
-    id: 1,
-    category: 'Maternity',
-    title: 'Serene Waiting',
-    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=500&q=80',
-    hideText: true,
-  },
-  {
-    id: 2,
-    category: 'Newborn',
-    title: 'Swaddled Dreams',
-    image: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 3,
-    category: 'Milestone',
-    title: 'Golden First Year',
-    image: 'https://images.unsplash.com/photo-1502444330042-d1a1ddf9bb5b?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 4,
-    category: 'Family',
-    title: 'Joyful Togetherness',
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 5,
-    category: 'Couples',
-    title: 'Forever Promise',
-    image: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 6,
-    category: 'Newborn',
-    title: 'Tiny Wonders',
-    image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 7,
-    category: 'Newborn',
-    title: 'Sweet Simplicity',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 8,
-    category: 'Maternity',
-    title: 'Angelic Bloom',
-    image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 9,
-    category: 'Milestone',
-    title: 'Solid Beginnings',
-    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 10,
-    category: 'Events',
-    title: 'Midnight Sparkle',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 11,
-    category: 'Events',
-    title: 'Garden Banquets',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    id: 12,
-    category: 'Couples',
-    title: 'Sunset Whispers',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
-  },
-];
 
 const categories = ['All', 'Maternity', 'Newborn', 'Milestone', 'Family', 'Couples', 'Events'];
 
@@ -88,6 +11,31 @@ export default function GalleryPageContent() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [visibleCount, setVisibleCount] = useState(9);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/gallery-images');
+        const data = await res.json();
+        if (res.ok && data.data) {
+          const mapped = data.data.map((item: any) => ({
+            id: item.id || item._id,
+            category: item.category,
+            title: item.title || '',
+            image: item.imageUrl || item.image || '',
+          }));
+          setGalleryItems(mapped);
+        }
+      } catch (err) {
+        console.error('Error fetching gallery:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
 
   // Filter Logic
   const filteredItems = galleryItems.filter(
@@ -297,20 +245,30 @@ export default function GalleryPageContent() {
 
         {/* Gallery Grid */}
         <div className={styles.gridContainer}>
-          <div className={styles.galleryGrid}>
-            {displayedItems.map((item) => (
-              <div key={item.id} className={styles.imageCard}>
-                <Image
-                  src={item.image}
-                  alt={`${item.category} photoshoot: ${item.title}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className={styles.galleryImage}
-                />
-                <div className={styles.cardOverlay} />
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className={styles.loadingWrapper}>
+              <div className={styles.spinner}></div>
+              <p>Loading Timeless Memories...</p>
+            </div>
+          ) : (
+            <div className={styles.galleryGrid}>
+              {displayedItems.map((item) => (
+                <div key={item.id} className={styles.imageCard}>
+                  <Image
+                    src={item.image}
+                    alt={`${item.category} photoshoot: ${item.title}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className={styles.galleryImage}
+                  />
+                  <div className={styles.cardOverlay}>
+                    <span className={styles.cardCategory}>{item.category}</span>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Load More Trigger */}

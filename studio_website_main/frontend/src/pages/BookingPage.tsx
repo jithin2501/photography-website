@@ -233,14 +233,13 @@ export default function BookingPageContent() {
 
                     <div className={styles.inputGroup}>
                       <label htmlFor="email" className={styles.inputLabel}>
-                        Email Address<span className={styles.required}>*</span>
+                        Email Address
                       </label>
                       <input
                         type="email"
                         id="email"
                         name="email"
-                        required
-                        placeholder="Enter your email"
+                        placeholder="Enter your email (optional)"
                         value={formData.email}
                         onChange={handleInputChange}
                         className={styles.formInput}
@@ -304,13 +303,12 @@ export default function BookingPageContent() {
 
                     <div className={styles.inputGroup}>
                       <label htmlFor="time" className={styles.inputLabel}>
-                        Preferred Time<span className={styles.required}>*</span>
+                        Preferred Time
                       </label>
                       <input
                         type="time"
                         id="time"
                         name="time"
-                        required
                         value={formData.time}
                         onChange={handleInputChange}
                         className={styles.formInput}
@@ -321,16 +319,17 @@ export default function BookingPageContent() {
                   <div className={styles.rowInputs}>
                     <div className={styles.inputGroup}>
                       <label htmlFor="locationPreference" className={styles.inputLabel}>
-                        Location Preference
+                        Location Preference<span className={styles.required}>*</span>
                       </label>
                       <select
                         id="locationPreference"
                         name="locationPreference"
+                        required
                         value={formData.locationPreference}
                         onChange={handleInputChange}
                         className={styles.formSelect}
                       >
-                        <option value="">Select location preference</option>
+                        <option value="" disabled>Select location preference</option>
                         <option value="studio">In Studio</option>
                         <option value="outdoor">Outdoor / On-location</option>
                         <option value="custom">Custom Location (Detail below)</option>
@@ -339,16 +338,17 @@ export default function BookingPageContent() {
 
                     <div className={styles.inputGroup}>
                       <label htmlFor="packageName" className={styles.inputLabel}>
-                        Packages
+                        Packages<span className={styles.required}>*</span>
                       </label>
                       <select
                         id="packageName"
                         name="packageName"
+                        required
                         value={formData.packageName}
                         onChange={handleInputChange}
                         className={styles.formSelect}
                       >
-                        <option value="">Select package tier</option>
+                        <option value="" disabled>Select package tier</option>
                         <option value="basic">Basic Package</option>
                         <option value="standard">Standard Package</option>
                         <option value="premium">Premium Package</option>

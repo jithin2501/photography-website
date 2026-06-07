@@ -56,4 +56,31 @@ public class GalleryImageController {
         response.put("message", "Gallery image deleted successfully.");
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> updateGalleryImage(
+            @PathVariable("id") @NonNull String id,
+            @RequestBody GalleryImage updatedImage) {
+        
+        String category = updatedImage.getCategory();
+        if (category == null || category.trim().isEmpty()) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("error", "Category is required.");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        GalleryImage result = galleryImageService.updateGalleryImage(id, updatedImage);
+        if (result == null) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", "error");
+            errorResponse.put("error", "Gallery image not found.");
+            return ResponseEntity.status(404).body(errorResponse);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("data", result);
+        return ResponseEntity.ok(response);
+    }
 }

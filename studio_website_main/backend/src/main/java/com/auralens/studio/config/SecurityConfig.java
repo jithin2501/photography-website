@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/api/wheel-images").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/wheel-images/upload").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/gallery-images").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/gallery-images/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/gallery-images/**").hasRole("ADMIN")
                 .requestMatchers("/api/contact/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

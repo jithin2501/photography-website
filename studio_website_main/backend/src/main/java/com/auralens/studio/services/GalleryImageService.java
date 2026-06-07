@@ -127,4 +127,40 @@ public class GalleryImageService {
             inMemoryFallback.removeIf(img -> id.equals(img.getId()));
         }
     }
+
+    public GalleryImage updateGalleryImage(@NonNull String id, @NonNull GalleryImage updatedImage) {
+        if (useFallback) {
+            for (int i = 0; i < inMemoryFallback.size(); i++) {
+                GalleryImage img = inMemoryFallback.get(i);
+                if (id.equals(img.getId())) {
+                    img.setImageUrl(updatedImage.getImageUrl());
+                    img.setCategory(updatedImage.getCategory());
+                    img.setTitle(updatedImage.getTitle());
+                    return img;
+                }
+            }
+            return null;
+        }
+        try {
+            return galleryImageRepository.findById(id).map(existing -> {
+                existing.setImageUrl(updatedImage.getImageUrl());
+                existing.setCategory(updatedImage.getCategory());
+                existing.setTitle(updatedImage.getTitle());
+                return galleryImageRepository.save(existing);
+            }).orElse(null);
+        } catch (Exception e) {
+            System.err.println("MongoDB connection failed during update! Falling back to in-memory. Error: " + e.getMessage());
+            useFallback = true;
+            for (int i = 0; i < inMemoryFallback.size(); i++) {
+                GalleryImage img = inMemoryFallback.get(i);
+                if (id.equals(img.getId())) {
+                    img.setImageUrl(updatedImage.getImageUrl());
+                    img.setCategory(updatedImage.getCategory());
+                    img.setTitle(updatedImage.getTitle());
+                    return img;
+                }
+            }
+            return null;
+        }
+    }
 }

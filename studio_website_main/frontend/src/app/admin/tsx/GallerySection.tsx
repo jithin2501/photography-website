@@ -19,6 +19,7 @@ export default function GallerySection() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Form fields state
   const [title, setTitle] = useState('');
@@ -43,6 +44,21 @@ export default function GallerySection() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleEditClick = (image: GalleryImage) => {
+    const id = image.id || image._id || null;
+    setEditingId(id);
+    setTitle(image.title);
+    setCategory(image.category);
+    setImageUrl(image.imageUrl);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setTitle('');
+    setCategory('Maternity');
+    setImageUrl('');
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,8 +117,13 @@ export default function GallerySection() {
     setSaving(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/gallery-images', {
-        method: 'POST',
+      const url = editingId 
+        ? `http://localhost:5000/api/gallery-images/${editingId}`
+        : 'http://localhost:5000/api/gallery-images';
+      const method = editingId ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -117,18 +138,26 @@ export default function GallerySection() {
       const data = await response.json();
 
       if (response.ok) {
-        // Prepend new image to list
-        setImages((prev) => [data.data, ...prev]);
+        if (editingId) {
+          // Update the specific image in list
+          setImages((prev) =>
+            prev.map((img) => ((img.id || img._id) === editingId ? data.data : img))
+          );
+        } else {
+          // Prepend new image to list
+          setImages((prev) => [data.data, ...prev]);
+        }
         // Reset form
         setTitle('');
         setCategory('Maternity');
         setImageUrl('');
+        setEditingId(null);
       } else {
-        alert(data.error || 'Failed to save gallery image.');
+        alert(data.error || `Failed to ${editingId ? 'update' : 'save'} gallery image.`);
       }
     } catch (err) {
-      console.error('Error saving gallery image:', err);
-      alert('An error occurred while saving the image.');
+      console.error(`Error ${editingId ? 'updating' : 'saving'} gallery image:`, err);
+      alert(`An error occurred while ${editingId ? 'updating' : 'saving'} the image.`);
     } finally {
       setSaving(false);
     }
@@ -205,6 +234,16 @@ export default function GallerySection() {
                   >
                     <span className="categoryBadge">{item.category}</span>
                     <button
+                      className="editCardBtn"
+                      onClick={() => handleEditClick(item)}
+                      title="Edit Image details"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                      </svg>
+                    </button>
+                    <button
                       className="deleteCardBtn"
                       onClick={() => handleDelete(imgId)}
                       title="Delete Image"
@@ -227,7 +266,7 @@ export default function GallerySection() {
         {/* Right Side: Upload and Add Form */}
         <div className="formPanel">
           <div className="formHeader">
-            <h2>Add New Image</h2>
+            <h2>{editingId ? 'Edit Image Details' : 'Add New Image'}</h2>
           </div>
 
           <form className="galleryForm" onSubmit={handleSave}>
@@ -301,26 +340,50 @@ export default function GallerySection() {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="saveBtnPremium"
-              disabled={saving || uploading || !imageUrl}
-            >
-              {saving ? (
-                <>
-                  <div className="uploadSpinner" style={{ width: '12px', height: '12px', borderTopColor: '#ffffff' }}></div>
-                  <span>Adding to Gallery...</span>
-                </>
-              ) : (
-                <>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                  <span>Add Image</span>
-                </>
+            <div className="formActionGroup">
+              <button
+                type="submit"
+                className="saveBtnPremium"
+                disabled={saving || uploading || !imageUrl}
+              >
+                {saving ? (
+                  <>
+                    <div className="uploadSpinner" style={{ width: '12px', height: '12px', borderTopColor: '#ffffff' }}></div>
+                    <span>{editingId ? 'Saving Changes...' : 'Adding to Gallery...'}</span>
+                  </>
+                ) : (
+                  <>
+                    {editingId ? (
+                      <>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                        <span>Save Changes</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="12" y1="5" x2="12" y2="19" />
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        <span>Add Image</span>
+                      </>
+                    )}
+                  </>
+                )}
+              </button>
+
+              {editingId && (
+                <button
+                  type="button"
+                  className="cancelBtnPremium"
+                  onClick={handleCancelEdit}
+                  disabled={saving || uploading}
+                >
+                  Cancel
+                </button>
               )}
-            </button>
+            </div>
           </form>
         </div>
       </div>

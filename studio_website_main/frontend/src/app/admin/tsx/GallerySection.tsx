@@ -9,6 +9,7 @@ interface GalleryImage {
   imageUrl: string;
   category: string;
   title: string;
+  showcasePosition?: number;
   createdAt?: number;
 }
 
@@ -25,6 +26,7 @@ export default function GallerySection() {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Maternity');
   const [imageUrl, setImageUrl] = useState('');
+  const [showcasePosition, setShowcasePosition] = useState(0);
 
   useEffect(() => {
     fetchGalleryImages();
@@ -32,7 +34,7 @@ export default function GallerySection() {
 
   const fetchGalleryImages = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/gallery-images');
+      const response = await fetch('http://localhost:5000/api/gallery-images', { cache: 'no-store' });
       const data = await response.json();
       if (response.ok) {
         setImages(data.data || []);
@@ -52,6 +54,7 @@ export default function GallerySection() {
     setTitle(image.title);
     setCategory(image.category);
     setImageUrl(image.imageUrl);
+    setShowcasePosition(image.showcasePosition || 0);
   };
 
   const handleCancelEdit = () => {
@@ -59,6 +62,7 @@ export default function GallerySection() {
     setTitle('');
     setCategory('Maternity');
     setImageUrl('');
+    setShowcasePosition(0);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,6 +136,7 @@ export default function GallerySection() {
           imageUrl,
           category,
           title: title.trim() || 'Untitled',
+          showcasePosition,
         }),
       });
 
@@ -151,6 +156,7 @@ export default function GallerySection() {
         setTitle('');
         setCategory('Maternity');
         setImageUrl('');
+        setShowcasePosition(0);
         setEditingId(null);
       } else {
         alert(data.error || `Failed to ${editingId ? 'update' : 'save'} gallery image.`);
@@ -233,6 +239,14 @@ export default function GallerySection() {
                     style={{ backgroundImage: `url('${item.imageUrl}')` }}
                   >
                     <span className="categoryBadge">{item.category}</span>
+                    {item.showcasePosition && item.showcasePosition > 0 ? (
+                      <span className="featuredBadge" title={`Featured at Position ${item.showcasePosition}`}>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                        <span>Pos {item.showcasePosition}</span>
+                      </span>
+                    ) : null}
                     <button
                       className="editCardBtn"
                       onClick={() => handleEditClick(item)}
@@ -294,6 +308,29 @@ export default function GallerySection() {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Swaddled Dreams"
               />
+            </div>
+
+            <div className="formGroup">
+              <label>Showcase Position (Homepage)</label>
+              <select
+                className="formSelect"
+                value={showcasePosition}
+                onChange={(e) => setShowcasePosition(Number(e.target.value))}
+              >
+                <option value={0}>Do Not Show on Homepage</option>
+                <option value={1}>Position 1 (Col 1 - Top)</option>
+                <option value={2}>Position 2 (Col 1 - Bottom)</option>
+                <option value={3}>Position 3 (Col 2 - Top)</option>
+                <option value={4}>Position 4 (Col 2 - Middle)</option>
+                <option value={5}>Position 5 (Col 2 - Bottom)</option>
+                <option value={6}>Position 6 (Col 3)</option>
+                <option value={7}>Position 7 (Col 6)</option>
+                <option value={8}>Position 8 (Col 7 - Top)</option>
+                <option value={9}>Position 9 (Col 7 - Middle)</option>
+                <option value={10}>Position 10 (Col 7 - Bottom)</option>
+                <option value={11}>Position 11 (Col 8 - Top)</option>
+                <option value={12}>Position 12 (Col 8 - Bottom)</option>
+              </select>
             </div>
 
             <div className="formGroup">

@@ -525,3 +525,89 @@
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.3);
 }
+
+/* Featured / Showcase Badge */
+.featuredBadge {
+  position: absolute;
+  top: 38px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.featuredBadge svg {
+  color: #FFD700;
+}
+
+/* Custom Checkbox / Toggle styling */
+.checkboxGroup {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.formCheckbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formCheckbox:checked {
+  background: #FF4D00;
+  border-color: #FF4D00;
+}
+
+.formCheckbox:checked::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 2px;
+}
+
+.checkboxText {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.checkboxLabel:hover .checkboxText {
+  color: #ffffff;
+}
+
+.checkboxLabel:hover .formCheckbox {
+  border-color: #FF4D00;
+}

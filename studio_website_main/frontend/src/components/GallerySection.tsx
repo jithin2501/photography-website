@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/styles/Gallery.css';
@@ -11,6 +12,15 @@ interface GalleryColumn {
     alt: string;
     styleClass: string;
   }[];
+}
+
+interface DBGalleryImage {
+  id?: string;
+  _id?: string;
+  imageUrl: string;
+  category: string;
+  title: string;
+  showcasePosition?: number;
 }
 
 const GALLERY_DATA: GalleryColumn[] = [
@@ -107,6 +117,54 @@ const GALLERY_DATA: GalleryColumn[] = [
 ];
 
 export default function GallerySection() {
+  const [columns, setColumns] = useState<GalleryColumn[]>(GALLERY_DATA);
+
+  useEffect(() => {
+    async function loadShowcase() {
+      try {
+        const response = await fetch('http://localhost:5000/api/gallery-images', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          const allImages: DBGalleryImage[] = data.data;
+          
+          const newColumns = GALLERY_DATA.map(col => ({
+            ...col,
+            images: col.images.map(img => ({ ...img }))
+          }));
+
+          allImages.forEach((img) => {
+            const pos = img.showcasePosition;
+            if (pos && pos >= 1 && pos <= 12) {
+              let colIdx = 0;
+              let imgIdx = 0;
+
+              if (pos === 1) { colIdx = 0; imgIdx = 0; }
+              else if (pos === 2) { colIdx = 0; imgIdx = 1; }
+              else if (pos === 3) { colIdx = 1; imgIdx = 0; }
+              else if (pos === 4) { colIdx = 1; imgIdx = 1; }
+              else if (pos === 5) { colIdx = 1; imgIdx = 2; }
+              else if (pos === 6) { colIdx = 2; imgIdx = 0; }
+              else if (pos === 7) { colIdx = 3; imgIdx = 0; }
+              else if (pos === 8) { colIdx = 4; imgIdx = 0; }
+              else if (pos === 9) { colIdx = 4; imgIdx = 1; }
+              else if (pos === 10) { colIdx = 4; imgIdx = 2; }
+              else if (pos === 11) { colIdx = 5; imgIdx = 0; }
+              else if (pos === 12) { colIdx = 5; imgIdx = 1; }
+
+              newColumns[colIdx].images[imgIdx].src = img.imageUrl;
+              newColumns[colIdx].images[imgIdx].alt = img.title || 'Showcase Image';
+            }
+          });
+
+          setColumns(newColumns);
+        }
+      } catch (err) {
+        console.error('Error fetching showcase images:', err);
+      }
+    }
+    loadShowcase();
+  }, []);
+
   return (
     <section id="gallery" className={styles.gallery}>
       <div className={styles.galleryContainer}>
@@ -121,7 +179,7 @@ export default function GallerySection() {
 
         {/* Gallery Arch Grid */}
         <div className={styles.galleryGrid}>
-          {GALLERY_DATA.map((column) => (
+          {columns.map((column) => (
             <div key={column.id} className={styles.column}>
               {column.images.map((img, idx) => (
                 <div key={idx} className={`${styles.imageWrapper} ${img.styleClass}`}>

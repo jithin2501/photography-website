@@ -17,7 +17,7 @@ export default function GalleryPageContent() {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/gallery-images');
+        const res = await fetch('http://localhost:5000/api/gallery-images', { cache: 'no-store' });
         const data = await res.json();
         if (res.ok && data.data) {
           const mapped = data.data.map((item: any) => ({

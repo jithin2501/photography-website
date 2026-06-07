@@ -12,6 +12,7 @@ public class GalleryImage {
     private String category; // Maternity, Newborn, Milestone, Family, Couples, Events
     private String title;
     private long createdAt;
+    private int showcasePosition = 0; // 0 = not featured, 1-12 = home page grid slots
 
     public GalleryImage() {}
 
@@ -60,5 +61,13 @@ public class GalleryImage {
 
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getShowcasePosition() {
+        return showcasePosition;
+    }
+
+    public void setShowcasePosition(int showcasePosition) {
+        this.showcasePosition = showcasePosition;
     }
 }

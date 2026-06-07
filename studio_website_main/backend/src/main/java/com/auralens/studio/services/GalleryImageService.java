@@ -57,6 +57,7 @@ public class GalleryImageService {
             // Keep timestamps descending
             GalleryImage img = new GalleryImage(defaultUrls[i], defaultCategories[i], defaultTitles[i], baseTime - (i * 1000));
             img.setId("fallback-gallery-id-" + (i + 1));
+            img.setShowcasePosition(i + 1);
             inMemoryFallback.add(img);
         }
 
@@ -66,6 +67,7 @@ public class GalleryImageService {
                 List<GalleryImage> dbImages = new ArrayList<>();
                 for (int i = 0; i < defaultUrls.length; i++) {
                     GalleryImage img = new GalleryImage(defaultUrls[i], defaultCategories[i], defaultTitles[i], baseTime - (i * 1000));
+                    img.setShowcasePosition(i + 1);
                     dbImages.add(img);
                 }
                 galleryImageRepository.saveAll(dbImages);
@@ -85,7 +87,7 @@ public class GalleryImageService {
             List<GalleryImage> images = galleryImageRepository.findAllByOrderByCreatedAtDesc();
             if (images.isEmpty()) {
                 return inMemoryFallback;
-            }
+              }
             return images;
         } catch (Exception e) {
             System.err.println("MongoDB connection failed! Falling back to in-memory gallery images. Error: " + e.getMessage());
@@ -136,6 +138,7 @@ public class GalleryImageService {
                     img.setImageUrl(updatedImage.getImageUrl());
                     img.setCategory(updatedImage.getCategory());
                     img.setTitle(updatedImage.getTitle());
+                    img.setShowcasePosition(updatedImage.getShowcasePosition());
                     return img;
                 }
             }
@@ -146,6 +149,7 @@ public class GalleryImageService {
                 existing.setImageUrl(updatedImage.getImageUrl());
                 existing.setCategory(updatedImage.getCategory());
                 existing.setTitle(updatedImage.getTitle());
+                existing.setShowcasePosition(updatedImage.getShowcasePosition());
                 return galleryImageRepository.save(existing);
             }).orElse(null);
         } catch (Exception e) {
@@ -157,6 +161,7 @@ public class GalleryImageService {
                     img.setImageUrl(updatedImage.getImageUrl());
                     img.setCategory(updatedImage.getCategory());
                     img.setTitle(updatedImage.getTitle());
+                    img.setShowcasePosition(updatedImage.getShowcasePosition());
                     return img;
                 }
             }

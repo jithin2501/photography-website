@@ -23,6 +23,7 @@ public class ServicePackagePriceService {
     }
 
     @PostConstruct
+    @SuppressWarnings("null")
     public void init() {
         inMemoryFallback.add(new ServicePackagePrice("maternity", "Maternity", "₹15,000", "₹25,000", "₹40,000"));
         inMemoryFallback.add(new ServicePackagePrice("newborn", "Newborn", "₹15,000", "₹25,000", "₹40,000"));

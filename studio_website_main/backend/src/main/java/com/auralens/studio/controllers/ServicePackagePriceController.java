@@ -34,7 +34,7 @@ public class ServicePackagePriceController {
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateServicePackagePrice(
             @PathVariable("id") @NonNull String id,
-            @RequestBody ServicePackagePrice updated) {
+            @RequestBody @NonNull ServicePackagePrice updated) {
         
         ServicePackagePrice result = service.updatePrice(id, updated);
         if (result == null) {

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -97,9 +98,9 @@ public class BookingService {
             String keySecret, 
             ServicePackagePriceRepository priceRepo) throws Exception {
         
-        // 1. Fetch dynamic price from database
-        String serviceId = booking.getPhotoshootType().toLowerCase();
-        Optional<ServicePackagePrice> priceOpt = priceRepo.findById(serviceId);
+        String photoshootType = booking.getPhotoshootType();
+        String serviceId = photoshootType != null ? photoshootType.toLowerCase() : "";
+        Optional<ServicePackagePrice> priceOpt = priceRepo.findById(Objects.requireNonNull(serviceId));
         
         int priceAmount = 15000; // default fallback amount
         if (priceOpt.isPresent()) {

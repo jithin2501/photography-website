@@ -14,7 +14,7 @@ import java.util.List;
 public class ServicePackagePriceService {
 
     private final ServicePackagePriceRepository repository;
-    private final List<ServicePackagePrice> inMemoryFallback = new ArrayList<>();
+    private final @NonNull List<ServicePackagePrice> inMemoryFallback = new ArrayList<>();
     private boolean useFallback = false;
 
     @Autowired

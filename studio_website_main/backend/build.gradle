@@ -8,6 +8,8 @@ plugins {
 group = 'com.auralens'
 version = '0.0.1-SNAPSHOT'
 
+layout.buildDirectory.set(new File(System.getProperty("user.home"), ".gradle-builds/auralens-backend"))
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)

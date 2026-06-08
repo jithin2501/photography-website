@@ -118,10 +118,10 @@ export default function BookingSection() {
 
   const getPhotoshootTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'maternity': return '🌸 Maternity';
-      case 'newborn': return '👶 Newborn';
-      case 'milestone': return '🍼 Milestone';
-      case 'classes': return '📸 Classes';
+      case 'maternity': return 'Maternity';
+      case 'newborn': return 'Newborn';
+      case 'milestone': return 'Milestone';
+      case 'classes': return 'Classes';
       default: return type;
     }
   };
@@ -204,7 +204,7 @@ export default function BookingSection() {
                     </div>
                     <div className="listDetails">
                       <span>{getPhotoshootTypeLabel(b.photoshootType)}</span>
-                      <span>📅 {b.date}</span>
+                      <span>{b.date}</span>
                     </div>
                     <div className="listPaymentDetails">
                       <span className={`paymentStatusBadge ${b.paymentStatus || 'pending'}`}>
@@ -253,27 +253,27 @@ export default function BookingSection() {
 
                   <div className="detailField">
                     <span className="fieldLabel">Photoshoot Date</span>
-                    <span className="fieldValue">📅 {selectedBooking.date}</span>
+                    <span className="fieldValue">{selectedBooking.date}</span>
                   </div>
 
                   <div className="detailField">
                     <span className="fieldLabel">Preferred Time</span>
                     <span className="fieldValue">
-                      ⏰ {selectedBooking.time || 'Not specified'}
+                      {selectedBooking.time || 'Not specified'}
                     </span>
                   </div>
 
                   <div className="detailField">
                     <span className="fieldLabel">Location Preference</span>
                     <span className="fieldValue capitalized">
-                      📍 {selectedBooking.locationPreference}
+                      {selectedBooking.locationPreference}
                     </span>
                   </div>
 
                   <div className="detailField">
                     <span className="fieldLabel">Phone Number</span>
                     <span className="fieldValue">
-                      📞 <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
+                      <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
                     </span>
                   </div>
 
@@ -289,7 +289,7 @@ export default function BookingSection() {
                   <div className="detailField">
                     <span className="fieldLabel">Payment Method</span>
                     <span className="fieldValue">
-                      💳 {selectedBooking.paymentMethod || 'N/A'}
+                      {selectedBooking.paymentMethod || 'N/A'}
                     </span>
                   </div>
 
@@ -303,7 +303,7 @@ export default function BookingSection() {
                   <div className="detailField fullWidth">
                     <span className="fieldLabel">Email Address</span>
                     <span className="fieldValue">
-                      ✉️ {selectedBooking.email ? (
+                      {selectedBooking.email ? (
                         <a href={`mailto:${selectedBooking.email}`} className="link">{selectedBooking.email}</a>
                       ) : (
                         <em className="textMuted">Not specified</em>

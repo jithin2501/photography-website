@@ -138,12 +138,6 @@ export default function PricingSection() {
                   onClick={() => handleSelectService(service)}
                 >
                   <div className="cardHeader">
-                    <span className="serviceIcon">
-                      {service.id === 'maternity' && '🌸'}
-                      {service.id === 'newborn' && '👶'}
-                      {service.id === 'milestone' && '⭐'}
-                      {service.id === 'classes' && '📚'}
-                    </span>
                     <h3>{service.serviceName}</h3>
                   </div>
 

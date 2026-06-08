@@ -28,9 +28,20 @@ export default function BookingSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
 
+  // Client Portal Credentials States
+  const [isViewingCredentials, setIsViewingCredentials] = useState(false);
+  const [clientUsername, setClientUsername] = useState('');
+  const [clientPassword, setClientPassword] = useState('');
+  const [credentialsExist, setCredentialsExist] = useState(false);
+  const [savingCredentials, setSavingCredentials] = useState(false);
+
   useEffect(() => {
     fetchBookings();
   }, []);
+
+  useEffect(() => {
+    setIsViewingCredentials(false);
+  }, [selectedBooking]);
 
   const fetchBookings = async () => {
     setLoading(true);
@@ -114,6 +125,79 @@ export default function BookingSection() {
       minute: '2-digit',
     };
     return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handleViewCredentials = async (booking: Booking) => {
+    setIsViewingCredentials(true);
+    setSavingCredentials(false);
+    
+    const token = localStorage.getItem('adminToken');
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/client/booking/${booking.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setClientUsername(data.username);
+        setClientPassword(data.password);
+        setCredentialsExist(true);
+      } else {
+        const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const cleanPhone = booking.phone.replace(/[^0-9]/g, '');
+        setClientUsername(cleanName || 'client');
+        setClientPassword(cleanPhone || '123456');
+        setCredentialsExist(false);
+      }
+    } catch (error) {
+      console.error('Error fetching client credentials:', error);
+      const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const cleanPhone = booking.phone.replace(/[^0-9]/g, '');
+      setClientUsername(cleanName || 'client');
+      setClientPassword(cleanPhone || '123456');
+      setCredentialsExist(false);
+    }
+  };
+
+  const handleSaveCredentials = async () => {
+    if (!selectedBooking) return;
+    if (!clientUsername.trim() || !clientPassword.trim()) {
+      alert('Username and Password cannot be empty.');
+      return;
+    }
+
+    setSavingCredentials(true);
+    const token = localStorage.getItem('adminToken');
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/client/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          bookingId: selectedBooking.id,
+          fullName: selectedBooking.fullName,
+          phone: selectedBooking.phone,
+          username: clientUsername.trim(),
+          password: clientPassword.trim(),
+        }),
+      });
+
+      if (response.ok) {
+        setCredentialsExist(true);
+        alert('Client credentials saved successfully!');
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to save credentials.');
+      }
+    } catch (error) {
+      console.error('Error saving client credentials:', error);
+      alert('An error occurred while saving credentials.');
+    } finally {
+      setSavingCredentials(false);
+    }
   };
 
   const getPhotoshootTypeLabel = (type: string) => {
@@ -221,107 +305,174 @@ export default function BookingSection() {
           <div className="bookingDetailPanel">
             {selectedBooking ? (
               <div className="bookingDetailCard">
-                <div className="detailCardHeader">
-                  <div>
-                    <h2>{selectedBooking.fullName}</h2>
-                    <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
-                  </div>
-                  <button
-                    className="deleteBookingBtn"
-                    onClick={() => handleDelete(selectedBooking.id)}
-                  >
-                    Delete Booking
-                  </button>
-                </div>
-
-                <div className="detailGrid">
-                  <div className="detailField">
-                    <span className="fieldLabel">Photoshoot Type</span>
-                    <span className="fieldValue highlightedVal">
-                      {getPhotoshootTypeLabel(selectedBooking.photoshootType)}
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Selected Package</span>
-                    <span className="fieldValue">
-                      <span className={getPackageBadgeClass(selectedBooking.packageName)}>
-                        {selectedBooking.packageName.toUpperCase()}
-                      </span>
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Photoshoot Date</span>
-                    <span className="fieldValue">{selectedBooking.date}</span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Preferred Time</span>
-                    <span className="fieldValue">
-                      {selectedBooking.time || 'Not specified'}
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Location Preference</span>
-                    <span className="fieldValue capitalized">
-                      {selectedBooking.locationPreference}
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Phone Number</span>
-                    <span className="fieldValue">
-                      <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Payment Status</span>
-                    <span className="fieldValue">
-                      <span className={`paymentStatusBadge large ${selectedBooking.paymentStatus || 'pending'}`}>
-                        {(selectedBooking.paymentStatus || 'pending').toUpperCase()}
-                      </span>
-                    </span>
-                  </div>
-
-                  <div className="detailField">
-                    <span className="fieldLabel">Payment Method</span>
-                    <span className="fieldValue">
-                      {selectedBooking.paymentMethod || 'N/A'}
-                    </span>
-                  </div>
-
-                  {selectedBooking.paymentId && (
-                    <div className="detailField fullWidth">
-                      <span className="fieldLabel">Razorpay Payment ID</span>
-                      <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
+                {isViewingCredentials ? (
+                  <>
+                    <div className="detailCardHeader">
+                      <div>
+                        <h2>Client Login Details</h2>
+                        <span className="submittedAt">Manage credentials for {selectedBooking.fullName}</span>
+                      </div>
+                      <button
+                        className="backDetailsBtn"
+                        onClick={() => setIsViewingCredentials(false)}
+                      >
+                        Back
+                      </button>
                     </div>
-                  )}
 
-                  <div className="detailField fullWidth">
-                    <span className="fieldLabel">Email Address</span>
-                    <span className="fieldValue">
-                      {selectedBooking.email ? (
-                        <a href={`mailto:${selectedBooking.email}`} className="link">{selectedBooking.email}</a>
-                      ) : (
-                        <em className="textMuted">Not specified</em>
-                      )}
-                    </span>
-                  </div>
+                    <div className="credentialsForm">
+                      <div className="credentialFieldGroup">
+                        <label className="credLabel">Generated Username</label>
+                        <input
+                          type="text"
+                          value={clientUsername}
+                          onChange={(e) => setClientUsername(e.target.value)}
+                          className="credInput"
+                          placeholder="Username"
+                        />
+                        <small className="fieldHint">Automatically created from client's name</small>
+                      </div>
 
-                  <div className="detailField fullWidth">
-                    <span className="fieldLabel">Session Details & Requests</span>
-                    <div className="detailsBox">
-                      {selectedBooking.details ? (
-                        <p>{selectedBooking.details}</p>
-                      ) : (
-                        <p className="noDetailsText">No special custom requests specified.</p>
+                      <div className="credentialFieldGroup">
+                        <label className="credLabel">Generated Password</label>
+                        <input
+                          type="text"
+                          value={clientPassword}
+                          onChange={(e) => setClientPassword(e.target.value)}
+                          className="credInput"
+                          placeholder="Password"
+                        />
+                        <small className="fieldHint">Automatically created from client's phone number</small>
+                      </div>
+
+                      <button
+                        className="saveCredentialsBtn"
+                        onClick={handleSaveCredentials}
+                        disabled={savingCredentials}
+                      >
+                        {savingCredentials ? 'Saving...' : credentialsExist ? 'Update Login' : 'Create Login'}
+                      </button>
+
+                      {credentialsExist && (
+                        <div className="credentialsStatusSuccess">
+                          ✓ This client can now login to the main website with these credentials.
+                        </div>
                       )}
                     </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="detailCardHeader">
+                      <div>
+                        <h2>{selectedBooking.fullName}</h2>
+                        <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
+                      </div>
+                      <div className="headerActions">
+                        <button
+                          className="loginBtn"
+                          onClick={() => handleViewCredentials(selectedBooking)}
+                        >
+                          Login
+                        </button>
+                        <button
+                          className="deleteBookingBtn"
+                          onClick={() => handleDelete(selectedBooking.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="detailGrid">
+                      <div className="detailField">
+                        <span className="fieldLabel">Photoshoot Type</span>
+                        <span className="fieldValue highlightedVal">
+                          {getPhotoshootTypeLabel(selectedBooking.photoshootType)}
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Selected Package</span>
+                        <span className="fieldValue">
+                          <span className={getPackageBadgeClass(selectedBooking.packageName)}>
+                            {selectedBooking.packageName.toUpperCase()}
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Photoshoot Date</span>
+                        <span className="fieldValue">{selectedBooking.date}</span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Preferred Time</span>
+                        <span className="fieldValue">
+                          {selectedBooking.time || 'Not specified'}
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Location Preference</span>
+                        <span className="fieldValue capitalized">
+                          {selectedBooking.locationPreference}
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Phone Number</span>
+                        <span className="fieldValue">
+                          <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Payment Status</span>
+                        <span className="fieldValue">
+                          <span className={`paymentStatusBadge large ${selectedBooking.paymentStatus || 'pending'}`}>
+                            {(selectedBooking.paymentStatus || 'pending').toUpperCase()}
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="detailField">
+                        <span className="fieldLabel">Payment Method</span>
+                        <span className="fieldValue">
+                          {selectedBooking.paymentMethod || 'N/A'}
+                        </span>
+                      </div>
+
+                      {selectedBooking.paymentId && (
+                        <div className="detailField fullWidth">
+                          <span className="fieldLabel">Razorpay Payment ID</span>
+                          <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
+                        </div>
+                      )}
+
+                      <div className="detailField fullWidth">
+                        <span className="fieldLabel">Email Address</span>
+                        <span className="fieldValue">
+                          {selectedBooking.email ? (
+                            <a href={`mailto:${selectedBooking.email}`} className="link">{selectedBooking.email}</a>
+                          ) : (
+                            <em className="textMuted">Not specified</em>
+                          )}
+                        </span>
+                      </div>
+
+                      <div className="detailField fullWidth">
+                        <span className="fieldLabel">Session Details & Requests</span>
+                        <div className="detailsBox">
+                          {selectedBooking.details ? (
+                            <p>{selectedBooking.details}</p>
+                          ) : (
+                            <p className="noDetailsText">No special custom requests specified.</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div className="noSelectionState">

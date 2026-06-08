@@ -416,3 +416,122 @@
   color: rgba(255, 255, 255, 0.8);
   word-break: break-all;
 }
+
+.headerActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.loginBtn {
+  background: rgba(255, 77, 0, 0.1);
+  color: #FF4D00;
+  border: 1px solid rgba(255, 77, 0, 0.2);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.loginBtn:hover {
+  background: #FF4D00;
+  color: #fff;
+  border-color: #FF4D00;
+}
+
+.backDetailsBtn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backDetailsBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Credentials Form Styles */
+.credentialsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 450px;
+  margin-top: 10px;
+}
+
+.credentialFieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credLabel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+.credInput {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.credInput:focus {
+  border-color: #FF4D00;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.15);
+}
+
+.fieldHint {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.saveCredentialsBtn {
+  background: #FF4D00;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.saveCredentialsBtn:hover:not(:disabled) {
+  background: #ff621f;
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
+}
+
+.saveCredentialsBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.credentialsStatusSuccess {
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: 6px;
+  color: #34d399;
+  font-size: 0.85rem;
+  font-weight: 500;
+}

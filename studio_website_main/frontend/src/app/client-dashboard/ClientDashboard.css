@@ -1,0 +1,315 @@
+.clientDashboardPage {
+  min-height: 100vh;
+  background-color: #070707;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.clientDashboardHeader {
+  height: 70px;
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerContainer {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.brandLogo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #a3a3a3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.clientSignOutBtn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clientSignOutBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Layout & Content */
+.clientDashboardContent {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.welcomeBanner {
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.welcomeBanner h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.8px;
+  background: linear-gradient(135deg, #ffffff 0%, #FF4D00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcomeBanner p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 700px;
+}
+
+/* Grid & Cards */
+.clientDashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.clientCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.fullWidthCard {
+  grid-column: span 2;
+}
+
+.clientCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.clientCardHeader svg {
+  color: #FF4D00;
+}
+
+.clientCardHeader h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  padding-bottom: 12px;
+}
+
+.detailRow.fullWidthRow {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.rowLabel {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+}
+
+.rowValue {
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.rowValue.highlightedValue {
+  color: #FF4D00;
+  font-weight: 600;
+}
+
+.rowValue.uppercaseValue {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.rowValue.capitalizedValue {
+  text-transform: capitalize;
+}
+
+.rowValue.codeValue {
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Payment Badges */
+.paymentBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.paymentBadge.pending {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.12);
+}
+
+.paymentBadge.paid {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+}
+
+.paymentBadge.failed {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
+}
+
+/* Notes content */
+.notesContent {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.notesContent p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: pre-wrap;
+}
+
+/* Error State card */
+.clientDashboardErrorCard {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ef4444;
+}
+
+.clientDashboardErrorCard p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Loading Spinner */
+.clientDashboardLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #070707;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.clientSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 77, 0, 0.1);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Keyframes */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .clientDashboardGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fullWidthCard {
+    grid-column: span 1;
+  }
+  .welcomeBanner h1 {
+    font-size: 2rem;
+  }
+}

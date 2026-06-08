@@ -62,6 +62,21 @@ public class BookingService {
         }
     }
 
+    public Booking getBookingById(@NonNull String id) {
+        if (useFallback) {
+            return inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null);
+        }
+        try {
+            return bookingRepository.findById(id).orElseGet(() -> 
+                inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null)
+            );
+        } catch (Exception e) {
+            System.err.println("MongoDB connection failed! Performing find booking in-memory fallback. Error: " + e.getMessage());
+            useFallback = true;
+            return inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null);
+        }
+    }
+
     public boolean deleteBooking(@NonNull String id) {
         if (useFallback) {
             return inMemoryFallback.removeIf(b -> b.getId().equals(id));

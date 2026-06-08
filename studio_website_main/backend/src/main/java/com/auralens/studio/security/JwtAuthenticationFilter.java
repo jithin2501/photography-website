@@ -23,6 +23,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
 
+    @org.springframework.beans.factory.annotation.Value("${app.admin.username}")
+    private String adminUsername;
+
     @Autowired
     public JwtAuthenticationFilter(JwtTokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -40,8 +43,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String username = tokenProvider.getUsernameFromToken(jwt);
 
-                // For static admin account, we grant ADMIN authority directly
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_ADMIN");
+                String role = (adminUsername != null && adminUsername.equals(username)) ? "ROLE_ADMIN" : "ROLE_CLIENT";
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         username, null, Collections.singletonList(authority)
                 );

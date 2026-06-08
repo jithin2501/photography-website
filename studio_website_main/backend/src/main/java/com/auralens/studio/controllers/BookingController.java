@@ -150,4 +150,20 @@ public class BookingController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/client/{id}")
+    public ResponseEntity<?> getClientBooking(@PathVariable @NonNull String id) {
+        Booking booking = bookingService.getBookingById(id);
+        if (booking == null) {
+            Map<String, String> err = new HashMap<>();
+            err.put("error", "Booking not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", booking);
+
+        return ResponseEntity.ok(response);
+    }
 }

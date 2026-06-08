@@ -30,9 +30,17 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok && data.token) {
-        localStorage.setItem('adminToken', data.token);
-        localStorage.setItem('adminUsername', data.username);
-        router.push('/admin');
+        if (data.role === 'client') {
+          localStorage.setItem('clientToken', data.token);
+          localStorage.setItem('clientUsername', data.username);
+          localStorage.setItem('clientFullName', data.fullName || '');
+          localStorage.setItem('clientBookingId', data.bookingId || '');
+          router.push('/client-dashboard');
+        } else {
+          localStorage.setItem('adminToken', data.token);
+          localStorage.setItem('adminUsername', data.username);
+          router.push('/admin');
+        }
       } else {
         setError(data.error || 'Invalid username or password');
       }

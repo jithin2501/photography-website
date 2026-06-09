@@ -12,12 +12,7 @@ export default function MaternityServicePageContent() {
     premium: '₹40,000',
   });
 
-  const [portfolioImages, setPortfolioImages] = useState<string[]>([
-    "https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?auto=format&fit=crop&w=600&q=80"
-  ]);
+  const [portfolioImages, setPortfolioImages] = useState<string[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -48,18 +43,10 @@ export default function MaternityServicePageContent() {
             (img: any) => img.serviceType === 'maternity' && img.servicePosition >= 1 && img.servicePosition <= 4
           );
 
-          if (serviceImages.length > 0) {
-            setPortfolioImages((prev) => {
-              const updated = [...prev];
-              serviceImages.forEach((img: any) => {
-                const idx = img.servicePosition - 1;
-                if (idx >= 0 && idx < 4) {
-                  updated[idx] = img.imageUrl;
-                }
-              });
-              return updated;
-            });
-          }
+          const sortedUrls = serviceImages
+            .sort((a: any, b: any) => a.servicePosition - b.servicePosition)
+            .map((img: any) => img.imageUrl);
+          setPortfolioImages(sortedUrls);
         }
       } catch (err) {
         console.error('Error fetching portfolio images:', err);
@@ -479,37 +466,39 @@ export default function MaternityServicePageContent() {
       </section>
 
       {/* 6. Portfolio Showcase */}
-      <section className={styles.portfolio}>
-        <div className={styles.portfolioContainer}>
-          <div className={styles.packagesHeader}>
-            <span className={styles.sectionTag}>Maternity Portfolio</span>
-            <h2 className={styles.sectionHeading}>
-              A Glimpse of <span className={styles.sectionHighlight}>Our Work</span>
-            </h2>
-          </div>
+      {portfolioImages.length > 0 && (
+        <section className={styles.portfolio}>
+          <div className={styles.portfolioContainer}>
+            <div className={styles.packagesHeader}>
+              <span className={styles.sectionTag}>Maternity Portfolio</span>
+              <h2 className={styles.sectionHeading}>
+                A Glimpse of <span className={styles.sectionHighlight}>Our Work</span>
+              </h2>
+            </div>
 
-          <div className={styles.portfolioGrid}>
-            {portfolioImages.map((src, idx) => (
-              <div key={idx} className={styles.portfolioCard}>
-                <Image
-                  src={src}
-                  alt={`Maternity portfolio showcase ${idx + 1}`}
-                  fill
-                  className={styles.portfolioImage}
-                />
-              </div>
-            ))}
-          </div>
+            <div className={styles.portfolioGrid}>
+              {portfolioImages.map((src, idx) => (
+                <div key={idx} className={styles.portfolioCard}>
+                  <Image
+                    src={src}
+                    alt={`Maternity portfolio showcase ${idx + 1}`}
+                    fill
+                    className={styles.portfolioImage}
+                  />
+                </div>
+              ))}
+            </div>
 
-          <Link href="/gallery" className={styles.viewAllLink}>
-            View Full Gallery
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
-        </div>
-      </section>
+            <Link href="/gallery" className={styles.viewAllLink}>
+              View Full Gallery
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

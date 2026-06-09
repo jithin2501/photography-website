@@ -1,0 +1,360 @@
+.reviewSection {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  animation: fadeIn 0.4s ease;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.mainTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #888888;
+  font-size: 0.9rem;
+}
+
+.refreshBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refreshBtn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.refreshBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Grid Layout */
+.reviewGrid {
+  display: grid;
+  grid-template-columns: 3.5fr 6.5fr;
+  gap: 30px;
+  align-items: start;
+}
+
+/* Cards */
+.qrCard, .listCard {
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.cardDesc {
+  color: #888888;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* QR Code elements */
+.qrContainer {
+  width: 100%;
+}
+
+.qrImageWrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 25px auto;
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(255, 77, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 3px solid #FF4D00;
+}
+
+.qrImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.qrOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FF4D00;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.qrPlaceholder {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 25px auto;
+  border-radius: 16px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.formLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FF4D00;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.formLink:hover {
+  opacity: 0.85;
+}
+
+/* List Moderation Queue */
+.listContainer {
+  width: 100%;
+}
+
+.errorBanner {
+  background-color: rgba(255, 77, 0, 0.1);
+  border: 1px solid #FF4D00;
+  color: #ff8855;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.loadingContainer, .emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  color: #666666;
+  text-align: center;
+  gap: 15px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.05);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.emptyState svg {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.reviewQueue {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reviewItem {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.reviewItem:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.reviewItem.approved {
+  border-left: 4px solid #10b981;
+}
+
+.reviewItem.disapproved {
+  border-left: 4px solid #ef4444;
+}
+
+.reviewItem.pending {
+  border-left: 4px solid #f59e0b;
+}
+
+.reviewMain {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.reviewMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.reviewerName {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+}
+
+.reviewStars {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.9rem;
+  display: flex;
+  letter-spacing: 1px;
+}
+
+.starIcon.active {
+  color: #FF4D00;
+}
+
+.statusBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+}
+
+.statusBadge.approved {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.statusBadge.disapproved {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.statusBadge.pending {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.reviewMessage {
+  color: #cccccc;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.reviewTime {
+  color: #555555;
+  font-size: 0.75rem;
+}
+
+/* Actions */
+.reviewActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 110px;
+}
+
+.actionBtn {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.approveBtn {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.approveBtn:hover {
+  background-color: #0d9668;
+}
+
+.disapproveBtn {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.disapproveBtn:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.deleteBtn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #888888;
+}
+
+.deleteBtn:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1100px) {
+  .reviewGrid {
+    grid-template-columns: 1fr;
+  }
+}

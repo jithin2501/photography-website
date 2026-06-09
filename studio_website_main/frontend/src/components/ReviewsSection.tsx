@@ -1,42 +1,42 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/Reviews.css';
 
 interface ReviewItem {
-  id: number;
+  id: string | number;
   name: string;
   avatar: string;
   rating: number;
   text: string;
 }
 
-const REVIEWS_DATA: ReviewItem[] = [
-  {
-    id: 1,
-    name: 'Ananya & Rohan',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-    rating: 5,
-    text: "Absolutely magical! They captured every little emotion beautifully. We couldn't have asked for more.",
-  },
-  {
-    id: 2,
-    name: 'Meera & Arjun',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
-    rating: 5,
-    text: 'The team is incredibly talented! Professional, patient, and they made us feel so comfortable.',
-  },
-  {
-    id: 3,
-    name: 'Sneha & Kabir',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
-    rating: 5,
-    text: 'Stunning photos! The quality and attention to detail are top-notch. Highly recommended!',
-  },
-];
-
 export default function ReviewsSection() {
+  const [reviews, setReviews] = useState<ReviewItem[]>([]);
+
+  useEffect(() => {
+    async function fetchApprovedReviews() {
+      try {
+        const response = await fetch('http://localhost:5000/api/reviews', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          const mappedReviews = data.data.map((r: any) => ({
+            id: r.id,
+            name: r.name,
+            // Generate initials avatar dynamically using initials api
+            avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(r.name)}&backgroundType=gradientLinear&fontFamily=Arial`,
+            rating: r.rating,
+            text: r.message,
+          }));
+          setReviews(mappedReviews);
+        }
+      } catch (err) {
+        console.error('Error fetching approved reviews:', err);
+      }
+    }
+    fetchApprovedReviews();
+  }, []);
 
   return (
     <section id="reviews" className={styles.reviews}>
@@ -177,7 +177,7 @@ export default function ReviewsSection() {
             {/* Testimonials Slider */}
             <div className={styles.sliderContainer}>
               <div className={styles.reviewsGrid}>
-                {REVIEWS_DATA.map((review) => (
+                {reviews.map((review) => (
                   <div key={review.id} className={styles.reviewCard}>
                     {/* Client Avatar */}
                     <div className={styles.avatarWrapper}>
@@ -187,6 +187,7 @@ export default function ReviewsSection() {
                         fill
                         sizes="70px"
                         style={{ objectFit: 'cover' }}
+                        unoptimized
                       />
                     </div>
                     {/* Client Name */}
@@ -196,12 +197,10 @@ export default function ReviewsSection() {
                       {Array.from({ length: review.rating }).map((_, i) => '★')}
                     </div>
                     {/* Review Text */}
-                    <p className={styles.reviewText}>"{review.text}"</p>
+                    <p className={styles.reviewText}>{review.text}</p>
                   </div>
                 ))}
               </div>
-
-
             </div>
           </div>
         </div>

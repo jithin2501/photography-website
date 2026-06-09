@@ -202,7 +202,7 @@ export default function ClientDashboardPage() {
                 </div>
                 <div className="detailRow">
                   <span className="rowLabel">Package Tier</span>
-                  <span className="rowValue uppercaseValue">{booking.packageName} Package</span>
+                  <span className="rowValue uppercaseValue">{booking.packageName} Package ({getPackagePriceVal(booking.photoshootType, booking.packageName, prices)})</span>
                 </div>
                 <div className="detailRow">
                   <span className="rowLabel">Scheduled Date</span>

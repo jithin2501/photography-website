@@ -134,15 +134,13 @@ export default function ReviewSection() {
         {/* Left Side: QR Code Area */}
         <div className="qrContainer">
           <div className="qrCard">
-            <h2 className="cardTitle">QR Code Feedback</h2>
-            <p className="cardDesc">Scan this QR code with a phone to access the public review submission form directly.</p>
+            <h2 className="cardTitle">QR Code</h2>
 
             {qrCodeUrl ? (
               <div className="qrImageWrapper">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={qrCodeUrl} alt="Review QR Code" className="qrImage" />
                 <div className="qrOverlay">
-                  <span>SCAN TO REVIEW</span>
                 </div>
               </div>
             ) : (

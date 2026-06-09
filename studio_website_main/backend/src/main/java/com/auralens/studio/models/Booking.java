@@ -24,6 +24,7 @@ public class Booking {
     private String paymentMethod;             
     private String paymentId;                 
     private String razorpayOrderId;           
+    private String clientId;
 
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -153,6 +154,14 @@ public class Booking {
 
     public void setRazorpayOrderId(String razorpayOrderId) {
         this.razorpayOrderId = razorpayOrderId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public LocalDateTime getCreatedAt() {

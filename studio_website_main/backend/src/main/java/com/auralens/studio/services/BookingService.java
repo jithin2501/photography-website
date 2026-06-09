@@ -32,7 +32,20 @@ public class BookingService {
         this.bookingRepository = bookingRepository;
     }
 
+    private String generateUniqueClientId() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        java.util.Random rand = new java.util.Random();
+        StringBuilder sb = new StringBuilder("AL-");
+        for (int i = 0; i < 6; i++) {
+            sb.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
     public Booking createBooking(@NonNull Booking booking) {
+        if (booking.getClientId() == null || booking.getClientId().trim().isEmpty()) {
+            booking.setClientId(generateUniqueClientId());
+        }
         if (useFallback) {
             booking.setId(UUID.randomUUID().toString());
             inMemoryFallback.add(0, booking);
@@ -51,10 +64,27 @@ public class BookingService {
 
     public List<Booking> getAllBookings() {
         if (useFallback) {
+            for (Booking b : inMemoryFallback) {
+                if (b.getClientId() == null || b.getClientId().trim().isEmpty()) {
+                    b.setClientId(generateUniqueClientId());
+                }
+            }
             return inMemoryFallback;
         }
         try {
-            return bookingRepository.findAllByOrderByCreatedAtDesc();
+            List<Booking> list = bookingRepository.findAllByOrderByCreatedAtDesc();
+            boolean updated = false;
+            for (Booking b : list) {
+                if (b.getClientId() == null || b.getClientId().trim().isEmpty()) {
+                    b.setClientId(generateUniqueClientId());
+                    bookingRepository.save(b);
+                    updated = true;
+                }
+            }
+            if (updated) {
+                return bookingRepository.findAllByOrderByCreatedAtDesc();
+            }
+            return list;
         } catch (Exception e) {
             System.err.println("MongoDB connection failed! Falling back to in-memory retrieval for bookings. Error: " + e.getMessage());
             useFallback = true;
@@ -64,16 +94,35 @@ public class BookingService {
 
     public Booking getBookingById(@NonNull String id) {
         if (useFallback) {
-            return inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null);
+            Booking b = inMemoryFallback.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+            if (b != null && (b.getClientId() == null || b.getClientId().trim().isEmpty())) {
+                b.setClientId(generateUniqueClientId());
+            }
+            return b;
         }
         try {
-            return bookingRepository.findById(id).orElseGet(() -> 
-                inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null)
-            );
+            Optional<Booking> opt = bookingRepository.findById(id);
+            if (opt.isPresent()) {
+                Booking b = opt.get();
+                if (b.getClientId() == null || b.getClientId().trim().isEmpty()) {
+                    b.setClientId(generateUniqueClientId());
+                    bookingRepository.save(b);
+                }
+                return b;
+            }
+            Booking fallbackB = inMemoryFallback.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+            if (fallbackB != null && (fallbackB.getClientId() == null || fallbackB.getClientId().trim().isEmpty())) {
+                fallbackB.setClientId(generateUniqueClientId());
+            }
+            return fallbackB;
         } catch (Exception e) {
             System.err.println("MongoDB connection failed! Performing find booking in-memory fallback. Error: " + e.getMessage());
             useFallback = true;
-            return inMemoryFallback.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null);
+            Booking b = inMemoryFallback.stream().filter(x -> x.getId().equals(id)).findFirst().orElse(null);
+            if (b != null && (b.getClientId() == null || b.getClientId().trim().isEmpty())) {
+                b.setClientId(generateUniqueClientId());
+            }
+            return b;
         }
     }
 

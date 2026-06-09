@@ -19,6 +19,7 @@ interface Booking {
   paymentStatus?: string;
   paymentMethod?: string;
   paymentId?: string;
+  clientId?: string;
 }
 
 export default function ClientDashboardPage() {
@@ -27,6 +28,8 @@ export default function ClientDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [clientName, setClientName] = useState('');
+  const [isShowingReceipt, setIsShowingReceipt] = useState(false);
+  const [prices, setPrices] = useState<any[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem('clientToken');
@@ -40,7 +43,20 @@ export default function ClientDashboardPage() {
 
     setClientName(name || 'Client');
     fetchBookingDetails(bookingId, token);
+    fetchPrices();
   }, [router]);
+
+  const fetchPrices = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/service-package-prices');
+      if (response.ok) {
+        const data = await response.json();
+        setPrices(data.data || []);
+      }
+    } catch (err) {
+      console.error('Error fetching prices:', err);
+    }
+  };
 
   const fetchBookingDetails = async (id: string, token: string) => {
     try {
@@ -81,6 +97,53 @@ export default function ClientDashboardPage() {
       case 'classes': return 'Photography Class';
       default: return type.charAt(0).toUpperCase() + type.slice(1) + ' Session';
     }
+  };
+
+  const getPackagePriceVal = (photoshootType: string, packageName: string, pricesList: any[]): number => {
+    const serviceId = photoshootType ? photoshootType.toLowerCase() : '';
+    const packageTier = packageName ? packageName.toLowerCase() : 'basic';
+    const match = pricesList.find((p: any) => p.id === serviceId);
+    let priceStr = '';
+    if (match) {
+      if (packageTier === 'standard') {
+        priceStr = match.standardPrice;
+      } else if (packageTier === 'premium') {
+        priceStr = match.premiumPrice;
+      } else {
+        priceStr = match.basicPrice;
+      }
+    }
+    if (!priceStr) {
+      if (packageTier === 'standard') return 25000;
+      if (packageTier === 'premium') return 35000;
+      return 15000;
+    }
+    const cleanStr = priceStr.replace(/[^0-9]/g, '');
+    return parseInt(cleanStr) || 15000;
+  };
+
+  const formatReceiptDate = (dateString: string) => {
+    if (!dateString) return '';
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return '';
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const formatReceiptTime = (dateString: string) => {
+    if (!dateString) return '';
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return '';
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const seconds = String(d.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const hoursStr = String(hours).padStart(2, '0');
+    return `${hoursStr}:${minutes}:${seconds} ${ampm}`;
   };
 
   if (loading) {
@@ -183,6 +246,26 @@ export default function ClientDashboardPage() {
                     <span className="rowValue codeValue">{booking.paymentId}</span>
                   </div>
                 )}
+                {booking.paymentStatus === 'paid' && (
+                  <div className="detailRow fullWidthRow" style={{ marginTop: '15px', borderBottom: 'none', paddingBottom: 0 }}>
+                    <button className="receiptBtn" onClick={() => {
+                      setIsShowingReceipt(true);
+                      setTimeout(() => {
+                        window.print();
+                        setIsShowingReceipt(false);
+                      }, 150);
+                    }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '6px' }}>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                      </svg>
+                      View Receipt
+                    </button>
+                  </div>
+                )}
               </div>
             </section>
           </div>
@@ -192,6 +275,137 @@ export default function ClientDashboardPage() {
           </div>
         )}
       </main>
+
+      {/* Receipt Modal Overlay */}
+      {isShowingReceipt && booking && (
+        <div className="receiptModalOverlay">
+          <div className="receiptModalContainer">
+            <h1 className="receiptLogo">AURA LENS STUDIO</h1>
+            <p className="receiptSubHeader">
+              No.52, Saxena complex, Kodigehalli Main Rd,<br />
+              Defence Layout, Sahakar Nagar, Bengaluru, Karnataka 560092<br />
+              Phone: 87928 88508<br />
+              GSTIN: APPLIED
+            </p>
+
+            <div className="receiptTitleBox">
+              <span className="receiptTitle">TAX INVOICE</span>
+            </div>
+
+            <div className="receiptMetaSection">
+              <div>
+                <div><span className="receiptMetaLabel">Bill No:</span> <span className="receiptMetaVal">{booking.clientId || 'N/A'}</span></div>
+                <div><span className="receiptMetaLabel">Customer:</span> <span className="receiptMetaVal">{booking.fullName}</span></div>
+                <div><span className="receiptMetaLabel">Phone:</span> <span className="receiptMetaVal">{booking.phone}</span></div>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div><span className="receiptMetaLabel">Date:</span> <span className="receiptMetaVal">{formatReceiptDate(booking.createdAt)}</span></div>
+                <div><span className="receiptMetaLabel">Time:</span> <span className="receiptMetaVal">{formatReceiptTime(booking.createdAt)}</span></div>
+              </div>
+            </div>
+
+            <div className="receiptSeparator"></div>
+
+            <table className="receiptItemTable">
+              <thead>
+                <tr>
+                  <th>SN</th>
+                  <th>ITEM NAME</th>
+                  <th>QTY</th>
+                  <th>ORDER VALUE</th>
+                  <th>AMOUNT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td style={{ fontWeight: 'bold' }}>{getPhotoshootTypeLabel(booking.photoshootType).toUpperCase()} ({booking.packageName.toUpperCase()} PACKAGE)</td>
+                  <td>1.00</td>
+                  <td>{getPackagePriceVal(booking.photoshootType, booking.packageName, prices).toFixed(2)}</td>
+                  <td>{getPackagePriceVal(booking.photoshootType, booking.packageName, prices).toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div className="receiptSeparatorDotted"></div>
+
+            <div className="receiptSummaryBox">
+              <div className="receiptSummaryRow">
+                <span>Total Qty:</span>
+                <span>1.00</span>
+              </div>
+              <div className="receiptSummaryRow">
+                <span>Discount:</span>
+                <span>0.00</span>
+              </div>
+              <div className="receiptSummaryRow netAmount">
+                <span>Net Bill Amount:</span>
+                <span>₹{getPackagePriceVal(booking.photoshootType, booking.packageName, prices).toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div className="receiptSeparatorDotted"></div>
+
+            <div className="receiptPaymentInfo">
+              <div style={{ fontWeight: 'bold', marginBottom: '8px', textTransform: 'uppercase', fontSize: '0.8rem', color: '#000' }}>Payment Details</div>
+              <div className="receiptPaymentRow">
+                <span>Payment ID:</span>
+                <span style={{ fontFamily: 'monospace' }}>{booking.paymentId}</span>
+              </div>
+              <div className="receiptPaymentRow">
+                <span>Payment Method:</span>
+                <span>{booking.paymentMethod}</span>
+              </div>
+            </div>
+
+            {/* GST breakdown table */}
+            <table className="receiptGstTable">
+              <thead>
+                <tr>
+                  <th rowSpan={2}>Taxable Value</th>
+                  <th colSpan={2}>CGST</th>
+                  <th colSpan={2}>SGST</th>
+                  <th rowSpan={2}>Total GST</th>
+                </tr>
+                <tr>
+                  <th>%</th>
+                  <th>Amt</th>
+                  <th>%</th>
+                  <th>Amt</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{(getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05).toFixed(2)}</td>
+                  <td>2.5</td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.025).toFixed(2)}</td>
+                  <td>2.5</td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.025).toFixed(2)}</td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.05).toFixed(2)}</td>
+                </tr>
+                <tr className="totalRow">
+                  <td>{(getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05).toFixed(2)}</td>
+                  <td></td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.025).toFixed(2)}</td>
+                  <td></td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.025).toFixed(2)}</td>
+                  <td>{((getPackagePriceVal(booking.photoshootType, booking.packageName, prices) / 1.05) * 0.05).toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="receiptFooterGreeting">
+              Thank you for choosing AuraLens Studio!<br />
+              This is a computer generated invoice.
+            </p>
+
+            <div className="receiptActionsRow">
+              <button className="receiptActionBtn printBtn" onClick={() => window.print()}>Print</button>
+              <button className="receiptActionBtn closeBtn" onClick={() => setIsShowingReceipt(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

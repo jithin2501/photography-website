@@ -17,6 +17,26 @@ export default function ReviewsSection() {
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [stats, setStats] = useState({ happyClients: 500, photoshoots: 1000, awardsWon: 20 });
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const response = await fetch('http://localhost:5000/api/settings', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          setStats({
+            happyClients: data.data.happyClients,
+            photoshoots: data.data.photoshoots,
+            awardsWon: data.data.awardsWon,
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching settings:', err);
+      }
+    }
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     async function fetchApprovedReviews() {
@@ -176,7 +196,7 @@ export default function ReviewsSection() {
                     <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" />
                   </svg>
                 </div>
-                <span className={styles.statNumber}>500+</span>
+                <span className={styles.statNumber}>{stats.happyClients}+</span>
                 <span className={styles.statLabel}>Happy Clients</span>
               </div>
 
@@ -188,7 +208,7 @@ export default function ReviewsSection() {
                     <circle cx="12" cy="13" r="4" />
                   </svg>
                 </div>
-                <span className={styles.statNumber}>1000+</span>
+                <span className={styles.statNumber}>{stats.photoshoots}+</span>
                 <span className={styles.statLabel}>Photoshoots</span>
               </div>
 
@@ -203,7 +223,7 @@ export default function ReviewsSection() {
                     <path d="M12 2a6 6 0 0 0-6 6v3.5a6 6 0 0 0 12 0V8a6 6 0 0 0-6-6z" />
                   </svg>
                 </div>
-                <span className={styles.statNumber}>20+</span>
+                <span className={styles.statNumber}>{stats.awardsWon}+</span>
                 <span className={styles.statLabel}>Awards Won</span>
               </div>
             </div>

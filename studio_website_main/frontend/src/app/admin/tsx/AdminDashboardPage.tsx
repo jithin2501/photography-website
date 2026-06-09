@@ -11,6 +11,7 @@ import GallerySection from './GallerySection';
 import PricingSection from './PricingSection';
 import BookingSection from './BookingSection';
 import ReviewSection from './ReviewSection';
+import SettingsSection from './SettingsSection';
 
 interface ContactMessage {
   _id: string;
@@ -140,6 +141,8 @@ export default function AdminDashboardPage() {
         <PricingSection />
       ) : activeTab === 'reviews' ? (
         <ReviewSection />
+      ) : activeTab === 'settings' ? (
+        <SettingsSection />
       ) : (
         <WheelSection />
       )}

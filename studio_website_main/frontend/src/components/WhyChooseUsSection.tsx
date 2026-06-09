@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/WhyChooseUs.css';
 
@@ -46,6 +47,23 @@ const FEATURES_DATA: FeatureItem[] = [
 ];
 
 export default function WhyChooseUsSection() {
+  const [happyClients, setHappyClients] = useState(500);
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const response = await fetch('http://localhost:5000/api/settings', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          setHappyClients(data.data.happyClients);
+        }
+      } catch (err) {
+        console.error('Error fetching settings for WhyChooseUs:', err);
+      }
+    }
+    fetchSettings();
+  }, []);
+
   return (
     <section className={styles.whyChoose}>
       <div className={styles.whyChooseContainer}>
@@ -111,7 +129,7 @@ export default function WhyChooseUsSection() {
 
               {/* Overlapping circular badge */}
               <div className={styles.badge}>
-                <span className={styles.badgeNumber}>1,485+</span>
+                <span className={styles.badgeNumber}>{happyClients.toLocaleString()}+</span>
                 <span className={styles.badgeLabel}>Trusted Clients</span>
               </div>
             </div>

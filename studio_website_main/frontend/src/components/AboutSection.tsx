@@ -1,9 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/About.css';
 
 export default function AboutSection() {
+  const [stats, setStats] = useState({ happyClients: 500, photoshoots: 1000, clientSatisfaction: 99 });
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const response = await fetch('http://localhost:5000/api/settings', { cache: 'no-store' });
+        const data = await response.json();
+        if (response.ok && data.data) {
+          setStats({
+            happyClients: data.data.happyClients,
+            photoshoots: data.data.photoshoots,
+            clientSatisfaction: data.data.clientSatisfaction !== undefined ? data.data.clientSatisfaction : 99,
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching settings for AboutSection:', err);
+      }
+    }
+    fetchSettings();
+  }, []);
+
   return (
     <section id="about" className={styles.about}>
       <div className={styles.aboutContainer}>
@@ -69,17 +91,17 @@ export default function AboutSection() {
           {/* Statistics Grid */}
           <div className={styles.statsWrapper}>
             <div className={styles.statItem}>
-              <span className={styles.statValue}>150+</span>
+              <span className={styles.statValue}>{stats.happyClients}+</span>
               <span className={styles.statLabel}>Projects</span>
             </div>
             <div className={styles.separator} />
             <div className={styles.statItem}>
-              <span className={styles.statValue}>2000+</span>
+              <span className={styles.statValue}>{stats.photoshoots}+</span>
               <span className={styles.statLabel}>Captures</span>
             </div>
             <div className={styles.separator} />
             <div className={styles.statItem}>
-              <span className={styles.statValue}>99%</span>
+              <span className={styles.statValue}>{stats.clientSatisfaction}%</span>
               <span className={styles.statLabel}>Client Satisfaction</span>
             </div>
           </div>

@@ -13,6 +13,7 @@ export default function GalleryPageContent() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [instagramId, setInstagramId] = useState('auralens_studio');
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -34,7 +35,19 @@ export default function GalleryPageContent() {
         setLoading(false);
       }
     };
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/settings', { cache: 'no-store' });
+        const data = await res.json();
+        if (res.ok && data.data && data.data.instagramId) {
+          setInstagramId(data.data.instagramId);
+        }
+      } catch (err) {
+        console.error('Error fetching settings for gallery:', err);
+      }
+    };
     fetchGallery();
+    fetchSettings();
   }, []);
 
   // Filter Logic
@@ -326,7 +339,7 @@ export default function GalleryPageContent() {
               </p>
             </div>
           </div>
-          <Link href="https://instagram.com" target="_blank" className={styles.instaBtn}>
+          <Link href={`https://instagram.com/${instagramId}`} target="_blank" className={styles.instaBtn}>
             Follow Us On Instagram
           </Link>
         </div>

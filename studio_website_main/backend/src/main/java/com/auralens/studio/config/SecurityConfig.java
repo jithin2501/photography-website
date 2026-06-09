@@ -44,6 +44,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/service-package-prices").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/reviews").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/reviews").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/settings").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/api/settings").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/wheel-images").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/wheel-images/upload").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/gallery-images").hasRole("ADMIN")

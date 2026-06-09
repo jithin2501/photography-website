@@ -535,3 +535,126 @@
   font-size: 0.85rem;
   font-weight: 500;
 }
+
+/* Existing Client Users section styles */
+.existingUsersSection {
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 30px;
+}
+
+.existingUsersSection h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.existingUsersTableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.existingUsersTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.existingUsersTable th,
+.existingUsersTable td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.existingUsersTable th {
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.existingUsersTable tr:last-child td {
+  border-bottom: none;
+}
+
+.noUsersText {
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  font-style: italic;
+}
+
+.statusBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.statusBadge.active {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+}
+
+.statusBadge.deactivated {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.statusBtn {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.statusBtn.deactivateBtn {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.statusBtn.deactivateBtn:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.statusBtn.activateBtn {
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #34d399;
+}
+
+.statusBtn.activateBtn:hover {
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.deleteUserBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteUserBtn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}

@@ -85,6 +85,32 @@ public class AuthController {
         return ResponseEntity.ok(saved);
     }
 
+    @GetMapping("/client/admin/users")
+    public ResponseEntity<?> getAllClientUsers() {
+        return ResponseEntity.ok(authService.getAllClientUsers());
+    }
+
+    @PutMapping("/client/admin/{id}/status")
+    public ResponseEntity<?> updateClientStatus(@PathVariable String id, @RequestBody Map<String, String> body) {
+        String status = body.get("status");
+        if (status == null || (!status.equalsIgnoreCase("ACTIVE") && !status.equalsIgnoreCase("DEACTIVATED"))) {
+            Map<String, String> err = new HashMap<>();
+            err.put("error", "Invalid status. Must be ACTIVE or DEACTIVATED");
+            return ResponseEntity.badRequest().body(err);
+        }
+        return authService.updateClientStatus(id, status.toUpperCase())
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/client/admin/{id}")
+    public ResponseEntity<?> deleteClientUser(@PathVariable String id) {
+        authService.deleteClientUser(id);
+        Map<String, String> res = new HashMap<>();
+        res.put("message", "Client user deleted successfully");
+        return ResponseEntity.ok(res);
+    }
+
     public static class LoginRequest {
         private String username;
         private String password;

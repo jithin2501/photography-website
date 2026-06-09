@@ -13,6 +13,8 @@ public class ClientUser {
     private String username;
     private String password;
     private String bookingId;
+    private String status = "ACTIVE"; // ACTIVE, DEACTIVATED
+    private Long lastLogin; // unix timestamp
 
     public ClientUser() {}
 
@@ -22,6 +24,7 @@ public class ClientUser {
         this.username = username;
         this.password = password;
         this.bookingId = bookingId;
+        this.status = "ACTIVE";
     }
 
     public String getId() {
@@ -70,5 +73,21 @@ public class ClientUser {
 
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Long lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }

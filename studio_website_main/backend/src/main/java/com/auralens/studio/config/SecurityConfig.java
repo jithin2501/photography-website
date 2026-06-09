@@ -55,6 +55,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/contact/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/bookings/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/reviews/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/auth/client/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             );
 

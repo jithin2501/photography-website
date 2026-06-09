@@ -34,6 +34,7 @@ export default function BookingSection() {
   const [clientPassword, setClientPassword] = useState('');
   const [credentialsExist, setCredentialsExist] = useState(false);
   const [savingCredentials, setSavingCredentials] = useState(false);
+  const [existingUsers, setExistingUsers] = useState<any[]>([]);
 
   useEffect(() => {
     fetchBookings();
@@ -127,9 +128,80 @@ export default function BookingSection() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const fetchExistingUsers = async () => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/client/admin/users', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setExistingUsers(data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching client users:', error);
+    }
+  };
+
+  const handleToggleStatus = async (user: any) => {
+    const newStatus = user.status === 'ACTIVE' ? 'DEACTIVATED' : 'ACTIVE';
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/client/admin/${user.id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (response.ok) {
+        fetchExistingUsers();
+        if (selectedBooking && user.bookingId === selectedBooking.id) {
+          handleViewCredentials(selectedBooking);
+        }
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to update user status');
+      }
+    } catch (error) {
+      console.error('Error toggling status:', error);
+    }
+  };
+
+  const handleDeleteUser = async (id: string, userBookingId: string) => {
+    if (!confirm('Are you sure you want to delete this client user?')) return;
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/client/admin/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        fetchExistingUsers();
+        if (selectedBooking && userBookingId === selectedBooking.id) {
+          setCredentialsExist(false);
+        }
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to delete client user');
+      }
+    } catch (error) {
+      console.error('Error deleting client user:', error);
+    }
+  };
+
   const handleViewCredentials = async (booking: Booking) => {
     setIsViewingCredentials(true);
     setSavingCredentials(false);
+    fetchExistingUsers();
     
     const token = localStorage.getItem('adminToken');
     try {
@@ -188,6 +260,7 @@ export default function BookingSection() {
       if (response.ok) {
         setCredentialsExist(true);
         alert('Client credentials saved successfully!');
+        fetchExistingUsers();
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to save credentials.');
@@ -353,11 +426,61 @@ export default function BookingSection() {
                         {savingCredentials ? 'Saving...' : credentialsExist ? 'Update Login' : 'Create Login'}
                       </button>
 
-                      {credentialsExist && (
-                        <div className="credentialsStatusSuccess">
-                          ✓ This client can now login to the main website with these credentials.
-                        </div>
-                      )}
+                    </div>
+
+                    <div className="existingUsersSection">
+                      <h3>Existing Client Users</h3>
+                      <div className="existingUsersTableWrapper">
+                        <table className="existingUsersTable">
+                          <thead>
+                            <tr>
+                              <th>USERNAME</th>
+                              <th>STATUS</th>
+                              <th>LAST LOGIN</th>
+                              <th>ACTION</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {existingUsers.length === 0 ? (
+                              <tr>
+                                <td colSpan={4} className="noUsersText">No client users registered yet.</td>
+                              </tr>
+                            ) : (
+                              existingUsers.map((user) => (
+                                <tr key={user.id}>
+                                  <td>{user.username}</td>
+                                  <td>
+                                    <span className={`statusBadge ${user.status === 'ACTIVE' ? 'active' : 'deactivated'}`}>
+                                      {user.status || 'ACTIVE'}
+                                    </span>
+                                  </td>
+                                  <td>
+                                    {user.lastLogin
+                                      ? formatTimestamp(new Date(user.lastLogin).toISOString())
+                                      : 'Never'}
+                                  </td>
+                                  <td>
+                                    <div className="actionButtons">
+                                      <button
+                                        onClick={() => handleToggleStatus(user)}
+                                        className={`statusBtn ${user.status === 'ACTIVE' ? 'deactivateBtn' : 'activateBtn'}`}
+                                      >
+                                        {user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                                      </button>
+                                      <button
+                                        onClick={() => handleDeleteUser(user.id, user.bookingId)}
+                                        className="deleteUserBtn"
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </>
                 ) : (

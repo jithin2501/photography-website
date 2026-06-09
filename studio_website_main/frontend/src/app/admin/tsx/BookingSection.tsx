@@ -279,18 +279,28 @@ export default function BookingSection() {
         setClientPassword(data.password);
         setCredentialsExist(true);
       } else {
-        const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'client';
         const cleanPhone = booking.phone.replace(/[^0-9]/g, '');
-        setClientUsername(cleanName || 'client');
-        setClientPassword(cleanPhone || '123456');
+        const namePart = cleanName.charAt(0).toUpperCase() + cleanName.slice(1, 4);
+        const phonePart = cleanPhone.slice(-4) || '1234';
+        const uniqueIdPart = booking.clientId ? booking.clientId.replace('AL-', '') : Math.floor(100 + Math.random() * 900).toString();
+        const generatedPassword = `${namePart}@${phonePart}#${uniqueIdPart}`;
+
+        setClientUsername(cleanName);
+        setClientPassword(generatedPassword);
         setCredentialsExist(false);
       }
     } catch (error) {
       console.error('Error fetching client credentials:', error);
-      const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const cleanName = booking.fullName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'client';
       const cleanPhone = booking.phone.replace(/[^0-9]/g, '');
-      setClientUsername(cleanName || 'client');
-      setClientPassword(cleanPhone || '123456');
+      const namePart = cleanName.charAt(0).toUpperCase() + cleanName.slice(1, 4);
+      const phonePart = cleanPhone.slice(-4) || '1234';
+      const uniqueIdPart = booking.clientId ? booking.clientId.replace('AL-', '') : Math.floor(100 + Math.random() * 900).toString();
+      const generatedPassword = `${namePart}@${phonePart}#${uniqueIdPart}`;
+
+      setClientUsername(cleanName);
+      setClientPassword(generatedPassword);
       setCredentialsExist(false);
     }
   };

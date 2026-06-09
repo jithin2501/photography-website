@@ -14,6 +14,9 @@ interface ReviewItem {
 
 export default function ReviewsSection() {
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
+  const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     async function fetchApprovedReviews() {
@@ -24,7 +27,6 @@ export default function ReviewsSection() {
           const mappedReviews = data.data.map((r: any) => ({
             id: r.id,
             name: r.name,
-            // Generate initials avatar dynamically using initials api
             avatar: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(r.name)}&backgroundType=gradientLinear&fontFamily=Arial`,
             rating: r.rating,
             text: r.message,
@@ -37,6 +39,38 @@ export default function ReviewsSection() {
     }
     fetchApprovedReviews();
   }, []);
+
+  useEffect(() => {
+    if (reviews.length <= 3 || isHovered) return;
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+
+      setTimeout(() => {
+        setCurrentGroupIndex((prev) => {
+          const totalGroups = Math.ceil(reviews.length / 3);
+          return (prev + 1) % totalGroups;
+        });
+        setIsTransitioning(false);
+      }, 600); // Wait for fade-out to complete
+    }, 15000); // 15 seconds gap
+
+    return () => clearInterval(interval);
+  }, [reviews, isHovered]);
+
+  const getVisibleReviews = () => {
+    if (reviews.length === 0) return [];
+    if (reviews.length <= 3) return reviews;
+
+    const startIndex = (currentGroupIndex * 3) % reviews.length;
+    const sliced = reviews.slice(startIndex, startIndex + 3);
+
+    if (sliced.length < 3) {
+      const needed = 3 - sliced.length;
+      return [...sliced, ...reviews.slice(0, needed)];
+    }
+    return sliced;
+  };
 
   return (
     <section id="reviews" className={styles.reviews}>
@@ -175,9 +209,13 @@ export default function ReviewsSection() {
             </div>
 
             {/* Testimonials Slider */}
-            <div className={styles.sliderContainer}>
-              <div className={styles.reviewsGrid}>
-                {reviews.map((review) => (
+            <div 
+              className={styles.sliderContainer}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <div className={`${styles.reviewsGrid} ${isTransitioning ? styles.animating : ''}`}>
+                {getVisibleReviews().map((review) => (
                   <div key={review.id} className={styles.reviewCard}>
                     {/* Client Avatar */}
                     <div className={styles.avatarWrapper}>

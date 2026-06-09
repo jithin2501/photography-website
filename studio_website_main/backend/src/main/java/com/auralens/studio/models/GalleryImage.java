@@ -13,6 +13,8 @@ public class GalleryImage {
     private String title;
     private long createdAt;
     private int showcasePosition = 0; // 0 = not featured, 1-12 = home page grid slots
+    private String serviceType = "none"; // none, maternity, newborn, milestone, classes
+    private int servicePosition = 0; // 0 = not featured, 1-4 = service page slots
 
     public GalleryImage() {}
 
@@ -69,5 +71,21 @@ public class GalleryImage {
 
     public void setShowcasePosition(int showcasePosition) {
         this.showcasePosition = showcasePosition;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public int getServicePosition() {
+        return servicePosition;
+    }
+
+    public void setServicePosition(int servicePosition) {
+        this.servicePosition = servicePosition;
     }
 }

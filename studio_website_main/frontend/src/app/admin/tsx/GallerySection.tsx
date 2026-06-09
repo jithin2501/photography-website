@@ -10,6 +10,8 @@ interface GalleryImage {
   category: string;
   title: string;
   showcasePosition?: number;
+  serviceType?: string;
+  servicePosition?: number;
   createdAt?: number;
 }
 
@@ -27,6 +29,8 @@ export default function GallerySection() {
   const [category, setCategory] = useState('Maternity');
   const [imageUrl, setImageUrl] = useState('');
   const [showcasePosition, setShowcasePosition] = useState(0);
+  const [serviceType, setServiceType] = useState('none');
+  const [servicePosition, setServicePosition] = useState(0);
 
   useEffect(() => {
     fetchGalleryImages();
@@ -55,6 +59,8 @@ export default function GallerySection() {
     setCategory(image.category);
     setImageUrl(image.imageUrl);
     setShowcasePosition(image.showcasePosition || 0);
+    setServiceType(image.serviceType || 'none');
+    setServicePosition(image.servicePosition || 0);
   };
 
   const handleCancelEdit = () => {
@@ -63,6 +69,8 @@ export default function GallerySection() {
     setCategory('Maternity');
     setImageUrl('');
     setShowcasePosition(0);
+    setServiceType('none');
+    setServicePosition(0);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,6 +145,8 @@ export default function GallerySection() {
           category,
           title: title.trim() || 'Untitled',
           showcasePosition,
+          serviceType,
+          servicePosition,
         }),
       });
 
@@ -157,6 +167,8 @@ export default function GallerySection() {
         setCategory('Maternity');
         setImageUrl('');
         setShowcasePosition(0);
+        setServiceType('none');
+        setServicePosition(0);
         setEditingId(null);
       } else {
         alert(data.error || `Failed to ${editingId ? 'update' : 'save'} gallery image.`);
@@ -247,6 +259,14 @@ export default function GallerySection() {
                         <span>Pos {item.showcasePosition}</span>
                       </span>
                     ) : null}
+                    {item.serviceType && item.serviceType !== 'none' && item.servicePosition && item.servicePosition > 0 ? (
+                      <span className="servicePortfolioBadge" title={`${item.serviceType} Portfolio Position ${item.servicePosition}`}>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                        </svg>
+                        <span>{item.serviceType.charAt(0).toUpperCase() + item.serviceType.slice(1)} P{item.servicePosition}</span>
+                      </span>
+                    ) : null}
                     <button
                       className="editCardBtn"
                       onClick={() => handleEditClick(item)}
@@ -330,6 +350,36 @@ export default function GallerySection() {
                 <option value={10}>Position 10 (Col 7 - Bottom)</option>
                 <option value={11}>Position 11 (Col 8 - Top)</option>
                 <option value={12}>Position 12 (Col 8 - Bottom)</option>
+              </select>
+            </div>
+
+            <div className="formGroup">
+              <label>Service Portfolio Showcase</label>
+              <select
+                className="formSelect"
+                value={serviceType}
+                onChange={(e) => setServiceType(e.target.value)}
+              >
+                <option value="none">Do Not Show in Service Page</option>
+                <option value="maternity">Maternity Photoshoot</option>
+                <option value="newborn">Newborn Photoshoot</option>
+                <option value="milestone">Milestone Photoshoot</option>
+                <option value="classes">Photoshoot Classes</option>
+              </select>
+            </div>
+
+            <div className="formGroup">
+              <label>Service Portfolio Position</label>
+              <select
+                className="formSelect"
+                value={servicePosition}
+                onChange={(e) => setServicePosition(Number(e.target.value))}
+              >
+                <option value={0}>Not Featured in Service Portfolio</option>
+                <option value={1}>Position 1 (Left-most / First)</option>
+                <option value={2}>Position 2</option>
+                <option value={3}>Position 3</option>
+                <option value={4}>Position 4 (Right-most / Last)</option>
               </select>
             </div>
 

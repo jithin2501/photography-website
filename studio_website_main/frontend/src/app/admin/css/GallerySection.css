@@ -611,3 +611,29 @@
 .checkboxLabel:hover .formCheckbox {
   border-color: #FF4D00;
 }
+
+/* Service Portfolio Showcase Badge */
+.servicePortfolioBadge {
+  position: absolute;
+  top: 64px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.servicePortfolioBadge svg {
+  color: #FF4D00;
+}

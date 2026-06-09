@@ -139,6 +139,8 @@ public class GalleryImageService {
                     img.setCategory(updatedImage.getCategory());
                     img.setTitle(updatedImage.getTitle());
                     img.setShowcasePosition(updatedImage.getShowcasePosition());
+                    img.setServiceType(updatedImage.getServiceType());
+                    img.setServicePosition(updatedImage.getServicePosition());
                     return img;
                 }
             }
@@ -150,6 +152,8 @@ public class GalleryImageService {
                 existing.setCategory(updatedImage.getCategory());
                 existing.setTitle(updatedImage.getTitle());
                 existing.setShowcasePosition(updatedImage.getShowcasePosition());
+                existing.setServiceType(updatedImage.getServiceType());
+                existing.setServicePosition(updatedImage.getServicePosition());
                 return galleryImageRepository.save(existing);
             }).orElse(null);
         } catch (Exception e) {
@@ -162,6 +166,8 @@ public class GalleryImageService {
                     img.setCategory(updatedImage.getCategory());
                     img.setTitle(updatedImage.getTitle());
                     img.setShowcasePosition(updatedImage.getShowcasePosition());
+                    img.setServiceType(updatedImage.getServiceType());
+                    img.setServicePosition(updatedImage.getServicePosition());
                     return img;
                 }
             }

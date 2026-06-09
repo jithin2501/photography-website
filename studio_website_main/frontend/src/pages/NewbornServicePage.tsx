@@ -12,13 +12,21 @@ export default function NewbornServicePageContent() {
     premium: '₹40,000',
   });
 
+  const [portfolioImages, setPortfolioImages] = useState<string[]>([
+    "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80"
+  ]);
+
   useEffect(() => {
-    async function fetchPrices() {
+    async function fetchData() {
       try {
-        const response = await fetch('http://localhost:5000/api/service-package-prices', { cache: 'no-store' });
-        const data = await response.json();
-        if (response.ok && data.data) {
-          const item = data.data.find((p: any) => p.id === 'newborn');
+        // Fetch prices
+        const priceRes = await fetch('http://localhost:5000/api/service-package-prices', { cache: 'no-store' });
+        const priceData = await priceRes.json();
+        if (priceRes.ok && priceData.data) {
+          const item = priceData.data.find((p: any) => p.id === 'newborn');
           if (item) {
             setPrices({
               basic: item.basicPrice || '₹15,000',
@@ -30,8 +38,34 @@ export default function NewbornServicePageContent() {
       } catch (err) {
         console.error('Error fetching prices:', err);
       }
+
+      try {
+        // Fetch dynamic portfolio images
+        const galleryRes = await fetch('http://localhost:5000/api/gallery-images', { cache: 'no-store' });
+        const galleryData = await galleryRes.json();
+        if (galleryRes.ok && galleryData.data) {
+          const serviceImages = galleryData.data.filter(
+            (img: any) => img.serviceType === 'newborn' && img.servicePosition >= 1 && img.servicePosition <= 4
+          );
+
+          if (serviceImages.length > 0) {
+            setPortfolioImages((prev) => {
+              const updated = [...prev];
+              serviceImages.forEach((img: any) => {
+                const idx = img.servicePosition - 1;
+                if (idx >= 0 && idx < 4) {
+                  updated[idx] = img.imageUrl;
+                }
+              });
+              return updated;
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching portfolio images:', err);
+      }
     }
-    fetchPrices();
+    fetchData();
   }, []);
 
   return (
@@ -465,38 +499,16 @@ export default function NewbornServicePageContent() {
           </div>
 
           <div className={styles.portfolioGrid}>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80"
-                alt="Newborn baby face close up"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=80"
-                alt="Sleeping swaddled baby"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80"
-                alt="Newborn baby sleeping in wooden basket"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
-            <div className={styles.portfolioCard}>
-              <Image
-                src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80"
-                alt="Sleeping baby on warm blanket"
-                fill
-                className={styles.portfolioImage}
-              />
-            </div>
+            {portfolioImages.map((src, idx) => (
+              <div key={idx} className={styles.portfolioCard}>
+                <Image
+                  src={src}
+                  alt={`Newborn portfolio showcase ${idx + 1}`}
+                  fill
+                  className={styles.portfolioImage}
+                />
+              </div>
+            ))}
           </div>
 
           <Link href="/gallery" className={styles.viewAllLink}>

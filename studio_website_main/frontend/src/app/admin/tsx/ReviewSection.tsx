@@ -17,13 +17,15 @@ export default function ReviewSection() {
   const [loading, setLoading] = useState(true);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [error, setError] = useState('');
+  const [filter, setFilter] = useState<'ALL' | 'PENDING' | 'APPROVED'>('ALL');
+  const [showQrModal, setShowQrModal] = useState(false);
 
   useEffect(() => {
     // Generate QR code link dynamically
     if (typeof window !== 'undefined') {
       const publicReviewUrl = `${window.location.origin}/reviews/new`;
       // Use qrserver api for clean zero-dependency QR code generation
-      setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(publicReviewUrl)}`);
+      setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(publicReviewUrl)}`);
     }
 
     fetchReviews();
@@ -114,6 +116,24 @@ export default function ReviewSection() {
     }
   };
 
+  const formatDate = (timestamp: number) => {
+    const date = new Date(timestamp);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const totalReviews = reviews.length;
+  const pendingCount = reviews.filter(r => r.status === 'PENDING').length;
+  const approvedCount = reviews.filter(r => r.status === 'APPROVED').length;
+
+  const filteredReviews = reviews.filter((r) => {
+    if (filter === 'PENDING') return r.status === 'PENDING';
+    if (filter === 'APPROVED') return r.status === 'APPROVED';
+    return true;
+  });
+
   return (
     <div className="reviewSection">
       {/* Top Banner / Header Area */}
@@ -121,37 +141,170 @@ export default function ReviewSection() {
         <div>
           <h1 className="mainTitle">Reviews Management</h1>
         </div>
-        <button className="refreshBtn" onClick={fetchReviews} disabled={loading}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M23 4v6h-6M1 20v-6h6" />
-            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
-          </svg>
-          Refresh
+      </div>
+
+      {error && <div className="errorBanner">{error}</div>}
+
+      {/* Top Stat Summary Row */}
+      <div className="statsSummaryRow">
+        <div className="statSummaryCard">
+          <div className="statSummaryNumber">{totalReviews}</div>
+          <div className="statSummaryLabel">Total Reviews</div>
+        </div>
+        <div className="statSummaryCard">
+          <div className="statSummaryNumber warningColor">{pendingCount}</div>
+          <div className="statSummaryLabel">Pending</div>
+        </div>
+        <div className="statSummaryCard">
+          <div className="statSummaryNumber successColor">{approvedCount}</div>
+          <div className="statSummaryLabel">Approved</div>
+        </div>
+        <div className="statSummaryCard qrActionCard">
+          <button className="viewQrButton" onClick={() => setShowQrModal(true)}>
+            View QR
+          </button>
+        </div>
+      </div>
+
+      {/* Filter Tabs Row */}
+      <div className="filterButtonGroup">
+        <button
+          className={`filterTabBtn ${filter === 'ALL' ? 'active' : ''}`}
+          onClick={() => setFilter('ALL')}
+        >
+          All ({totalReviews})
+        </button>
+        <button
+          className={`filterTabBtn ${filter === 'PENDING' ? 'active' : ''}`}
+          onClick={() => setFilter('PENDING')}
+        >
+          Pending ({pendingCount})
+        </button>
+        <button
+          className={`filterTabBtn ${filter === 'APPROVED' ? 'active' : ''}`}
+          onClick={() => setFilter('APPROVED')}
+        >
+          Approved ({approvedCount})
         </button>
       </div>
 
-      <div className="reviewGrid">
-        {/* Left Side: QR Code Area */}
-        <div className="qrContainer">
-          <div className="qrCard">
-            <h2 className="cardTitle">QR Code</h2>
+      {/* Table Data Board */}
+      <div className="tableCard">
+        {loading ? (
+          <div className="loadingContainer">
+            <div className="spinner"></div>
+            <p>Loading reviews...</p>
+          </div>
+        ) : (
+          <div className="tableWrapper">
+            <table className="reviewsTable">
+              <thead>
+                <tr>
+                  <th>DATE</th>
+                  <th>NAME</th>
+                  <th>RATING</th>
+                  <th>REVIEW</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredReviews.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="noReviewsRow">
+                      No reviews found for the selected filter.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredReviews.map((review) => (
+                    <tr key={review.id}>
+                      <td className="dateCell">{formatDate(review.createdAt)}</td>
+                      <td className="nameCell">{review.name}</td>
+                      <td className="ratingCell">
+                        <div className="tableStars">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <span
+                              key={i}
+                              className={`tableStar ${i < review.rating ? 'active' : ''}`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="messageCell">{review.message}</td>
+                      <td className="statusCell">
+                        <span className={`statusLabelBadge ${review.status.toLowerCase()}`}>
+                          {review.status === 'APPROVED' ? 'Approved' : review.status === 'PENDING' ? 'Pending' : 'Disapproved'}
+                        </span>
+                      </td>
+                      <td className="actionCell">
+                        <div className="tableActionButtons">
+                          {review.status === 'APPROVED' ? (
+                            <button
+                              className="iconActionBtn disapproveCircleBtn"
+                              title="Disapprove / Make Pending"
+                              onClick={() => handleUpdateStatus(review.id, 'PENDING')}
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                              </svg>
+                            </button>
+                          ) : (
+                            <button
+                              className="iconActionBtn approveCircleBtn"
+                              title="Approve Review"
+                              onClick={() => handleUpdateStatus(review.id, 'APPROVED')}
+                            >
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                            </button>
+                          )}
+                          <button
+                            className="iconActionBtn deleteTrashBtn"
+                            title="Delete Review"
+                            onClick={() => handleDeleteReview(review.id)}
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="3 6 5 6 21 6"></polyline>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                              <line x1="10" y1="11" x2="10" y2="17"></line>
+                              <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
 
+      {/* Floating QR Modal */}
+      {showQrModal && (
+        <div className="qrModalOverlay" onClick={() => setShowQrModal(false)}>
+          <div className="qrModalContent" onClick={(e) => e.stopPropagation()}>
+            <button className="qrModalClose" onClick={() => setShowQrModal(false)}>×</button>
+            <h3 className="qrModalTitle">Client Feedback Link</h3>
+            <p className="qrModalDesc">Scan this QR code with a mobile device to submit a review.</p>
             {qrCodeUrl ? (
-              <div className="qrImageWrapper">
+              <div className="modalQrWrapper">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={qrCodeUrl} alt="Review QR Code" className="qrImage" />
-                <div className="qrOverlay">
-                </div>
+                <img src={qrCodeUrl} alt="Review QR Code" className="modalQrImg" />
               </div>
             ) : (
-              <div className="qrPlaceholder">Generating QR Code...</div>
+              <div className="modalQrPlaceholder">Generating QR Code...</div>
             )}
-
             <a
               href={typeof window !== 'undefined' ? `${window.location.origin}/reviews/new` : '#'}
               target="_blank"
               rel="noopener noreferrer"
-              className="formLink"
+              className="modalFormLink"
             >
               Open Form in New Tab
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -160,89 +313,7 @@ export default function ReviewSection() {
             </a>
           </div>
         </div>
-
-        {/* Right Side: Reviews List Moderation */}
-        <div className="listContainer">
-          <div className="listCard">
-            <h2 className="cardTitle">Feedback Moderation Queue</h2>
-            {error && <div className="errorBanner">{error}</div>}
-
-            {loading ? (
-              <div className="loadingContainer">
-                <div className="spinner"></div>
-                <p>Loading reviews...</p>
-              </div>
-            ) : reviews.length === 0 ? (
-              <div className="emptyState">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
-                <p>No reviews found in the system.</p>
-              </div>
-            ) : (
-              <div className="reviewQueue">
-                {reviews.map((review) => (
-                  <div key={review.id} className={`reviewItem ${review.status.toLowerCase()}`}>
-                    <div className="reviewMain">
-                      <div className="reviewMeta">
-                        <span className="reviewerName">{review.name}</span>
-                        <div className="reviewStars">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <span
-                              key={i}
-                              className={`starIcon ${i < review.rating ? 'active' : ''}`}
-                            >
-                              ★
-                            </span>
-                          ))}
-                        </div>
-                        <span className={`statusBadge ${review.status.toLowerCase()}`}>
-                          {review.status}
-                        </span>
-                      </div>
-                      <p className="reviewMessage">"{review.message}"</p>
-                      <span className="reviewTime">
-                        {new Date(review.createdAt).toLocaleDateString(undefined, {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </span>
-                    </div>
-
-                    <div className="reviewActions">
-                      {review.status !== 'APPROVED' && (
-                        <button
-                          className="actionBtn approveBtn"
-                          onClick={() => handleUpdateStatus(review.id, 'APPROVED')}
-                        >
-                          Approve
-                        </button>
-                      )}
-                      {review.status !== 'DISAPPROVED' && (
-                        <button
-                          className="actionBtn disapproveBtn"
-                          onClick={() => handleUpdateStatus(review.id, 'DISAPPROVED')}
-                        >
-                          Disapprove
-                        </button>
-                      )}
-                      <button
-                        className="actionBtn deleteBtn"
-                        onClick={() => handleDeleteReview(review.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

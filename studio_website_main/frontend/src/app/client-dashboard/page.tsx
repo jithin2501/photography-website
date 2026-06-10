@@ -31,6 +31,28 @@ export default function ClientDashboardPage() {
   const [clientName, setClientName] = useState('');
   const [isShowingReceipt, setIsShowingReceipt] = useState(false);
   const [prices, setPrices] = useState<any[]>([]);
+  const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (activePhotoIndex === null || !booking || !booking.clientImages) return;
+      const totalImages = booking.clientImages.length;
+      if (e.key === 'Escape') {
+        setActivePhotoIndex(null);
+      } else if (e.key === 'ArrowLeft') {
+        setActivePhotoIndex((prev) =>
+          prev !== null ? (prev - 1 + totalImages) % totalImages : 0
+        );
+      } else if (e.key === 'ArrowRight') {
+        setActivePhotoIndex((prev) =>
+          prev !== null ? (prev + 1) % totalImages : 0
+        );
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activePhotoIndex, booking]);
 
   useEffect(() => {
     const token = localStorage.getItem('clientToken');
@@ -296,18 +318,17 @@ export default function ClientDashboardPage() {
                       style={{ backgroundImage: `url('${img.url}')` }}
                     >
                       <div className="clientPhotoHoverOverlay">
-                        <a 
-                          href={img.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <button 
+                          type="button"
                           className="overlayActionBtn"
                           title="View Fullsize"
+                          onClick={() => setActivePhotoIndex(idx)}
                         >
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                             <circle cx="12" cy="12" r="3" />
                           </svg>
-                        </a>
+                        </button>
                         <a 
                           href={img.url} 
                           download={img.name}
@@ -351,6 +372,66 @@ export default function ClientDashboardPage() {
           </div>
         )}
       </main>
+
+      {/* Lightbox Modal Overlay */}
+      {activePhotoIndex !== null && booking && booking.clientImages && (
+        <div className="lightboxOverlay" onClick={() => setActivePhotoIndex(null)}>
+          <button 
+            className="lightboxCloseBtn" 
+            onClick={() => setActivePhotoIndex(null)}
+            aria-label="Close lightbox"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
+          <button
+            className="lightboxNavBtn left"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActivePhotoIndex((prev) =>
+                prev !== null ? (prev - 1 + booking.clientImages!.length) % booking.clientImages!.length : 0
+              );
+            }}
+            aria-label="Previous photo"
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+
+          <div className="lightboxContentContainer" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={booking.clientImages[activePhotoIndex].url} 
+              alt={booking.clientImages[activePhotoIndex].name} 
+              className="lightboxImage" 
+            />
+            <div className="lightboxCaption">
+              <span className="lightboxPhotoTitle">{booking.clientImages[activePhotoIndex].name}</span>
+              <span className="lightboxPhotoIndex">
+                {activePhotoIndex + 1} / {booking.clientImages.length}
+              </span>
+            </div>
+          </div>
+
+          <button
+            className="lightboxNavBtn right"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActivePhotoIndex((prev) =>
+                prev !== null ? (prev + 1) % booking.clientImages!.length : 0
+              );
+            }}
+            aria-label="Next photo"
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      )}
 
       {/* Receipt Modal Overlay */}
       {isShowingReceipt && booking && (

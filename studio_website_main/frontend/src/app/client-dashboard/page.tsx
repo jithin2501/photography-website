@@ -34,6 +34,76 @@ export default function ClientDashboardPage() {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const [updatingReeditIndex, setUpdatingReeditIndex] = useState<number | null>(null);
 
+  // Chat state
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [newMessageText, setNewMessageText] = useState('');
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
+
+  useEffect(() => {
+    if (!isChatOpen) return;
+    const bookingId = localStorage.getItem('clientBookingId');
+    if (!bookingId) return;
+
+    const fetchHistory = async () => {
+      const token = localStorage.getItem('clientToken');
+      try {
+        const response = await fetch(`http://localhost:5000/api/chat/history/${bookingId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setChatMessages(data);
+        }
+      } catch (err) {
+        console.error('Error fetching chat history:', err);
+      }
+    };
+
+    fetchHistory();
+    const interval = setInterval(fetchHistory, 4000);
+    return () => clearInterval(interval);
+  }, [isChatOpen]);
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMessageText.trim()) return;
+    
+    const bookingId = localStorage.getItem('clientBookingId');
+    if (!bookingId) return;
+
+    const msgPayload = {
+      senderId: bookingId,
+      receiverId: 'ADMIN',
+      message: newMessageText.trim()
+    };
+
+    setNewMessageText('');
+    setIsSendingMessage(true);
+
+    const token = localStorage.getItem('clientToken');
+    try {
+      const response = await fetch('http://localhost:5000/api/chat/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(msgPayload)
+      });
+      if (response.ok) {
+        const savedMsg = await response.json();
+        setChatMessages(prev => [...prev, savedMsg]);
+      }
+    } catch (err) {
+      console.error('Error sending message:', err);
+    } finally {
+      setIsSendingMessage(false);
+    }
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (activePhotoIndex === null || !booking || !booking.clientImages) return;
@@ -613,6 +683,74 @@ export default function ClientDashboardPage() {
               <button className="receiptActionBtn closeBtn" onClick={() => setIsShowingReceipt(false)}>Close</button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Floating Chat Button */}
+      <button 
+        className={`floatingChatBtn ${isChatOpen ? 'active' : ''}`}
+        onClick={() => setIsChatOpen(!isChatOpen)}
+        title="Chat with Admin"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          {isChatOpen ? (
+            <>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </>
+          ) : (
+            <>
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </>
+          )}
+        </svg>
+      </button>
+
+      {/* Floating Chat Window */}
+      {isChatOpen && (
+        <div className="floatingChatWindow">
+          <div className="chatHeader">
+            <div className="chatHeaderTitle">
+              <span className="onlineIndicator"></span>
+              <h4>AuraLens Support</h4>
+            </div>
+            <p>Typically replies in a few minutes</p>
+          </div>
+          <div className="chatMessagesList">
+            {chatMessages.length === 0 ? (
+              <div className="chatEmptyState">
+                <p>Hello! Ask us anything about your photoshoot or re-edits here.</p>
+              </div>
+            ) : (
+              chatMessages.map((msg, index) => {
+                const isMe = msg.senderId !== 'ADMIN';
+                return (
+                  <div key={index} className={`chatMessageRow ${isMe ? 'me' : 'them'}`}>
+                    <div className="chatBubble">
+                      <p>{msg.message}</p>
+                      <span className="chatTime">
+                        {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          <form className="chatInputArea" onSubmit={handleSendMessage}>
+            <input
+              type="text"
+              placeholder="Type your message..."
+              value={newMessageText}
+              onChange={(e) => setNewMessageText(e.target.value)}
+            />
+            <button type="submit" disabled={!newMessageText.trim() || isSendingMessage}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+          </form>
         </div>
       )}
     </div>

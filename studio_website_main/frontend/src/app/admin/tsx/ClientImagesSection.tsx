@@ -376,7 +376,7 @@ export default function ClientImagesSection() {
                         </button>
                       </div>
                       <div className="cardDetails">
-                        <label htmlFor={`imgName-${index}`}>Display Name</label>
+                        <label htmlFor={`imgName-${index}`}></label>
                         <input
                           id={`imgName-${index}`}
                           type="text"

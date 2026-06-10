@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [adminUser, setAdminUser] = useState('');
-  const [activeTab, setActiveTab] = useState('contacts');
+  const [activeTab, setActiveTab] = useState('bookings');
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');

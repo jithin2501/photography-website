@@ -4,6 +4,7 @@ import com.auralens.studio.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class AuthController {
     }
 
     @PutMapping("/client/admin/{id}/status")
-    public ResponseEntity<?> updateClientStatus(@PathVariable String id, @RequestBody Map<String, String> body) {
+    public ResponseEntity<?> updateClientStatus(@PathVariable @NonNull String id, @RequestBody Map<String, String> body) {
         String status = body.get("status");
         if (status == null || (!status.equalsIgnoreCase("ACTIVE") && !status.equalsIgnoreCase("DEACTIVATED"))) {
             Map<String, String> err = new HashMap<>();
@@ -104,7 +105,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/client/admin/{id}")
-    public ResponseEntity<?> deleteClientUser(@PathVariable String id) {
+    public ResponseEntity<?> deleteClientUser(@PathVariable @NonNull String id) {
         authService.deleteClientUser(id);
         Map<String, String> res = new HashMap<>();
         res.put("message", "Client user deleted successfully");

@@ -15,6 +15,7 @@ public class ClientUser {
     private String bookingId;
     private String status = "ACTIVE"; // ACTIVE, DEACTIVATED
     private Long lastLogin; // unix timestamp
+    private String clientId;
 
     public ClientUser() {}
 
@@ -89,5 +90,13 @@ public class ClientUser {
 
     public void setLastLogin(Long lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 }

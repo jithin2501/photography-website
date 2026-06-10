@@ -39,7 +39,36 @@ export default function ClientDashboardPage() {
   const [chatMessages, setChatMessages] = useState<any[]>([]);
   const [newMessageText, setNewMessageText] = useState('');
   const [isSendingMessage, setIsSendingMessage] = useState(false);
+  const [clientUnreadCount, setClientUnreadCount] = useState(0);
 
+  // Poll client unread counts
+  useEffect(() => {
+    const bookingId = localStorage.getItem('clientBookingId');
+    if (!bookingId) return;
+
+    const fetchUnreadCount = async () => {
+      const token = localStorage.getItem('clientToken');
+      try {
+        const response = await fetch(`http://localhost:5000/api/chat/unread-count/client/${bookingId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setClientUnreadCount(data.unreadCount || 0);
+        }
+      } catch (err) {
+        console.error('Error fetching client unread count:', err);
+      }
+    };
+
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Poll chat history and clear unread when new messages are found
   useEffect(() => {
     if (!isChatOpen) return;
     const bookingId = localStorage.getItem('clientBookingId');
@@ -56,6 +85,19 @@ export default function ClientDashboardPage() {
         if (response.ok) {
           const data = await response.json();
           setChatMessages(data);
+
+          // Clear counts if history has unread messages from admin
+          const hasUnread = data.some((msg: any) => msg.senderId === 'ADMIN' && !msg.read);
+          if (hasUnread) {
+            fetch(`http://localhost:5000/api/chat/read/client/${bookingId}`, {
+              method: 'PUT',
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }).catch(err => console.error(err));
+
+            setClientUnreadCount(0);
+          }
         }
       } catch (err) {
         console.error('Error fetching chat history:', err);
@@ -65,6 +107,30 @@ export default function ClientDashboardPage() {
     fetchHistory();
     const interval = setInterval(fetchHistory, 4000);
     return () => clearInterval(interval);
+  }, [isChatOpen]);
+
+  // Mark all as read when window opens
+  useEffect(() => {
+    if (!isChatOpen) return;
+    const bookingId = localStorage.getItem('clientBookingId');
+    if (!bookingId) return;
+
+    const markAsRead = async () => {
+      const token = localStorage.getItem('clientToken');
+      try {
+        await fetch(`http://localhost:5000/api/chat/read/client/${bookingId}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setClientUnreadCount(0);
+      } catch (err) {
+        console.error('Error marking messages as read:', err);
+      }
+    };
+
+    markAsRead();
   }, [isChatOpen]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -704,6 +770,9 @@ export default function ClientDashboardPage() {
             </>
           )}
         </svg>
+        {!isChatOpen && clientUnreadCount > 0 && (
+          <span className="clientUnreadBadge">{clientUnreadCount}</span>
+        )}
       </button>
 
       {/* Floating Chat Window */}

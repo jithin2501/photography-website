@@ -49,8 +49,31 @@ public class ChatController {
     }
 
     @PutMapping("/read/{clientId}")
+    @SuppressWarnings("null")
     public ResponseEntity<?> markMessagesAsRead(@PathVariable String clientId) {
         List<ChatMessage> unreadMessages = chatMessageRepository.findBySenderIdAndReceiverIdAndRead(clientId, "ADMIN", false);
+        for (ChatMessage msg : unreadMessages) {
+            msg.setRead(true);
+        }
+        chatMessageRepository.saveAll(unreadMessages);
+        java.util.Map<String, Object> response = new java.util.HashMap<>();
+        response.put("success", true);
+        response.put("updatedCount", unreadMessages.size());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/unread-count/client/{clientId}")
+    public ResponseEntity<java.util.Map<String, Long>> getClientUnreadCount(@PathVariable String clientId) {
+        List<ChatMessage> unreadMessages = chatMessageRepository.findBySenderIdAndReceiverIdAndRead("ADMIN", clientId, false);
+        java.util.Map<String, Long> response = new java.util.HashMap<>();
+        response.put("unreadCount", (long) unreadMessages.size());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/read/client/{clientId}")
+    @SuppressWarnings("null")
+    public ResponseEntity<?> markClientMessagesAsRead(@PathVariable String clientId) {
+        List<ChatMessage> unreadMessages = chatMessageRepository.findBySenderIdAndReceiverIdAndRead("ADMIN", clientId, false);
         for (ChatMessage msg : unreadMessages) {
             msg.setRead(true);
         }

@@ -445,6 +445,29 @@ export default function BookingSection() {
                       {savingCredentials ? 'Saving...' : credentialsExist ? 'Update Login' : 'Create Login'}
                     </button>
                   </div>
+
+                  {/* Existing Client Users Section */}
+                  <div style={{ marginTop: '30px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#ffffff', marginBottom: '16px', textAlign: 'center' }}>
+                      Existing Client Users
+                    </h3>
+                    {credentialsExist ? (
+                      <div style={{ background: 'rgba(255, 77, 0, 0.03)', border: '1px solid rgba(255, 77, 0, 0.15)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Username</span>
+                          <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, fontFamily: 'monospace' }}>{clientUsername}</span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '10px' }}>
+                          <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Password</span>
+                          <span style={{ fontSize: '0.9rem', color: '#FF4D00', fontWeight: 600, fontFamily: 'monospace' }}>{clientPassword}</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ textAlign: 'center', padding: '16px', background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: '8px' }}>
+                        <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.35)', fontStyle: 'italic' }}>No active login user for this booking yet.</span>
+                      </div>
+                    )}
+                  </div>
                 </>
               ) : (
                 <>

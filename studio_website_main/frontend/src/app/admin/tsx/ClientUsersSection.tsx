@@ -24,6 +24,32 @@ export default function ClientUsersSection() {
   const [adminChatMessages, setAdminChatMessages] = useState<any[]>([]);
   const [adminNewMessage, setAdminNewMessage] = useState('');
   const [isAdminSending, setIsAdminSending] = useState(false);
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({});
+
+  // Poll unread message counts for all client users
+  useEffect(() => {
+    const fetchUnreadCounts = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) return;
+      try {
+        const response = await fetch('http://localhost:5000/api/chat/unread-counts', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUnreadCounts(data || {});
+        }
+      } catch (err) {
+        console.error('Error fetching unread counts:', err);
+      }
+    };
+
+    fetchUnreadCounts();
+    const interval = setInterval(fetchUnreadCounts, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!activeChatUser) return;
@@ -39,6 +65,22 @@ export default function ClientUsersSection() {
         if (response.ok) {
           const data = await response.json();
           setAdminChatMessages(data);
+          
+          // Check if there are any unread messages from the user in this history
+          const hasUnread = data.some((msg: any) => msg.senderId !== 'ADMIN' && !msg.read);
+          if (hasUnread) {
+            fetch(`http://localhost:5000/api/chat/read/${activeChatUser.bookingId}`, {
+              method: 'PUT',
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }).catch(err => console.error('Error marking as read during fetch:', err));
+
+            setUnreadCounts(prev => ({
+              ...prev,
+              [activeChatUser.bookingId]: 0
+            }));
+          }
         }
       } catch (err) {
         console.error('Error fetching admin chat:', err);
@@ -48,6 +90,32 @@ export default function ClientUsersSection() {
     fetchHistory();
     const interval = setInterval(fetchHistory, 4000);
     return () => clearInterval(interval);
+  }, [activeChatUser]);
+
+  // Mark as read when active user changes
+  useEffect(() => {
+    if (!activeChatUser) return;
+    
+    const markAsRead = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) return;
+      try {
+        await fetch(`http://localhost:5000/api/chat/read/${activeChatUser.bookingId}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUnreadCounts(prev => ({
+          ...prev,
+          [activeChatUser.bookingId]: 0
+        }));
+      } catch (err) {
+        console.error('Error marking messages as read:', err);
+      }
+    };
+
+    markAsRead();
   }, [activeChatUser]);
 
   const handleAdminSendMessage = async (e: React.FormEvent) => {
@@ -254,6 +322,9 @@ export default function ClientUsersSection() {
                           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
                         <span>Chat</span>
+                        {unreadCounts[user.bookingId] > 0 && (
+                          <span className="unreadBadge">{unreadCounts[user.bookingId]}</span>
+                        )}
                       </button>
                     </td>
                     <td>

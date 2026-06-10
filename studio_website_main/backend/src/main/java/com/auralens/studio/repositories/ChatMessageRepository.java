@@ -11,4 +11,8 @@ import java.util.List;
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
     @Query("{ '$or': [ { 'senderId': ?0, 'receiverId': ?1 }, { 'senderId': ?1, 'receiverId': ?0 } ] }")
     List<ChatMessage> findChatHistory(String userA, String userB);
+
+    List<ChatMessage> findByReceiverIdAndRead(String receiverId, boolean read);
+
+    List<ChatMessage> findBySenderIdAndReceiverIdAndRead(String senderId, String receiverId, boolean read);
 }

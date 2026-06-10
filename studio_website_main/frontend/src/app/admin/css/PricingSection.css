@@ -146,6 +146,8 @@
 .pricingSidePanel {
   width: 380px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .pricingPanelCard {
@@ -154,9 +156,10 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 16px;
   padding: 24px;
-  position: sticky;
-  top: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .panelHeader {
@@ -189,6 +192,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
 }
 
 .formGroup {
@@ -227,7 +231,8 @@
 }
 
 .panelActions {
-  margin-top: 10px;
+  margin-top: auto;
+  padding-top: 20px;
 }
 
 .saveBtn {
@@ -266,4 +271,8 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }

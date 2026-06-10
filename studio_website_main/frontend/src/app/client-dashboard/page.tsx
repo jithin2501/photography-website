@@ -20,7 +20,7 @@ interface Booking {
   paymentMethod?: string;
   paymentId?: string;
   clientId?: string;
-  clientImages?: { name: string; url: string }[];
+  clientImages?: { name: string; url: string; reeditRequested?: boolean }[];
 }
 
 export default function ClientDashboardPage() {
@@ -32,6 +32,7 @@ export default function ClientDashboardPage() {
   const [isShowingReceipt, setIsShowingReceipt] = useState(false);
   const [prices, setPrices] = useState<any[]>([]);
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+  const [updatingReeditIndex, setUpdatingReeditIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -109,6 +110,39 @@ export default function ClientDashboardPage() {
     localStorage.removeItem('clientFullName');
     localStorage.removeItem('clientBookingId');
     router.push('/login');
+  };
+
+  const handleToggleReedit = async (index: number) => {
+    if (!booking || !booking.clientImages) return;
+
+    const updatedImages = booking.clientImages.map((img, idx) => 
+      idx === index ? { ...img, reeditRequested: !img.reeditRequested } : img
+    );
+
+    setUpdatingReeditIndex(index);
+    const token = localStorage.getItem('clientToken');
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/bookings/client/${booking.id}/images`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedImages),
+      });
+
+      if (response.ok) {
+        setBooking(prev => prev ? { ...prev, clientImages: updatedImages } : null);
+      } else {
+        alert('Failed to update re-edit request.');
+      }
+    } catch (err) {
+      console.error('Error updating re-edit request:', err);
+      alert('An error occurred while submitting your re-edit request.');
+    } finally {
+      setUpdatingReeditIndex(null);
+    }
   };
 
   const getPhotoshootTypeLabel = (type: string) => {
@@ -317,6 +351,9 @@ export default function ClientDashboardPage() {
                       className="clientPhotoFrame" 
                       style={{ backgroundImage: `url('${img.url}')` }}
                     >
+                      {img.reeditRequested && (
+                        <div className="reeditBadge">Re-edit Requested</div>
+                      )}
                       <div className="clientPhotoHoverOverlay">
                         <button 
                           type="button"
@@ -343,6 +380,21 @@ export default function ClientDashboardPage() {
                             <line x1="12" y1="15" x2="12" y2="3" />
                           </svg>
                         </a>
+                        <button 
+                          type="button" 
+                          className={`overlayActionBtn reeditBtn ${img.reeditRequested ? 'active' : ''}`}
+                          onClick={() => handleToggleReedit(idx)}
+                          disabled={updatingReeditIndex === idx}
+                          title={img.reeditRequested ? "Cancel Re-edit Request" : "Request Re-edit"}
+                        >
+                          {updatingReeditIndex === idx ? (
+                            <div className="btnSpinner"></div>
+                          ) : (
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                            </svg>
+                          )}
+                        </button>
                       </div>
                     </div>
                     <div className="photoCardMeta">

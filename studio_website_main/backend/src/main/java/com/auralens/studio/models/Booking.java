@@ -186,12 +186,20 @@ public class Booking {
     public static class ClientImage {
         private String name;
         private String url;
+        private boolean reeditRequested = false;
 
         public ClientImage() {}
 
         public ClientImage(String name, String url) {
             this.name = name;
             this.url = url;
+            this.reeditRequested = false;
+        }
+
+        public ClientImage(String name, String url, boolean reeditRequested) {
+            this.name = name;
+            this.url = url;
+            this.reeditRequested = reeditRequested;
         }
 
         public String getName() {
@@ -208,6 +216,14 @@ public class Booking {
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public boolean isReeditRequested() {
+            return reeditRequested;
+        }
+
+        public void setReeditRequested(boolean reeditRequested) {
+            this.reeditRequested = reeditRequested;
         }
     }
 }

@@ -398,3 +398,146 @@
   max-width: 320px;
   line-height: 1.5;
 }
+
+/* Re-edit Requests Checklist Card */
+.reeditChecklistCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.reeditChecklistCard h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.reeditList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.reeditList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reeditList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.reeditList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.reeditListItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.reeditListItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.reeditItemThumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.reeditItemInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.reeditItemName {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reeditItemStatus {
+  font-size: 0.72rem;
+  color: #FF4D00;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.reeditDoneBtn {
+  background: rgba(255, 77, 0, 0.15);
+  border: 1px solid rgba(255, 77, 0, 0.3);
+  color: #FF4D00;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.reeditDoneBtn:hover {
+  background: #FF4D00;
+  border-color: #FF4D00;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.reeditEmptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.82rem;
+}
+
+.reeditEmptyState svg {
+  color: #4cd964;
+}
+
+.reeditBadgeAdmin {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #FF4D00;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  pointer-events: none;
+}

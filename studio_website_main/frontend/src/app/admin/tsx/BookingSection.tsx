@@ -260,6 +260,7 @@ export default function BookingSection() {
       if (response.ok) {
         setCredentialsExist(true);
         alert('Client credentials saved successfully!');
+        setIsViewingCredentials(false);
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to save credentials.');
@@ -407,17 +408,10 @@ export default function BookingSection() {
             <div className="sidebarContent">
               {isViewingCredentials ? (
                 <>
-                  <div className="detailCardHeader">
-                    <div>
+                  <div className="detailCardHeader" style={{ justifyContent: 'center', textAlign: 'center', width: '100%' }}>
+                    <div style={{ textAlign: 'center', width: '100%' }}>
                       <h2>Client Login Details</h2>
-                      <span className="submittedAt">Manage credentials for {selectedBooking.fullName}</span>
                     </div>
-                    <button
-                      className="backDetailsBtn"
-                      onClick={() => setIsViewingCredentials(false)}
-                    >
-                      Back
-                    </button>
                   </div>
 
                   <div className="credentialsForm">
@@ -430,7 +424,6 @@ export default function BookingSection() {
                         className="credInput"
                         placeholder="Username"
                       />
-                      <small className="fieldHint">Automatically created from client's name</small>
                     </div>
 
                     <div className="credentialFieldGroup">
@@ -442,7 +435,6 @@ export default function BookingSection() {
                         className="credInput"
                         placeholder="Password"
                       />
-                      <small className="fieldHint">Automatically created from client's phone number</small>
                     </div>
 
                     <button

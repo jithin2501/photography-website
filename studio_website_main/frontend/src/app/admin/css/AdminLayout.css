@@ -149,3 +149,44 @@
     padding: 8px;
   }
 }
+
+/* Specific overrides to align all page headings with the Sidebar Brand header */
+@media (min-width: 769px) {
+  .adminMain .controlsRow {
+    height: 70px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 24px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+  }
+}
+
+.adminMain .sectionTitle {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  letter-spacing: -0.3px !important;
+  line-height: 1.2 !important;
+}
+
+/* Container padding alignment overrides to ensure straight line layout with Admin Dashboard */
+.adminMain .paymentsSectionContainer,
+.adminMain .clientUsersSectionContainer,
+.adminMain .messageSectionContainer,
+.adminMain .gallerySectionContainer,
+.adminMain .wheelSectionContainer,
+.adminMain .pricingSectionContainer,
+.adminMain .reviewSection,
+.adminMain .reviewSectionContainer,
+.adminMain .bookingSectionContainer {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  min-height: auto !important;
+}

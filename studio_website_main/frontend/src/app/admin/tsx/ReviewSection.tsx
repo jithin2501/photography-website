@@ -135,12 +135,10 @@ export default function ReviewSection() {
   });
 
   return (
-    <div className="reviewSection">
+    <div className="reviewSectionContainer">
       {/* Top Banner / Header Area */}
-      <div className="sectionHeader">
-        <div>
-          <h1 className="mainTitle">Reviews Management</h1>
-        </div>
+      <div className="controlsRow">
+        <h1 className="sectionTitle">Reviews Management</h1>
       </div>
 
       {error && <div className="errorBanner">{error}</div>}

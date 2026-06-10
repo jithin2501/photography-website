@@ -440,21 +440,6 @@ export default function BookingSection() {
                         <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
                       </div>
                       <div className="headerActions">
-                        {selectedBooking.paymentStatus === 'paid' && (
-                          <button
-                            className="loginBtn"
-                            onClick={() => {
-                              setIsShowingReceipt(true);
-                              setTimeout(() => {
-                                window.print();
-                                setIsShowingReceipt(false);
-                              }, 150);
-                            }}
-                            style={{ background: 'rgba(255, 77, 0, 0.1)', color: '#FF4D00', borderColor: 'rgba(255, 77, 0, 0.2)' }}
-                          >
-                            Receipt
-                          </button>
-                        )}
                         <button
                           className="loginBtn"
                           onClick={() => handleViewCredentials(selectedBooking)}

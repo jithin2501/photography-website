@@ -191,12 +191,19 @@ export default function PaymentsSection() {
                       </td>
                       <td>
                         <button
-                          onClick={() => handleViewReceipt(b)}
+                          onClick={() => {
+                            setSelectedBooking(b);
+                            setIsShowingReceipt(true);
+                            setTimeout(() => {
+                              window.print();
+                              setIsShowingReceipt(false);
+                            }, 150);
+                          }}
                           className="viewReceiptBtn"
                           disabled={status !== 'paid'}
-                          title={status !== 'paid' ? 'Receipt only available for paid bookings' : 'View Tax Invoice'}
+                          title={status !== 'paid' ? 'Receipt only available for paid bookings' : 'Print Receipt'}
                         >
-                          View Receipt
+                          Receipt
                         </button>
                       </td>
                     </tr>

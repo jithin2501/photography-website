@@ -244,6 +244,12 @@
   box-sizing: border-box;
 }
 
+@media screen {
+  .receiptModalOverlay {
+    display: none !important;
+  }
+}
+
 .receiptModalContainer {
   background: #ffffff;
   color: #111111;

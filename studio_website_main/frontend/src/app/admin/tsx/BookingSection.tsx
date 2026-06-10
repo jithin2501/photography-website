@@ -26,6 +26,7 @@ export default function BookingSection() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('all');
 
@@ -76,11 +77,7 @@ export default function BookingSection() {
       if (response.ok) {
         const list = data.data || [];
         setBookings(list);
-        if (list.length > 0) {
-          setSelectedBooking(list[0]);
-        } else {
-          setSelectedBooking(null);
-        }
+        setSelectedBooking(null);
       } else {
         console.error('Failed to fetch bookings:', data.error);
       }
@@ -108,11 +105,10 @@ export default function BookingSection() {
       if (response.ok) {
         setBookings((prev) => {
           const updated = prev.filter((b) => b.id !== id);
-          if (selectedBooking?.id === id) {
-            setSelectedBooking(updated.length > 0 ? updated[0] : null);
-          }
           return updated;
         });
+        setIsSidebarOpen(false);
+        setSelectedBooking(null);
       } else {
         const data = await response.json();
         alert(data.error || 'Failed to delete booking');
@@ -306,10 +302,29 @@ export default function BookingSection() {
 
   return (
     <div className="bookingSectionContainer">
-      <div className="controlsRow">
+      <div className="controlsRow" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
         <div>
           <h1 className="sectionTitle">Booking Requests</h1>
-
+        </div>
+        <div className="filterControls" style={{ display: 'flex', gap: '12px', border: 'none', background: 'transparent', padding: 0, alignItems: 'center' }}>
+          <input
+            type="text"
+            placeholder="Search by name, email or phone..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="searchBar"
+          />
+          <select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="filterSelect"
+          >
+            <option value="all">All Service Types</option>
+            <option value="maternity">Maternity</option>
+            <option value="newborn">Newborn</option>
+            <option value="milestone">Milestone</option>
+            <option value="classes">Classes</option>
+          </select>
         </div>
       </div>
 
@@ -323,243 +338,247 @@ export default function BookingSection() {
           No bookings submitted yet.
         </div>
       ) : (
-        <div className="bookingDashboardGrid">
-          {/* Left Panel: Bookings List */}
-          <div className="bookingsListPanel">
-            <div className="filterControls">
-              <input
-                type="text"
-                placeholder="Search by name, email or phone..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="searchBar"
-              />
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="filterSelect"
-              >
-                <option value="all">All Service Types</option>
-                <option value="maternity">Maternity</option>
-                <option value="newborn">Newborn</option>
-                <option value="milestone">Milestone</option>
-                <option value="classes">Classes</option>
-              </select>
-            </div>
-
-            <div className="bookingsScrollList">
-              {filteredBookings.length === 0 ? (
-                <div className="noResults">No matches found.</div>
-              ) : (
-                filteredBookings.map((b) => (
-                  <div
-                    key={b.id}
-                    className={`bookingListItem ${selectedBooking?.id === b.id ? 'active' : ''}`}
-                    onClick={() => setSelectedBooking(b)}
-                  >
-                    <div className="listHeader">
-                      <h4>{b.fullName}</h4>
+        <div className="tableCard">
+          <div className="bookingsTableWrapper">
+            <table className="bookingsTable">
+              <thead>
+                <tr>
+                  <th>CLIENT ID</th>
+                  <th>CLIENT NAME</th>
+                  <th>PHOTOSHOOT TYPE</th>
+                  <th>PHOTOSHOOT DATE</th>
+                  <th>SELECTED PACKAGE</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredBookings.map((b) => (
+                  <tr key={b.id}>
+                    <td>
+                      <span className="clientIdText">{b.clientId || 'N/A'}</span>
+                    </td>
+                    <td>
+                      <div className="clientNameCell">
+                        <span className="clientNameText">{b.fullName}</span>
+                        <span className="clientPhoneText">{b.phone}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="typeText">{getPhotoshootTypeLabel(b.photoshootType)}</span>
+                    </td>
+                    <td>
+                      <span className="dateText">{b.date}</span>
+                    </td>
+                    <td>
                       <span className={getPackageBadgeClass(b.packageName)}>
-                        {b.packageName}
+                        {b.packageName.toUpperCase()}
                       </span>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          setSelectedBooking(b);
+                          setIsSidebarOpen(true);
+                          setIsViewingCredentials(false);
+                        }}
+                        className="viewBookingBtn"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Right Sidebar Drawer: Detailed View */}
+      {isSidebarOpen && selectedBooking && (
+        <>
+          <div className="sidebarBackdrop" onClick={() => setIsSidebarOpen(false)}></div>
+          <div className="sidebarDrawer open">
+            <button className="closeSidebarBtn" onClick={() => setIsSidebarOpen(false)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            
+            <div className="sidebarContent">
+              {isViewingCredentials ? (
+                <>
+                  <div className="detailCardHeader">
+                    <div>
+                      <h2>Client Login Details</h2>
+                      <span className="submittedAt">Manage credentials for {selectedBooking.fullName}</span>
                     </div>
-                    <div className="listDetails">
-                      <span>{getPhotoshootTypeLabel(b.photoshootType)}</span>
-                      <span>{b.date}</span>
+                    <button
+                      className="backDetailsBtn"
+                      onClick={() => setIsViewingCredentials(false)}
+                    >
+                      Back
+                    </button>
+                  </div>
+
+                  <div className="credentialsForm">
+                    <div className="credentialFieldGroup">
+                      <label className="credLabel">Generated Username</label>
+                      <input
+                        type="text"
+                        value={clientUsername}
+                        onChange={(e) => setClientUsername(e.target.value)}
+                        className="credInput"
+                        placeholder="Username"
+                      />
+                      <small className="fieldHint">Automatically created from client's name</small>
                     </div>
-                    <div className="listPaymentDetails">
-                      <span className={`paymentStatusBadge ${b.paymentStatus || 'pending'}`}>
-                        {b.paymentStatus === 'paid' ? '● Paid' : b.paymentStatus === 'failed' ? '● Failed' : '○ Pending'}
-                      </span>
+
+                    <div className="credentialFieldGroup">
+                      <label className="credLabel">Generated Password</label>
+                      <input
+                        type="text"
+                        value={clientPassword}
+                        onChange={(e) => setClientPassword(e.target.value)}
+                        className="credInput"
+                        placeholder="Password"
+                      />
+                      <small className="fieldHint">Automatically created from client's phone number</small>
+                    </div>
+
+                    <button
+                      className="saveCredentialsBtn"
+                      onClick={handleSaveCredentials}
+                      disabled={savingCredentials}
+                    >
+                      {savingCredentials ? 'Saving...' : credentialsExist ? 'Update Login' : 'Create Login'}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="detailCardHeader">
+                    <div>
+                      <h2>{selectedBooking.fullName}</h2>
+                      <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
+                    </div>
+                    <div className="headerActions">
+                      <button
+                        className="loginBtn"
+                        onClick={() => handleViewCredentials(selectedBooking)}
+                      >
+                        Login
+                      </button>
+                      <button
+                        className="deleteBookingBtn"
+                        onClick={() => handleDelete(selectedBooking.id)}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
-                ))
+
+                  <div className="detailGrid">
+                    <div className="detailField">
+                      <span className="fieldLabel">Client ID / Unique ID</span>
+                      <span className="fieldValue highlightedVal" style={{ fontWeight: 'bold' }}>
+                        {selectedBooking.clientId || 'N/A'}
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Photoshoot Type</span>
+                      <span className="fieldValue highlightedVal">
+                        {getPhotoshootTypeLabel(selectedBooking.photoshootType)}
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Selected Package</span>
+                      <span className="fieldValue">
+                        <span className={getPackageBadgeClass(selectedBooking.packageName)}>
+                          {selectedBooking.packageName.toUpperCase()}
+                        </span>
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Photoshoot Date</span>
+                      <span className="fieldValue">{selectedBooking.date}</span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Preferred Time</span>
+                      <span className="fieldValue">
+                        {selectedBooking.time || 'Not specified'}
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Location Preference</span>
+                      <span className="fieldValue capitalized">
+                        {selectedBooking.locationPreference}
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Phone Number</span>
+                      <span className="fieldValue">
+                        <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Payment Status</span>
+                      <span className="fieldValue">
+                        <span className={`paymentStatusBadge large ${selectedBooking.paymentStatus || 'pending'}`}>
+                          {(selectedBooking.paymentStatus || 'pending').toUpperCase()}
+                        </span>
+                      </span>
+                    </div>
+
+                    <div className="detailField">
+                      <span className="fieldLabel">Payment Method</span>
+                      <span className="fieldValue">
+                        {selectedBooking.paymentMethod || 'N/A'}
+                      </span>
+                    </div>
+
+                    {selectedBooking.paymentId && (
+                      <div className="detailField fullWidth">
+                        <span className="fieldLabel">Razorpay Payment ID</span>
+                        <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
+                      </div>
+                    )}
+
+                    <div className="detailField fullWidth">
+                      <span className="fieldLabel">Email Address</span>
+                      <span className="fieldValue">
+                        {selectedBooking.email ? (
+                          <a href={`mailto:${selectedBooking.email}`} className="link">{selectedBooking.email}</a>
+                        ) : (
+                          <em className="textMuted">Not specified</em>
+                        )}
+                      </span>
+                    </div>
+
+                    <div className="detailField fullWidth">
+                      <span className="fieldLabel">Session Details & Requests</span>
+                      <div className="detailsBox">
+                        {selectedBooking.details ? (
+                          <p>{selectedBooking.details}</p>
+                        ) : (
+                          <p className="noDetailsText">No special custom requests specified.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
           </div>
-
-          {/* Right Panel: Detailed View */}
-          <div className="bookingDetailPanel">
-            {selectedBooking ? (
-              <div className="bookingDetailCard">
-                {isViewingCredentials ? (
-                  <>
-                    <div className="detailCardHeader">
-                      <div>
-                        <h2>Client Login Details</h2>
-                        <span className="submittedAt">Manage credentials for {selectedBooking.fullName}</span>
-                      </div>
-                      <button
-                        className="backDetailsBtn"
-                        onClick={() => setIsViewingCredentials(false)}
-                      >
-                        Back
-                      </button>
-                    </div>
-
-                    <div className="credentialsForm">
-                      <div className="credentialFieldGroup">
-                        <label className="credLabel">Generated Username</label>
-                        <input
-                          type="text"
-                          value={clientUsername}
-                          onChange={(e) => setClientUsername(e.target.value)}
-                          className="credInput"
-                          placeholder="Username"
-                        />
-                        <small className="fieldHint">Automatically created from client's name</small>
-                      </div>
-
-                      <div className="credentialFieldGroup">
-                        <label className="credLabel">Generated Password</label>
-                        <input
-                          type="text"
-                          value={clientPassword}
-                          onChange={(e) => setClientPassword(e.target.value)}
-                          className="credInput"
-                          placeholder="Password"
-                        />
-                        <small className="fieldHint">Automatically created from client's phone number</small>
-                      </div>
-
-                      <button
-                        className="saveCredentialsBtn"
-                        onClick={handleSaveCredentials}
-                        disabled={savingCredentials}
-                      >
-                        {savingCredentials ? 'Saving...' : credentialsExist ? 'Update Login' : 'Create Login'}
-                      </button>
-
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="detailCardHeader">
-                      <div>
-                        <h2>{selectedBooking.fullName}</h2>
-                        <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
-                      </div>
-                      <div className="headerActions">
-                        <button
-                          className="loginBtn"
-                          onClick={() => handleViewCredentials(selectedBooking)}
-                        >
-                          Login
-                        </button>
-                        <button
-                          className="deleteBookingBtn"
-                          onClick={() => handleDelete(selectedBooking.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="detailGrid">
-                      <div className="detailField">
-                        <span className="fieldLabel">Client ID / Unique ID</span>
-                        <span className="fieldValue highlightedVal" style={{ fontWeight: 'bold' }}>
-                          {selectedBooking.clientId || 'N/A'}
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Photoshoot Type</span>
-                        <span className="fieldValue highlightedVal">
-                          {getPhotoshootTypeLabel(selectedBooking.photoshootType)}
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Selected Package</span>
-                        <span className="fieldValue">
-                          <span className={getPackageBadgeClass(selectedBooking.packageName)}>
-                            {selectedBooking.packageName.toUpperCase()}
-                          </span>
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Photoshoot Date</span>
-                        <span className="fieldValue">{selectedBooking.date}</span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Preferred Time</span>
-                        <span className="fieldValue">
-                          {selectedBooking.time || 'Not specified'}
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Location Preference</span>
-                        <span className="fieldValue capitalized">
-                          {selectedBooking.locationPreference}
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Phone Number</span>
-                        <span className="fieldValue">
-                          <a href={`tel:${selectedBooking.phone}`} className="link">{selectedBooking.phone}</a>
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Payment Status</span>
-                        <span className="fieldValue">
-                          <span className={`paymentStatusBadge large ${selectedBooking.paymentStatus || 'pending'}`}>
-                            {(selectedBooking.paymentStatus || 'pending').toUpperCase()}
-                          </span>
-                        </span>
-                      </div>
-
-                      <div className="detailField">
-                        <span className="fieldLabel">Payment Method</span>
-                        <span className="fieldValue">
-                          {selectedBooking.paymentMethod || 'N/A'}
-                        </span>
-                      </div>
-
-                      {selectedBooking.paymentId && (
-                        <div className="detailField fullWidth">
-                          <span className="fieldLabel">Razorpay Payment ID</span>
-                          <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
-                        </div>
-                      )}
-
-                      <div className="detailField fullWidth">
-                        <span className="fieldLabel">Email Address</span>
-                        <span className="fieldValue">
-                          {selectedBooking.email ? (
-                            <a href={`mailto:${selectedBooking.email}`} className="link">{selectedBooking.email}</a>
-                          ) : (
-                            <em className="textMuted">Not specified</em>
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="detailField fullWidth">
-                        <span className="fieldLabel">Session Details & Requests</span>
-                        <div className="detailsBox">
-                          {selectedBooking.details ? (
-                            <p>{selectedBooking.details}</p>
-                          ) : (
-                            <p className="noDetailsText">No special custom requests specified.</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            ) : (
-              <div className="noSelectionState">
-                <p>Select a booking request from the list to view full details.</p>
-              </div>
-            )}
-          </div>
-        </div>
+        </>
       )}
 
       {/* Receipt Modal Overlay */}

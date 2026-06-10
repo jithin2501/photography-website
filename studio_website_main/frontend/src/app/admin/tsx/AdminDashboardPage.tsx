@@ -6,9 +6,7 @@ import '../css/Admin.css';
 import AdminLayout from './AdminLayout';
 import MessageSection from './MessageSection';
 import WheelSection from './WheelSection';
-// Dynamic admin panel section for managing gallery photo uploads
 import GallerySection from './GallerySection';
-import PricingSection from './PricingSection';
 import BookingSection from './BookingSection';
 import ReviewSection from './ReviewSection';
 import SettingsSection from './SettingsSection';
@@ -143,8 +141,6 @@ export default function AdminDashboardPage() {
         <PaymentsSection />
       ) : activeTab === 'gallery' ? (
         <GallerySection />
-      ) : activeTab === 'pricing' ? (
-        <PricingSection />
       ) : activeTab === 'reviews' ? (
         <ReviewSection />
       ) : activeTab === 'settings' ? (

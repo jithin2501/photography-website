@@ -62,6 +62,26 @@ public class BookingService {
         }
     }
 
+    public Booking updateBooking(@NonNull Booking booking) {
+        if (useFallback) {
+            for (int i = 0; i < inMemoryFallback.size(); i++) {
+                if (inMemoryFallback.get(i).getId().equals(booking.getId())) {
+                    inMemoryFallback.set(i, booking);
+                    return booking;
+                }
+            }
+            inMemoryFallback.add(0, booking);
+            return booking;
+        }
+        try {
+            return bookingRepository.save(booking);
+        } catch (Exception e) {
+            System.err.println("MongoDB connection failed! Falling back to in-memory storage for updates. Error: " + e.getMessage());
+            useFallback = true;
+            return updateBooking(booking);
+        }
+    }
+
     public List<Booking> getAllBookings() {
         if (useFallback) {
             for (Booking b : inMemoryFallback) {

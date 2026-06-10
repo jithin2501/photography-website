@@ -20,6 +20,7 @@ interface Booking {
   paymentMethod?: string;
   paymentId?: string;
   clientId?: string;
+  clientImages?: { name: string; url: string }[];
 }
 
 export default function ClientDashboardPage() {
@@ -182,7 +183,8 @@ export default function ClientDashboardPage() {
             <p>{error}</p>
           </div>
         ) : booking ? (
-          <div className="clientDashboardGrid">
+          <>
+            <div className="clientDashboardGrid">
             {/* Session Details Card */}
             <section className="clientCard sessionDetailsCard">
               <div className="clientCardHeader">
@@ -269,7 +271,81 @@ export default function ClientDashboardPage() {
               </div>
             </section>
           </div>
-        ) : (
+
+          {/* Separate Space for client section below the boxes */}
+          <section className="clientPhotosSection">
+            <div className="clientCardHeader">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+              <h2>Your Photos & Gallery</h2>
+            </div>
+            
+            <p className="photosDescription">
+              View and download the high-resolution images from your session below.
+            </p>
+
+            {booking.clientImages && booking.clientImages.length > 0 ? (
+              <div className="clientPhotosGrid">
+                {booking.clientImages.map((img, idx) => (
+                  <div key={idx} className="clientPhotoCard">
+                    <div 
+                      className="clientPhotoFrame" 
+                      style={{ backgroundImage: `url('${img.url}')` }}
+                    >
+                      <div className="clientPhotoHoverOverlay">
+                        <a 
+                          href={img.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="overlayActionBtn"
+                          title="View Fullsize"
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        </a>
+                        <a 
+                          href={img.url} 
+                          download={img.name}
+                          target="_blank"
+                          rel="noopener noreferrer" 
+                          className="overlayActionBtn secondaryBtn"
+                          title="Download Image"
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                    <div className="photoCardMeta">
+                      <span className="photoCardTitle" title={img.name}>{img.name}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="noPhotosBox">
+                <div className="noPhotosIcon">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                </div>
+                <h3>Photos Processing</h3>
+                <p>Your beautiful photos are currently being edited and processed. Once complete, your personalized gallery will show up here.</p>
+              </div>
+            )}
+          </section>
+        </>
+      ) : (
           <div className="clientDashboardErrorCard">
             <p>No booking is currently linked to your portal account.</p>
           </div>

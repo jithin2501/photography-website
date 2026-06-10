@@ -166,4 +166,20 @@ public class BookingController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/admin/{id}/images")
+    public ResponseEntity<?> updateClientImages(@PathVariable @NonNull String id, @RequestBody List<Booking.ClientImage> clientImages) {
+        Booking booking = bookingService.getBookingById(id);
+        if (booking == null) {
+            Map<String, String> err = new HashMap<>();
+            err.put("error", "Booking not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+        }
+        booking.setClientImages(clientImages);
+        Booking saved = bookingService.updateBooking(booking);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", saved);
+        return ResponseEntity.ok(response);
+    }
 }

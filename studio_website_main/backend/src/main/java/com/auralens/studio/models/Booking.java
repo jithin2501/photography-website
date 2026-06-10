@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 @Document(collection = "bookings")
 public class Booking {
@@ -25,6 +27,7 @@ public class Booking {
     private String paymentId;                 
     private String razorpayOrderId;           
     private String clientId;
+    private List<ClientImage> clientImages = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -164,11 +167,47 @@ public class Booking {
         this.clientId = clientId;
     }
 
+    public List<ClientImage> getClientImages() {
+        return clientImages;
+    }
+
+    public void setClientImages(List<ClientImage> clientImages) {
+        this.clientImages = clientImages;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public static class ClientImage {
+        private String name;
+        private String url;
+
+        public ClientImage() {}
+
+        public ClientImage(String name, String url) {
+            this.name = name;
+            this.url = url;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 }

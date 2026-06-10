@@ -1,0 +1,400 @@
+/* ClientImagesSection.css */
+
+.clientImagesSectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: #0d0d0d;
+  min-height: calc(100vh - 80px);
+  color: #ffffff;
+}
+
+.selectClientCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.selectClientCard h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+}
+
+.clientSelectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clientDropdown {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 500px;
+}
+
+.clientDropdown option {
+  background: #121212;
+  color: #ffffff;
+  padding: 12px;
+}
+
+.clientDropdown:focus {
+  border-color: #FF4D00;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.15);
+}
+
+.uploadWorkspace {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 992px) {
+  .uploadWorkspace {
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+.uploadControlPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.infoCardPremium {
+  background: rgba(255, 77, 0, 0.02);
+  border: 1px solid rgba(255, 77, 0, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.infoCardPremium h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FF4D00;
+  margin: 0 0 8px 0;
+}
+
+.infoCardPremium p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.dropzoneArea {
+  position: relative;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.01);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dropzoneArea:hover {
+  border-color: #FF4D00;
+  background: rgba(255, 77, 0, 0.02);
+}
+
+.dropzoneArea.dragging {
+  border-color: #FF4D00;
+  background: rgba(255, 77, 0, 0.05);
+  transform: scale(1.02);
+}
+
+.dropzoneInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropzoneIcon {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease;
+}
+
+.dropzoneArea:hover .dropzoneIcon {
+  color: #FF4D00;
+}
+
+.dropzoneText h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.dropzoneText p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+.imagesGridPanel {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panelHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 16px;
+}
+
+.panelHeaderRow h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.imageCounter {
+  background: rgba(255, 77, 0, 0.1);
+  color: #FF4D00;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 77, 0, 0.2);
+}
+
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  min-height: 200px;
+}
+
+.imageCardPremium {
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.imageCardPremium:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 77, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.thumbnailWrapper {
+  position: relative;
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.deleteCardBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ff4d4d;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deleteCardBtn:hover {
+  background: #ff4d4d;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.cardDetails {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardDetails label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cardImageNameInput {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.cardImageNameInput:focus {
+  border-color: #FF4D00;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.queueCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  opacity: 0.7;
+}
+
+.uploadProgressOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.progressSpinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(255, 77, 0, 0.2);
+  border-top-color: #FF4D00;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.progressText {
+  font-size: 0.75rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.saveChangesBar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20px;
+}
+
+.saveBtnPremium {
+  background: #FF4D00;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saveBtnPremium:hover:not(:disabled) {
+  background: #e64500;
+  box-shadow: 0 0 15px rgba(255, 77, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.saveBtnPremium:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.3);
+  cursor: not-allowed;
+}
+
+.cancelBtnPremium {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelBtnPremium:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cancelBtnPremium:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.emptyGridPlaceholder {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  gap: 12px;
+}
+
+.placeholderGridIcon {
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.emptyGridPlaceholder h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.emptyGridPlaceholder p {
+  font-size: 0.85rem;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.5;
+}

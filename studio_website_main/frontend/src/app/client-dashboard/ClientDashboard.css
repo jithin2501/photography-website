@@ -616,3 +616,156 @@
     display: none !important;
   }
 }
+
+/* Client Photos Section */
+.clientPhotosSection {
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.photosDescription {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  margin: -10px 0 24px 0;
+  line-height: 1.5;
+}
+
+.clientPhotosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.clientPhotoCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+}
+
+.clientPhotoCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 77, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.clientPhotoFrame {
+  position: relative;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.clientPhotoHoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  gap: 12px;
+}
+
+.clientPhotoCard:hover .clientPhotoHoverOverlay {
+  opacity: 1;
+}
+
+.overlayActionBtn {
+  background: #FF4D00;
+  color: #ffffff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.3);
+  text-decoration: none;
+}
+
+.overlayActionBtn:hover {
+  transform: scale(1.1);
+  background: #e64500;
+  box-shadow: 0 4px 16px rgba(255, 77, 0, 0.5);
+}
+
+.overlayActionBtn.secondaryBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+.overlayActionBtn.secondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.photoCardMeta {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.photoCardTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.noPhotosBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.01);
+  text-align: center;
+  gap: 16px;
+}
+
+.noPhotosIcon {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.noPhotosBox h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.noPhotosBox p {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.55;
+}

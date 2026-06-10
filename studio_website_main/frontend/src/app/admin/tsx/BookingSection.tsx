@@ -302,11 +302,9 @@ export default function BookingSection() {
 
   return (
     <div className="bookingSectionContainer">
-      <div className="controlsRow" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-        <div>
-          <h1 className="sectionTitle">Booking Requests</h1>
-        </div>
-        <div className="filterControls" style={{ display: 'flex', gap: '12px', border: 'none', background: 'transparent', padding: 0, alignItems: 'center' }}>
+      <div className="controlsRow">
+        <h1 className="sectionTitle">Booking Requests</h1>
+        <div className="filterControls">
           <input
             type="text"
             placeholder="Search by name, email or phone..."
@@ -458,24 +456,10 @@ export default function BookingSection() {
                 </>
               ) : (
                 <>
-                  <div className="detailCardHeader">
-                    <div>
+                  <div className="detailCardHeader" style={{ justifyContent: 'center', textAlign: 'center', width: '100%' }}>
+                    <div style={{ textAlign: 'center', width: '100%' }}>
                       <h2>{selectedBooking.fullName}</h2>
                       <span className="submittedAt">Submitted on {formatTimestamp(selectedBooking.createdAt)}</span>
-                    </div>
-                    <div className="headerActions">
-                      <button
-                        className="loginBtn"
-                        onClick={() => handleViewCredentials(selectedBooking)}
-                      >
-                        Login
-                      </button>
-                      <button
-                        className="deleteBookingBtn"
-                        onClick={() => handleDelete(selectedBooking.id)}
-                      >
-                        Delete
-                      </button>
                     </div>
                   </div>
 
@@ -546,7 +530,7 @@ export default function BookingSection() {
                     </div>
 
                     {selectedBooking.paymentId && (
-                      <div className="detailField fullWidth">
+                      <div className="detailField">
                         <span className="fieldLabel">Razorpay Payment ID</span>
                         <span className="fieldValue textCode">{selectedBooking.paymentId}</span>
                       </div>
@@ -572,6 +556,23 @@ export default function BookingSection() {
                           <p className="noDetailsText">No special custom requests specified.</p>
                         )}
                       </div>
+                    </div>
+
+                    <div className="detailField fullWidth" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '24px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '20px' }}>
+                      <button
+                        className="loginBtn"
+                        onClick={() => handleViewCredentials(selectedBooking)}
+                        style={{ margin: 0 }}
+                      >
+                        Login
+                      </button>
+                      <button
+                        className="deleteBookingBtn"
+                        onClick={() => handleDelete(selectedBooking.id)}
+                        style={{ margin: 0 }}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </>

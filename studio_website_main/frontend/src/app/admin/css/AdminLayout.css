@@ -184,7 +184,8 @@
 .adminMain .pricingSectionContainer,
 .adminMain .reviewSection,
 .adminMain .reviewSectionContainer,
-.adminMain .bookingSectionContainer {
+.adminMain .bookingSectionContainer,
+.adminMain .settingsSectionContainer {
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;

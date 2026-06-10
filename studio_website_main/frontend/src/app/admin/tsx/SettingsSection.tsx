@@ -8,7 +8,7 @@ export default function SettingsSection() {
   const [photoshoots, setPhotoshoots] = useState<number>(1000);
   const [awardsWon, setAwardsWon] = useState<number>(20);
   const [clientSatisfaction, setClientSatisfaction] = useState<number>(99);
-  const [instagramId, setInstagramId] = useState<string>('auralens_studio');
+  const [instagramId, setInstagramId] = useState<string>('jith_in05');
 
   const [loading, setLoading] = useState<boolean>(true);
   const [saving, setSaving] = useState<boolean>(false);
@@ -25,7 +25,7 @@ export default function SettingsSection() {
           setPhotoshoots(data.data.photoshoots);
           setAwardsWon(data.data.awardsWon);
           setClientSatisfaction(data.data.clientSatisfaction !== undefined ? data.data.clientSatisfaction : 99);
-          setInstagramId(data.data.instagramId || 'auralens_studio');
+          setInstagramId(data.data.instagramId || 'jith_in05');
         } else {
           setError(data.error || 'Failed to retrieve site settings.');
         }
@@ -97,12 +97,10 @@ export default function SettingsSection() {
   };
 
   return (
-    <div className="settingsSection">
+    <div className="settingsSectionContainer">
       {/* Title block aligned straight with dashboard title */}
-      <div className="sectionHeader">
-        <div>
-          <h1 className="mainTitle">Stats & Settings</h1>
-        </div>
+      <div className="controlsRow">
+        <h1 className="sectionTitle">Stats & Settings</h1>
       </div>
 
       {loading ? (
@@ -124,82 +122,92 @@ export default function SettingsSection() {
             {error && <div className="messageAlert errorAlert">{error}</div>}
             {success && <div className="messageAlert successAlert">{success}</div>}
 
-            <div className="formGroup">
-              <label className="formLabel" htmlFor="happy-clients">Happy Clients</label>
-              <input
-                id="happy-clients"
-                type="number"
-                className="settingsInput"
-                value={happyClients}
-                onChange={(e) => setHappyClients(parseInt(e.target.value) || 0)}
-                required
-                min="0"
-              />
-            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', marginTop: '10px' }}>
+              {/* Left Column: Statistics */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div className="formGroup">
+                  <label className="formLabel" htmlFor="happy-clients">Happy Clients</label>
+                  <input
+                    id="happy-clients"
+                    type="number"
+                    className="settingsInput"
+                    value={happyClients}
+                    onChange={(e) => setHappyClients(parseInt(e.target.value) || 0)}
+                    required
+                    min="0"
+                  />
+                </div>
 
-            <div className="formGroup">
-              <label className="formLabel" htmlFor="photoshoots">Photoshoots</label>
-              <input
-                id="photoshoots"
-                type="number"
-                className="settingsInput"
-                value={photoshoots}
-                onChange={(e) => setPhotoshoots(parseInt(e.target.value) || 0)}
-                required
-                min="0"
-              />
-            </div>
+                <div className="formGroup">
+                  <label className="formLabel" htmlFor="photoshoots">Photoshoots</label>
+                  <input
+                    id="photoshoots"
+                    type="number"
+                    className="settingsInput"
+                    value={photoshoots}
+                    onChange={(e) => setPhotoshoots(parseInt(e.target.value) || 0)}
+                    required
+                    min="0"
+                  />
+                </div>
 
-            <div className="formGroup">
-              <label className="formLabel" htmlFor="awards-won">Awards Won</label>
-              <input
-                id="awards-won"
-                type="number"
-                className="settingsInput"
-                value={awardsWon}
-                onChange={(e) => setAwardsWon(parseInt(e.target.value) || 0)}
-                required
-                min="0"
-              />
-            </div>
+                <div className="formGroup">
+                  <label className="formLabel" htmlFor="awards-won">Awards Won</label>
+                  <input
+                    id="awards-won"
+                    type="number"
+                    className="settingsInput"
+                    value={awardsWon}
+                    onChange={(e) => setAwardsWon(parseInt(e.target.value) || 0)}
+                    required
+                    min="0"
+                  />
+                </div>
+              </div>
 
-            <div className="formGroup">
-              <label className="formLabel" htmlFor="client-satisfaction">Client Satisfaction (in %)</label>
-              <input
-                id="client-satisfaction"
-                type="number"
-                className="settingsInput"
-                value={clientSatisfaction}
-                onChange={(e) => setClientSatisfaction(parseInt(e.target.value) || 0)}
-                required
-                min="0"
-                max="100"
-              />
-            </div>
+              {/* Right Column: Satisfaction, Instagram & Save Button */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  <div className="formGroup">
+                    <label className="formLabel" htmlFor="client-satisfaction">Client Satisfaction (in %)</label>
+                    <input
+                      id="client-satisfaction"
+                      type="number"
+                      className="settingsInput"
+                      value={clientSatisfaction}
+                      onChange={(e) => setClientSatisfaction(parseInt(e.target.value) || 0)}
+                      required
+                      min="0"
+                      max="100"
+                    />
+                  </div>
 
-            <div className="formGroup">
-              <label className="formLabel" htmlFor="instagram-id">Instagram Profile Handle</label>
-              <input
-                id="instagram-id"
-                type="text"
-                className="settingsInput"
-                placeholder="e.g. auralens_studio"
-                value={instagramId}
-                onChange={(e) => setInstagramId(e.target.value)}
-                required
-              />
-            </div>
+                  <div className="formGroup">
+                    <label className="formLabel" htmlFor="instagram-id">Instagram Profile Handle</label>
+                    <input
+                      id="instagram-id"
+                      type="text"
+                      className="settingsInput"
+                      placeholder="e.g. auralens_studio"
+                      value={instagramId}
+                      onChange={(e) => setInstagramId(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
 
-            <button type="submit" className="saveBtn" disabled={saving}>
-              {saving ? (
-                <>
-                  <div style={{ width: '16px', height: '16px', border: '2px solid rgba(255,255,255,0.1)', borderTopColor: '#ffffff', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-                  <span>Saving...</span>
-                </>
-              ) : (
-                <span>Save Configurations</span>
-              )}
-            </button>
+                <button type="submit" className="saveBtn" disabled={saving} style={{ marginTop: 'auto', alignSelf: 'stretch', width: '100%' }}>
+                  {saving ? (
+                    <>
+                      <div style={{ width: '16px', height: '16px', border: '2px solid rgba(255,255,255,0.1)', borderTopColor: '#ffffff', borderRadius: '50%', animation: 'spin 1s linear infinite', marginRight: '8px' }}></div>
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <span>Save Configurations</span>
+                  )}
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       )}

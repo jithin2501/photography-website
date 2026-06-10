@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/AdminLayout.css';
 
 interface AdminLayoutProps {
@@ -16,6 +16,33 @@ export default function AdminLayout({
   onLogout,
   children,
 }: AdminLayoutProps) {
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) return;
+      try {
+        const response = await fetch('http://localhost:5000/api/chat/unread-counts', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const total = Object.values(data).reduce((acc: number, val: any) => acc + Number(val), 0);
+          setUnreadCount(total);
+        }
+      } catch (err) {
+        console.error('Error fetching unread count in sidebar:', err);
+      }
+    };
+
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="adminContainer">
       {/* Sidebar */}
@@ -54,6 +81,9 @@ export default function AdminLayout({
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
                 <span>Client Users</span>
+                {unreadCount > 0 && (
+                  <span className="sidebarUnreadBadge">{unreadCount}</span>
+                )}
               </span>
             </li>
             <li className={activeTab === 'client-images' ? 'active' : ''} onClick={() => onTabChange('client-images')}>

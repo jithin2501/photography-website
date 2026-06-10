@@ -26,12 +26,12 @@ export default function ClientImagesSection() {
   const [selectedBookingId, setSelectedBookingId] = useState('');
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [clientImages, setClientImages] = useState<ClientImage[]>([]);
-  
+
   // Uploading status
   const [uploadingQueue, setUploadingQueue] = useState<{ id: string; name: string }[]>([]);
   const [saving, setSaving] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -106,10 +106,10 @@ export default function ClientImagesSection() {
 
     // Process files one by one or in parallel
     const filesArray = Array.from(files);
-    
+
     for (const file of filesArray) {
       const tempId = Math.random().toString(36).substring(2, 9);
-      
+
       // Add to uploading queue
       setUploadingQueue((prev) => [...prev, { id: tempId, name: file.name }]);
 
@@ -209,7 +209,7 @@ export default function ClientImagesSection() {
         <>
           {/* Step 1: Select client */}
           <div className="selectClientCard">
-            <h2>Step 1: Select a Client Booking</h2>
+            <h2>Select a Client Booking</h2>
             <div className="clientSelectWrapper">
               <select
                 value={selectedBookingId}
@@ -258,8 +258,8 @@ export default function ClientImagesSection() {
                         if (!img.reeditRequested) return null;
                         return (
                           <div key={index} className="reeditListItem">
-                            <div 
-                              className="reeditItemThumb" 
+                            <div
+                              className="reeditItemThumb"
                               style={{ backgroundImage: `url('${img.url}')` }}
                             />
                             <div className="reeditItemInfo">
@@ -271,11 +271,11 @@ export default function ClientImagesSection() {
                               className="reeditDoneBtn"
                               title="Mark as Re-edited"
                               onClick={async () => {
-                                const updated = clientImages.map((item, idx) => 
+                                const updated = clientImages.map((item, idx) =>
                                   idx === index ? { ...item, reeditRequested: false } : item
                                 );
                                 setClientImages(updated);
-                                
+
                                 const token = localStorage.getItem('adminToken');
                                 try {
                                   await fetch(`http://localhost:5000/api/bookings/admin/${selectedBookingId}/images`, {
@@ -313,7 +313,7 @@ export default function ClientImagesSection() {
                   )}
                 </div>
 
-                <div 
+                <div
                   className={`dropzoneArea ${isDragging ? 'dragging' : ''}`}
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
@@ -354,15 +354,15 @@ export default function ClientImagesSection() {
                 <div className="imagesGrid">
                   {clientImages.map((img, index) => (
                     <div key={index} className="imageCardPremium">
-                      <div 
-                        className="thumbnailWrapper" 
+                      <div
+                        className="thumbnailWrapper"
                         style={{ backgroundImage: `url('${img.url}')` }}
                       >
                         {img.reeditRequested && (
                           <div className="reeditBadgeAdmin">Re-edit</div>
                         )}
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           className="deleteCardBtn"
                           onClick={() => handleDeleteImage(index)}
                           title="Remove Image"

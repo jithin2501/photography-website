@@ -185,6 +185,7 @@
 .adminMain .reviewSection,
 .adminMain .reviewSectionContainer,
 .adminMain .bookingSectionContainer,
+.adminMain .clientImagesSectionContainer,
 .adminMain .settingsSectionContainer {
   padding: 0 !important;
   margin: 0 !important;

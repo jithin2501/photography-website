@@ -3,10 +3,7 @@
 .clientImagesSectionContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 24px;
-  background: #0d0d0d;
-  min-height: calc(100vh - 80px);
+  gap: 16px;
   color: #ffffff;
 }
 

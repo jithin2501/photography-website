@@ -242,7 +242,7 @@ export default function UserManagementSection() {
   return (
     <div className="userManagementContainer">
       <div className="controlsRow">
-        <h1 className="sectionTitle">USER MANAGEMENT</h1>
+        <h1 className="sectionTitle">User Management</h1>
       </div>
 
       {/* Form Section */}

@@ -3,7 +3,7 @@
 .userManagementContainer {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   padding: 24px;
   background: #0d0d0d;
   min-height: calc(100vh - 80px);
@@ -17,7 +17,7 @@
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 20px;
-  margin-bottom: 8px;
+  margin-bottom: 0 !important;
 }
 
 .sectionTitle {

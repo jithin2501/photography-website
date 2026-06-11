@@ -34,6 +34,251 @@ export default function ClientDashboardPage() {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
   const [updatingReeditIndex, setUpdatingReeditIndex] = useState<number | null>(null);
 
+  // Device & Google Drive Download States
+  const [downloadingDevice, setDownloadingDevice] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [googleClientId, setGoogleClientId] = useState('');
+  const [showConfigModal, setShowConfigModal] = useState(false);
+  const [tempClientId, setTempClientId] = useState('');
+  const [savingToDrive, setSavingToDrive] = useState(false);
+  const [driveProgress, setDriveProgress] = useState(0);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('googleClientId');
+    if (stored) {
+      setGoogleClientId(stored);
+      setTempClientId(stored);
+    }
+  }, []);
+
+  const loadScript = (src: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Script load error for ${src}`));
+      document.head.appendChild(script);
+    });
+  };
+
+  const handleDownloadAllToDevice = async () => {
+    if (!booking || !booking.clientImages || booking.clientImages.length === 0) return;
+    setDownloadingDevice(true);
+    setDownloadProgress(0);
+    
+    try {
+      const JSZip = (await import('jszip')).default;
+      const zip = new JSZip();
+      
+      const images = booking.clientImages;
+      let loaded = 0;
+      
+      for (const img of images) {
+        try {
+          const response = await fetch(img.url);
+          const blob = await response.blob();
+          
+          let filename = img.name || `image_${loaded + 1}`;
+          if (!filename.includes('.')) {
+            const mime = blob.type;
+            const ext = mime ? mime.split('/')[1] : 'jpg';
+            filename = `${filename}.${ext}`;
+          }
+          
+          zip.file(filename, blob);
+        } catch (err) {
+          console.error(`Failed to download ${img.url}:`, err);
+        }
+        loaded++;
+        setDownloadProgress(Math.round((loaded / images.length) * 100));
+      }
+      
+      const content = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(content);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${booking.fullName.replace(/\s+/g, '_')}_Photos.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Error creating ZIP archive:', err);
+      alert('Failed to bundle and download images. Please try downloading them individually.');
+    } finally {
+      setDownloadingDevice(false);
+    }
+  };
+
+  const handleSaveToGoogleDrive = () => {
+    if (!googleClientId) {
+      setShowConfigModal(true);
+    } else {
+      triggerGoogleDriveAuth(googleClientId);
+    }
+  };
+
+  const triggerGoogleDriveAuth = async (clientIdToUse: string) => {
+    setSavingToDrive(true);
+    setDriveProgress(0);
+    
+    try {
+      await loadScript('https://accounts.google.com/gsi/client');
+      
+      const google = (window as any).google;
+      if (!google || !google.accounts) {
+        throw new Error('Google Identity Services script failed to load.');
+      }
+      
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: clientIdToUse,
+        scope: 'https://www.googleapis.com/auth/drive.file',
+        callback: async (tokenResponse: any) => {
+          if (tokenResponse.error !== undefined) {
+            alert(`Google Authentication error: ${tokenResponse.error}`);
+            setSavingToDrive(false);
+            return;
+          }
+          
+          try {
+            const accessToken = tokenResponse.access_token;
+            await uploadAllImagesToDrive(accessToken);
+          } catch (err: any) {
+            console.error('Error in drive upload process:', err);
+            alert(`Failed to save images: ${err.message || err}`);
+            setSavingToDrive(false);
+          }
+        },
+        error_callback: (err: any) => {
+          console.error('GIS Error:', err);
+          alert('Failed to authorize with Google Drive.');
+          setSavingToDrive(false);
+        }
+      });
+      
+      tokenClient.requestAccessToken({ prompt: 'consent' });
+    } catch (err: any) {
+      console.error('Error starting Google Drive integration:', err);
+      alert(`Could not start Google Drive integration: ${err.message || err}`);
+      setSavingToDrive(false);
+    }
+  };
+
+  const createDriveFolder = async (accessToken: string, folderName: string) => {
+    const response = await fetch('https://www.googleapis.com/drive/v3/files', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: folderName,
+        mimeType: 'application/vnd.google-apps.folder'
+      })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Folder creation failed: ${errText}`);
+    }
+
+    const data = await response.json();
+    return data.id;
+  };
+
+  const uploadImageToDrive = async (accessToken: string, folderId: string, filename: string, imageBlob: Blob) => {
+    const metadata = {
+      name: filename,
+      parents: [folderId]
+    };
+
+    const boundary = '314159265358979323846';
+    const delimiter = `\r\n--${boundary}\r\n`;
+    const closeDelimiter = `\r\n--${boundary}--`;
+
+    const reader = new FileReader();
+    const base64DataPromise = new Promise<string>((resolve) => {
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        const base64 = dataUrl.split(',')[1];
+        resolve(base64);
+      };
+      reader.readAsDataURL(imageBlob);
+    });
+
+    const base64Data = await base64DataPromise;
+
+    const multipartRequestBody =
+      delimiter +
+      'Content-Type: application/json; charset=UTF-8\r\n\r\n' +
+      JSON.stringify(metadata) +
+      delimiter +
+      `Content-Type: ${imageBlob.type}\r\n` +
+      'Content-Transfer-Encoding: base64\r\n\r\n' +
+      base64Data +
+      closeDelimiter;
+
+    const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': `multipart/related; boundary=${boundary}`
+      },
+      body: multipartRequestBody
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Drive upload failed: ${errText}`);
+    }
+
+    return response.json();
+  };
+
+  const uploadAllImagesToDrive = async (accessToken: string) => {
+    if (!booking || !booking.clientImages || booking.clientImages.length === 0) return;
+    
+    try {
+      const folderName = `AuraLens Studio - ${booking.fullName}`;
+      const folderId = await createDriveFolder(accessToken, folderName);
+      
+      const images = booking.clientImages;
+      let loaded = 0;
+      
+      for (const img of images) {
+        try {
+          const response = await fetch(img.url);
+          const blob = await response.blob();
+          
+          let filename = img.name || `image_${loaded + 1}`;
+          if (!filename.includes('.')) {
+            const mime = blob.type;
+            const ext = mime ? mime.split('/')[1] : 'jpg';
+            filename = `${filename}.${ext}`;
+          }
+          
+          await uploadImageToDrive(accessToken, folderId, filename, blob);
+        } catch (err) {
+          console.error(`Failed to upload ${img.url} to drive:`, err);
+        }
+        loaded++;
+        setDriveProgress(Math.round((loaded / images.length) * 100));
+      }
+      
+      alert(`Successfully saved all ${images.length} images to Google Drive inside folder "${folderName}"!`);
+    } catch (err: any) {
+      throw err;
+    } finally {
+      setSavingToDrive(false);
+    }
+  };
+
   // Chat state
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<any[]>([]);
@@ -466,13 +711,63 @@ export default function ClientDashboardPage() {
 
           {/* Separate Space for client section below the boxes */}
           <section className="clientPhotosSection">
-            <div className="clientCardHeader">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <h2>Your Photos & Gallery</h2>
+            <div className="clientCardHeader galleryHeader">
+              <div className="headerTitleWrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <h2>Your Photos & Gallery</h2>
+              </div>
+
+              {booking.clientImages && booking.clientImages.length > 0 && (
+                <div className="galleryActionButtons">
+                  <button 
+                    onClick={handleDownloadAllToDevice} 
+                    className="galleryActionBtn"
+                    disabled={downloadingDevice}
+                  >
+                    {downloadingDevice ? (
+                      <>
+                        <div className="btnSpinner"></div>
+                        <span>Packaging ZIP ({downloadProgress}%)...</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span>Download All to Device</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button 
+                    onClick={handleSaveToGoogleDrive} 
+                    className="galleryActionBtn googleDriveBtn"
+                    disabled={savingToDrive}
+                  >
+                    {savingToDrive ? (
+                      <>
+                        <div className="btnSpinner"></div>
+                        <span>Saving to Drive ({driveProgress}%)...</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2L2 22h20L12 2z" />
+                          <path d="M12 2v20" />
+                          <path d="M17 12H7" />
+                        </svg>
+                        <span>Save All to Google Drive</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
             
             <p className="photosDescription">
@@ -820,6 +1115,58 @@ export default function ClientDashboardPage() {
               </svg>
             </button>
           </form>
+        </div>
+      )}
+      {/* Configuration Modal Overlay */}
+      {showConfigModal && (
+        <div className="configModalOverlay" onClick={() => setShowConfigModal(false)}>
+          <div className="configModal" onClick={(e) => e.stopPropagation()}>
+            <h3>Google Drive Integration</h3>
+            <p className="configInstructions">
+              To upload photos directly to your personal Google Drive, we need a <strong>Google Client ID</strong>.
+            </p>
+            <p className="configSteps">
+              1. Go to the <a href="https://console.cloud.google.com/" target="_blank" rel="noopener noreferrer">Google Cloud Console</a>.<br />
+              2. Set up your OAuth consent screen.<br />
+              3. Create an <strong>OAuth 2.0 Client ID</strong> (Web Application type).<br />
+              4. Add <code>http://localhost:3000</code> to <strong>Authorized JavaScript origins</strong>.<br />
+              5. Copy the Client ID and paste it below:
+            </p>
+            
+            <div className="configInputGroup">
+              <label htmlFor="clientIdInput">Google OAuth Client ID</label>
+              <input
+                id="clientIdInput"
+                type="text"
+                value={tempClientId}
+                onChange={(e) => setTempClientId(e.target.value)}
+                placeholder="example: 12345678-abc.apps.googleusercontent.com"
+              />
+            </div>
+            
+            <div className="configModalButtons">
+              <button 
+                type="button" 
+                onClick={() => {
+                  const defaultId = tempClientId.trim() || '180907238125-99dkgv9btr4b0m7j5aepsk8u43clocv1.apps.googleusercontent.com';
+                  localStorage.setItem('googleClientId', defaultId);
+                  setGoogleClientId(defaultId);
+                  setShowConfigModal(false);
+                  triggerGoogleDriveAuth(defaultId);
+                }}
+                className="saveConfigBtn"
+              >
+                Connect & Save
+              </button>
+              <button 
+                type="button" 
+                onClick={() => setShowConfigModal(false)}
+                className="cancelConfigBtn"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

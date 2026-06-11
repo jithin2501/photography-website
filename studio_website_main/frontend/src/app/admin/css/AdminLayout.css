@@ -178,6 +178,7 @@
 /* Container padding alignment overrides to ensure straight line layout with Admin Dashboard */
 .adminMain .paymentsSectionContainer,
 .adminMain .clientUsersSectionContainer,
+.adminMain .userManagementContainer,
 .adminMain .messageSectionContainer,
 .adminMain .gallerySectionContainer,
 .adminMain .wheelSectionContainer,

@@ -26,12 +26,47 @@ public class AuthService {
     private final JwtTokenProvider tokenProvider;
     private final com.auralens.studio.repositories.ClientUserRepository clientUserRepository;
     private final BookingRepository bookingRepository;
+    private final com.auralens.studio.repositories.AdminUserRepository adminUserRepository;
 
     @Autowired
-    public AuthService(JwtTokenProvider tokenProvider, com.auralens.studio.repositories.ClientUserRepository clientUserRepository, BookingRepository bookingRepository) {
+    public AuthService(JwtTokenProvider tokenProvider, 
+                       com.auralens.studio.repositories.ClientUserRepository clientUserRepository, 
+                       BookingRepository bookingRepository,
+                       com.auralens.studio.repositories.AdminUserRepository adminUserRepository) {
         this.tokenProvider = tokenProvider;
         this.clientUserRepository = clientUserRepository;
         this.bookingRepository = bookingRepository;
+        this.adminUserRepository = adminUserRepository;
+    }
+
+    @jakarta.annotation.PostConstruct
+    public void seedAdminUsers() {
+        try {
+            Optional<com.auralens.studio.models.AdminUser> existing = adminUserRepository.findByUsername(adminUsername);
+            if (!existing.isPresent()) {
+                com.auralens.studio.models.AdminUser defaultAdmin = new com.auralens.studio.models.AdminUser();
+                defaultAdmin.setUsername(adminUsername);
+                defaultAdmin.setPassword(adminPassword);
+                defaultAdmin.setRole("Superadmin");
+                defaultAdmin.setStatus("ACTIVE");
+                defaultAdmin.setPageAccess(java.util.Arrays.asList(
+                    "bookings",
+                    "contacts",
+                    "clients",
+                    "client-images",
+                    "payments",
+                    "wheel",
+                    "gallery",
+                    "reviews",
+                    "settings",
+                    "user-management"
+                ));
+                adminUserRepository.save(defaultAdmin);
+                System.out.println("Seeded default Superadmin user: " + adminUsername);
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to seed default admin user: " + e.getMessage());
+        }
     }
 
     @jakarta.annotation.PostConstruct
@@ -58,13 +93,26 @@ public class AuthService {
         }
     }
 
-    public Map<String, String> authenticateAdmin(String username, String password) {
-        if (username.equals(adminUsername) && password.equals(adminPassword)) {
-            String token = tokenProvider.generateToken(username);
-            Map<String, String> response = new HashMap<>();
-            response.put("token", token);
-            response.put("username", username);
-            return response;
+    public Map<String, Object> authenticateAdmin(String username, String password) {
+        Optional<com.auralens.studio.models.AdminUser> adminOpt = adminUserRepository.findByUsername(username);
+        if (adminOpt.isPresent()) {
+            com.auralens.studio.models.AdminUser admin = adminOpt.get();
+            if (admin.getPassword().equals(password)) {
+                if ("DEACTIVATED".equalsIgnoreCase(admin.getStatus())) {
+                    return null;
+                }
+                
+                admin.setLastLogin(System.currentTimeMillis());
+                adminUserRepository.save(admin);
+
+                String token = tokenProvider.generateToken(username, admin.getRole().toLowerCase());
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+                response.put("username", username);
+                response.put("role", admin.getRole());
+                response.put("pageAccess", admin.getPageAccess());
+                return response;
+            }
         }
         return null;
     }
@@ -130,5 +178,59 @@ public class AuthService {
 
     public void deleteClientUser(@NonNull String id) {
         clientUserRepository.deleteById(id);
+    }
+
+    // Admin Users Management methods
+    public List<com.auralens.studio.models.AdminUser> getAllAdminUsers() {
+        return adminUserRepository.findAll();
+    }
+
+    public com.auralens.studio.models.AdminUser createAdminUser(com.auralens.studio.models.AdminUser adminUser) {
+        adminUser.setStatus("ACTIVE");
+        if (adminUser.getRole() == null) {
+            adminUser.setRole("Admin");
+        }
+        if (adminUser.getPageAccess() == null) {
+            adminUser.setPageAccess(new java.util.ArrayList<>());
+        }
+        return adminUserRepository.save(adminUser);
+    }
+
+    public Optional<com.auralens.studio.models.AdminUser> updateAdminStatus(@NonNull String id, String status) {
+        Optional<com.auralens.studio.models.AdminUser> adminOpt = adminUserRepository.findById(id);
+        if (adminOpt.isPresent()) {
+            com.auralens.studio.models.AdminUser admin = adminOpt.get();
+            if (admin.getUsername().equals(adminUsername)) {
+                // Cannot deactivate primary superadmin
+                return Optional.empty();
+            }
+            admin.setStatus(status);
+            return Optional.of(adminUserRepository.save(admin));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<com.auralens.studio.models.AdminUser> updateAdminPermissions(@NonNull String id, List<String> pageAccess) {
+        Optional<com.auralens.studio.models.AdminUser> adminOpt = adminUserRepository.findById(id);
+        if (adminOpt.isPresent()) {
+            com.auralens.studio.models.AdminUser admin = adminOpt.get();
+            admin.setPageAccess(pageAccess);
+            return Optional.of(adminUserRepository.save(admin));
+        }
+        return Optional.empty();
+    }
+
+    public boolean deleteAdminUser(@NonNull String id) {
+        Optional<com.auralens.studio.models.AdminUser> adminOpt = adminUserRepository.findById(id);
+        if (adminOpt.isPresent()) {
+            com.auralens.studio.models.AdminUser admin = adminOpt.get();
+            if (admin.getUsername().equals(adminUsername)) {
+                // Cannot delete primary superadmin
+                return false;
+            }
+            adminUserRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

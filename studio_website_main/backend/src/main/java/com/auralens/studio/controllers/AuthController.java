@@ -30,7 +30,7 @@ public class AuthController {
         }
 
         // 1. Try admin authentication
-        Map<String, String> adminAuthResult = authService.authenticateAdmin(
+        Map<String, Object> adminAuthResult = authService.authenticateAdmin(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
         );
@@ -42,6 +42,7 @@ public class AuthController {
             response.put("token", adminAuthResult.get("token"));
             response.put("username", adminAuthResult.get("username"));
             response.put("role", "admin");
+            response.put("pageAccess", adminAuthResult.get("pageAccess"));
             return ResponseEntity.ok(response);
         }
 

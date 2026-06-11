@@ -39,6 +39,8 @@ export default function LoginPage() {
         } else {
           localStorage.setItem('adminToken', data.token);
           localStorage.setItem('adminUsername', data.username);
+          localStorage.setItem('adminRole', data.role || 'Admin');
+          localStorage.setItem('adminPageAccess', JSON.stringify(data.pageAccess || []));
           router.push('/admin');
         }
       } else {

@@ -13,6 +13,7 @@ import SettingsSection from './SettingsSection';
 import ClientUsersSection from './ClientUsersSection';
 import ClientImagesSection from './ClientImagesSection';
 import PaymentsSection from './PaymentsSection';
+import UserManagementSection from './UserManagementSection';
 
 interface ContactMessage {
   _id: string;
@@ -31,6 +32,7 @@ export default function AdminDashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [adminUser, setAdminUser] = useState('');
   const [activeTab, setActiveTab] = useState('bookings');
+  const [allowedTabs, setAllowedTabs] = useState<string[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -41,6 +43,36 @@ export default function AdminDashboardPage() {
     } else {
       setIsAuthenticated(true);
       setAdminUser(user || 'Admin');
+      
+      const role = localStorage.getItem('adminRole');
+      const pageAccessStr = localStorage.getItem('adminPageAccess');
+      let tabs: string[] = [];
+      if (role === 'Superadmin') {
+        tabs = [
+          'bookings',
+          'contacts',
+          'clients',
+          'client-images',
+          'payments',
+          'wheel',
+          'gallery',
+          'reviews',
+          'settings',
+          'user-management'
+        ];
+      } else if (pageAccessStr) {
+        try {
+          tabs = JSON.parse(pageAccessStr) as string[];
+        } catch (e) {
+          tabs = [];
+        }
+      }
+      setAllowedTabs(tabs);
+      if (tabs.length > 0 && !tabs.includes('bookings')) {
+        // If bookings tab is not allowed, select the first allowed tab
+        setActiveTab(tabs[0]);
+      }
+      
       fetchMessages(token);
     }
   }, []);
@@ -148,6 +180,8 @@ export default function AdminDashboardPage() {
         <ReviewSection />
       ) : activeTab === 'settings' ? (
         <SettingsSection />
+      ) : activeTab === 'user-management' ? (
+        <UserManagementSection />
       ) : (
         <WheelSection />
       )}

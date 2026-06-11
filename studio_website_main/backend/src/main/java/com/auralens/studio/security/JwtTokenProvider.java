@@ -25,12 +25,16 @@ public class JwtTokenProvider {
     }
 
     public String generateToken(String username) {
+        return generateToken(username, "client");
+    }
+
+    public String generateToken(String username, String role) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
 
         return Jwts.builder()
                 .setSubject(username)
-                .claim("role", "admin")
+                .claim("role", role)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -45,6 +49,19 @@ public class JwtTokenProvider {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+    public String getRoleFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("role", String.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public boolean validateToken(String token) {

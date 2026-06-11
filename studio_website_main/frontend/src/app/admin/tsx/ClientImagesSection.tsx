@@ -26,6 +26,7 @@ export default function ClientImagesSection() {
   const [selectedBookingId, setSelectedBookingId] = useState('');
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [clientImages, setClientImages] = useState<ClientImage[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Uploading status
   const [uploadingQueue, setUploadingQueue] = useState<{ id: string; name: string }[]>([]);
@@ -194,273 +195,358 @@ export default function ClientImagesSection() {
     setClientImages(selectedBooking ? selectedBooking.clientImages || [] : []);
   };
 
+  const filteredBookings = bookings.filter((b) => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    return (
+      b.fullName.toLowerCase().includes(query) ||
+      b.photoshootType.toLowerCase().includes(query) ||
+      (b.packageName && b.packageName.toLowerCase().includes(query)) ||
+      b.date.toLowerCase().includes(query) ||
+      (b.clientId && b.clientId.toLowerCase().includes(query)) ||
+      (b.phone && b.phone.includes(query))
+    );
+  });
+
   return (
     <div className="clientImagesSectionContainer">
-      <div className="controlsRow">
-        <h1 className="sectionTitle">Client Photos & Galleries</h1>
-      </div>
+      {!selectedBooking ? (
+        <>
+          {/* View 1: List Table View */}
+          <div className="controlsRow">
+            <h1 className="sectionTitle">Client Photos & Galleries</h1>
+            <input
+              type="text"
+              placeholder="Search by client name, type, date or client ID..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="searchBar"
+            />
+          </div>
 
-      {loading ? (
-        <div className="loadingWrapper">
-          <div className="spinner"></div>
-          <p>Loading bookings...</p>
-        </div>
+          {loading ? (
+            <div className="loadingWrapper">
+              <div className="spinner"></div>
+              <p>Loading sessions...</p>
+            </div>
+          ) : filteredBookings.length === 0 ? (
+            <div className="emptyStateCard">
+              {searchQuery ? 'No matching client sessions found.' : 'No client sessions registered yet.'}
+            </div>
+          ) : (
+            <div className="tableCard">
+              <div className="existingBookingsTableWrapper">
+                <table className="existingBookingsTable">
+                  <thead>
+                    <tr>
+                      <th>CLIENT ID</th>
+                      <th>CLIENT NAME</th>
+                      <th>SESSION & PACKAGE</th>
+                      <th>DATE</th>
+                      <th>PHOTO COUNT</th>
+                      <th>RE-EDIT STATUS</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredBookings.map((b) => {
+                      const hasReedit = b.clientImages?.some(img => img.reeditRequested);
+                      const imgCount = b.clientImages?.length || 0;
+                      return (
+                        <tr key={b.id}>
+                          <td>
+                            <span className="clientIdText">{b.clientId || 'N/A'}</span>
+                          </td>
+                          <td>
+                            <div className="userCell">
+                              <span className="usernameText">{b.fullName}</span>
+                              <span className="fullNameText">{b.phone}</span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userCell">
+                              <span className="usernameText" style={{ fontSize: '0.85rem' }}>
+                                {b.photoshootType.toUpperCase()}
+                              </span>
+                              <span className="fullNameText">{b.packageName} Package</span>
+                            </div>
+                          </td>
+                          <td>
+                            <span className="dateText">{b.date}</span>
+                          </td>
+                          <td>
+                            <span className="photoCountBadge">{imgCount} Photo{imgCount !== 1 ? 's' : ''}</span>
+                          </td>
+                          <td>
+                            <span className={`statusBadge ${hasReedit ? 'deactivated' : 'active'}`}>
+                              {hasReedit ? 'Needs Re-edit' : 'No Requests'}
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() => handleSelectBooking(b.id)}
+                              className="managePhotosBtn"
+                            >
+                              Manage Photos
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <>
-          {/* Step 1: Select client */}
-          <div className="selectClientCard">
-            <h2>Select a Client Booking</h2>
-            <div className="clientSelectWrapper">
-              <select
-                value={selectedBookingId}
-                onChange={(e) => handleSelectBooking(e.target.value)}
-                className="clientDropdown"
+          {/* View 2: Detailed Workspace View */}
+          <div className="controlsRow">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <button 
+                onClick={() => handleSelectBooking('')}
+                className="backToSessionsBtn"
+                type="button"
               >
-                <option value="">-- Select client session to manage images --</option>
-                {bookings.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.fullName} - {b.photoshootType.toUpperCase()} ({b.date}) {b.clientId ? `[${b.clientId}]` : ''}
-                  </option>
-                ))}
-              </select>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
+                </svg>
+                <span>Back to Sessions</span>
+              </button>
+              <h1 className="sectionTitle">Manage Photos</h1>
             </div>
           </div>
 
-          {/* Step 2: Upload workspace (Only visible when client is selected) */}
-          {selectedBooking ? (
-            <div className="uploadWorkspace">
-              {/* Left Column: Upload Controls */}
-              <div className="uploadControlPanel">
-                <div className="infoCardPremium">
-                  <h3>Managing Photos For:</h3>
-                  <p style={{ color: '#fff', fontWeight: 600, fontSize: '0.95rem', marginBottom: '4px' }}>
-                    {selectedBooking.fullName}
+          <div className="uploadWorkspace">
+            {/* Left Column: Upload Controls */}
+            <div className="uploadControlPanel">
+              <div className="infoCardPremium">
+                <h3>Managing Photos For:</h3>
+                <p style={{ color: '#fff', fontWeight: 600, fontSize: '0.95rem', marginBottom: '6px' }}>
+                  {selectedBooking.fullName}
+                </p>
+                <p style={{ marginBottom: '4px' }}>
+                  <strong>Session:</strong> {selectedBooking.photoshootType} ({selectedBooking.packageName} package)
+                </p>
+                <p style={{ marginBottom: '4px' }}>
+                  <strong>Date:</strong> {selectedBooking.date}
+                </p>
+                {selectedBooking.clientId && (
+                  <p>
+                    <strong>Client ID:</strong> {selectedBooking.clientId}
                   </p>
-                  <p style={{ marginBottom: '2px' }}>
-                    <strong>Session:</strong> {selectedBooking.photoshootType} ({selectedBooking.packageName} package)
-                  </p>
-                  <p style={{ marginBottom: '2px' }}>
-                    <strong>Date:</strong> {selectedBooking.date}
-                  </p>
-                  {selectedBooking.clientId && (
-                    <p>
-                      <strong>Client ID:</strong> {selectedBooking.clientId}
-                    </p>
-                  )}
-                </div>
+                )}
+              </div>
 
-                {/* Re-edit Requests Checklist */}
-                <div className="reeditChecklistCard">
-                  <h3>Re-edit Requests</h3>
-                  {clientImages.filter(img => img.reeditRequested).length > 0 ? (
-                    <div className="reeditList">
-                      {clientImages.map((img, index) => {
-                        if (!img.reeditRequested) return null;
-                        return (
-                          <div key={index} className="reeditListItem">
-                            <div
-                              className="reeditItemThumb"
-                              style={{ backgroundImage: `url('${img.url}')` }}
-                            />
-                            <div className="reeditItemInfo">
-                              <span className="reeditItemName" title={img.name}>{img.name}</span>
-                              <span className="reeditItemStatus">Needs Re-editing</span>
-                            </div>
-                            <button
-                              type="button"
-                              className="reeditDoneBtn"
-                              title="Mark as Re-edited"
-                              onClick={async () => {
-                                const updated = clientImages.map((item, idx) =>
-                                  idx === index ? { ...item, reeditRequested: false } : item
-                                );
-                                setClientImages(updated);
-
-                                const token = localStorage.getItem('adminToken');
-                                try {
-                                  await fetch(`http://localhost:5000/api/bookings/admin/${selectedBookingId}/images`, {
-                                    method: 'PUT',
-                                    headers: {
-                                      'Content-Type': 'application/json',
-                                      Authorization: `Bearer ${token}`,
-                                    },
-                                    body: JSON.stringify(updated),
-                                  });
-                                  setBookings((prev) =>
-                                    prev.map((b) => (b.id === selectedBookingId ? { ...b, clientImages: updated } : b))
-                                  );
-                                } catch (e) {
-                                  console.error('Failed to auto-save re-edit clear:', e);
-                                }
-                              }}
-                            >
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="20 6 9 17 4 12" />
-                              </svg>
-                            </button>
+              {/* Re-edit Requests Checklist */}
+              <div className="reeditChecklistCard">
+                <h3>Re-edit Requests</h3>
+                {clientImages.filter(img => img.reeditRequested).length > 0 ? (
+                  <div className="reeditList">
+                    {clientImages.map((img, index) => {
+                      if (!img.reeditRequested) return null;
+                      return (
+                        <div key={index} className="reeditListItem">
+                          <div
+                            className="reeditItemThumb"
+                            style={{ backgroundImage: `url('${img.url}')` }}
+                          />
+                          <div className="reeditItemInfo">
+                            <span className="reeditItemName" title={img.name}>{img.name}</span>
+                            <span className="reeditItemStatus">Needs Re-editing</span>
                           </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="reeditEmptyState">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                        <polyline points="22 4 12 14.01 9 11.01" />
-                      </svg>
-                      <span>No pending re-edit requests</span>
-                    </div>
-                  )}
-                </div>
+                          <button
+                            type="button"
+                            className="reeditDoneBtn"
+                            title="Mark as Re-edited"
+                            onClick={async () => {
+                              const updated = clientImages.map((item, idx) =>
+                                idx === index ? { ...item, reeditRequested: false } : item
+                              );
+                              setClientImages(updated);
 
-                <div
-                  className={`dropzoneArea ${isDragging ? 'dragging' : ''}`}
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    className="dropzoneInput"
-                    accept="image/*"
-                    multiple
-                  />
-                  <div className="dropzoneIcon">
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" x2="12" y1="3" y2="15" />
-                    </svg>
-                  </div>
-                  <div className="dropzoneText">
-                    <h4>Upload client photos</h4>
-                    <p>Drag and drop image files or click to browse</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Uploaded Images Grid */}
-              <div className="imagesGridPanel">
-                <div className="panelHeaderRow">
-                  <h2>Uploaded Images</h2>
-                  <span className="imageCounter">
-                    {clientImages.length} Image{clientImages.length !== 1 ? 's' : ''}
-                  </span>
-                </div>
-
-                <div className="imagesGrid">
-                  {clientImages.map((img, index) => (
-                    <div key={index} className="imageCardPremium">
-                      <div
-                        className="thumbnailWrapper"
-                        style={{ backgroundImage: `url('${img.url}')` }}
-                      >
-                        {img.reeditRequested && (
-                          <div className="reeditBadgeAdmin">Re-edit</div>
-                        )}
-                        <button
-                          type="button"
-                          className="deleteCardBtn"
-                          onClick={() => handleDeleteImage(index)}
-                          title="Remove Image"
-                        >
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="3 6 5 6 21 6" />
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                            <line x1="10" y1="11" x2="10" y2="17" />
-                            <line x1="14" y1="11" x2="14" y2="17" />
-                          </svg>
-                        </button>
-                      </div>
-                      <div className="cardDetails">
-                        <label htmlFor={`imgName-${index}`}></label>
-                        <input
-                          id={`imgName-${index}`}
-                          type="text"
-                          className="cardImageNameInput"
-                          value={img.name}
-                          onChange={(e) => handleUpdateImageName(index, e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* Uploading Queue Skeletons */}
-                  {uploadingQueue.map((item) => (
-                    <div key={item.id} className="imageCardPremium queueCard">
-                      <div className="thumbnailWrapper" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
-                        <div className="uploadProgressOverlay">
-                          <div className="progressSpinner"></div>
-                          <span className="progressText">Uploading...</span>
+                              const token = localStorage.getItem('adminToken');
+                              try {
+                                await fetch(`http://localhost:5000/api/bookings/admin/${selectedBookingId}/images`, {
+                                  method: 'PUT',
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${token}`,
+                                  },
+                                  body: JSON.stringify(updated),
+                                });
+                                setBookings((prev) =>
+                                  prev.map((b) => (b.id === selectedBookingId ? { ...b, clientImages: updated } : b))
+                                );
+                              } catch (e) {
+                                console.error('Failed to auto-save re-edit clear:', e);
+                              }
+                            }}
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          </button>
                         </div>
-                      </div>
-                      <div className="cardDetails">
-                        <label>Display Name</label>
-                        <input
-                          type="text"
-                          className="cardImageNameInput"
-                          value={item.name}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="reeditEmptyState">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span>No pending re-edit requests</span>
+                  </div>
+                )}
+              </div>
 
-                  {clientImages.length === 0 && uploadingQueue.length === 0 && (
-                    <div className="emptyGridPlaceholder">
-                      <div className="placeholderGridIcon">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                          <circle cx="8.5" cy="8.5" r="1.5" />
-                          <polyline points="21 15 16 10 5 21" />
-                        </svg>
-                      </div>
-                      <h3>No Photos Added Yet</h3>
-                      <p>Drag images into the dropzone on the left to start uploading photos for this client session.</p>
-                    </div>
-                  )}
+              <div
+                className={`dropzoneArea ${isDragging ? 'dragging' : ''}`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="dropzoneInput"
+                  accept="image/*"
+                  multiple
+                />
+                <div className="dropzoneIcon">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" x2="12" y1="3" y2="15" />
+                  </svg>
                 </div>
-
-                <div className="saveChangesBar">
-                  <button
-                    type="button"
-                    className="cancelBtnPremium"
-                    onClick={handleCancelChanges}
-                    disabled={saving || uploadingQueue.length > 0}
-                  >
-                    Discard Changes
-                  </button>
-                  <button
-                    type="button"
-                    className="saveBtnPremium"
-                    onClick={handleSave}
-                    disabled={saving || uploadingQueue.length > 0}
-                  >
-                    {saving ? (
-                      <>
-                        <div className="progressSpinner" style={{ width: '14px', height: '14px', borderTopColor: '#fff' }}></div>
-                        <span>Saving...</span>
-                      </>
-                    ) : (
-                      <>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        <span>Save Images</span>
-                      </>
-                    )}
-                  </button>
+                <div className="dropzoneText">
+                  <h4>Upload client photos</h4>
+                  <p>Drag and drop image files or click to browse</p>
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="emptyStateCard" style={{ padding: '60px 40px' }}>
-              Please select a client booking above to start uploading and managing session photos.
+
+            {/* Right Column: Uploaded Images Grid */}
+            <div className="imagesGridPanel">
+              <div className="panelHeaderRow">
+                <h2>Uploaded Images</h2>
+                <span className="imageCounter">
+                  {clientImages.length} Image{clientImages.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+
+              <div className="imagesGrid">
+                {clientImages.map((img, index) => (
+                  <div key={index} className="imageCardPremium">
+                    <div
+                      className="thumbnailWrapper"
+                      style={{ backgroundImage: `url('${img.url}')` }}
+                    >
+                      {img.reeditRequested && (
+                        <div className="reeditBadgeAdmin">Re-edit</div>
+                      )}
+                      <button
+                        type="button"
+                        className="deleteCardBtn"
+                        onClick={() => handleDeleteImage(index)}
+                        title="Remove Image"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="3 6 5 6 21 6" />
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                          <line x1="10" y1="11" x2="10" y2="17" />
+                          <line x1="14" y1="11" x2="14" y2="17" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="cardDetails">
+                      <label htmlFor={`imgName-${index}`}></label>
+                      <input
+                        id={`imgName-${index}`}
+                        type="text"
+                        className="cardImageNameInput"
+                        value={img.name}
+                        onChange={(e) => handleUpdateImageName(index, e.target.value)}
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {/* Uploading Queue Skeletons */}
+                {uploadingQueue.map((item) => (
+                  <div key={item.id} className="imageCardPremium queueCard">
+                    <div className="thumbnailWrapper" style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
+                      <div className="uploadProgressOverlay">
+                        <div className="progressSpinner"></div>
+                        <span className="progressText">Uploading...</span>
+                      </div>
+                    </div>
+                    <div className="cardDetails">
+                      <label>Display Name</label>
+                      <input
+                        type="text"
+                        className="cardImageNameInput"
+                        value={item.name}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                ))}
+
+                {clientImages.length === 0 && uploadingQueue.length === 0 && (
+                  <div className="emptyGridPlaceholder">
+                    <div className="placeholderGridIcon">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
+                      </svg>
+                    </div>
+                    <h3>No Photos Added Yet</h3>
+                    <p>Drag images into the dropzone on the left to start uploading photos for this client session.</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="saveChangesBar">
+                <button
+                  type="button"
+                  className="cancelBtnPremium"
+                  onClick={handleCancelChanges}
+                  disabled={saving || uploadingQueue.length > 0}
+                >
+                  Discard Changes
+                </button>
+                <button
+                  type="button"
+                  className="saveBtnPremium"
+                  onClick={handleSave}
+                  disabled={saving || uploadingQueue.length > 0}
+                >
+                  {saving ? (
+                    <>
+                      <div className="progressSpinner" style={{ width: '14px', height: '14px', borderTopColor: '#fff' }}></div>
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>Save Images</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-          )}
+          </div>
         </>
       )}
     </div>

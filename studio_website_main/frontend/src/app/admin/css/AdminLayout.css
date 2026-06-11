@@ -36,10 +36,10 @@
   margin: 0;
   letter-spacing: -0.3px;
   color: #ffffff;
+  line-height: 70px;
 }
 
 .sidebarNav {
-  flex-grow: 1;
   padding: 20px 0;
 }
 
@@ -172,7 +172,7 @@
   color: #ffffff !important;
   margin: 0 !important;
   letter-spacing: -0.3px !important;
-  line-height: 1.2 !important;
+  line-height: 70px !important;
 }
 
 /* Container padding alignment overrides to ensure straight line layout with Admin Dashboard */

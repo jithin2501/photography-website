@@ -131,6 +131,8 @@ export default function AdminDashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUsername');
+    localStorage.removeItem('adminRole');
+    localStorage.removeItem('adminPageAccess');
     router.push('/login');
   };
 

@@ -89,13 +89,13 @@
   color: #e0e0e0;
 }
 
-.inputWrapper {
+.loginInputWrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.inputIcon {
+.loginInputIcon {
   position: absolute;
   left: 16px;
   color: #666666;
@@ -104,26 +104,26 @@
   justify-content: center;
 }
 
-.input {
+.loginPage .loginInput {
   width: 100%;
-  background-color: #121212;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 15px 16px 15px 48px;
-  border-radius: 12px;
-  color: #ffffff;
-  font-size: 0.9rem;
+  background-color: #121212 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 15px 16px 15px 48px !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  font-size: 0.9rem !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.input::placeholder {
+.loginPage .loginInput::placeholder {
   color: #4a4a4a;
 }
 
-.input:focus {
-  border-color: #FF4D00;
-  outline: none;
-  background-color: #141414;
-  box-shadow: 0 0 0 1px #FF4D00;
+.loginPage .loginInput:focus {
+  border-color: #FF4D00 !important;
+  outline: none !important;
+  background-color: #141414 !important;
+  box-shadow: 0 0 0 1px #FF4D00 !important;
 }
 
 .eyeButton {

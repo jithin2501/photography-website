@@ -99,10 +99,8 @@ export default function UserManagementSection() {
         body: JSON.stringify({
           username: username.trim(),
           password: password,
-          role: role,
-          pageAccess: role === 'Superadmin' 
-            ? SECTIONS.map(s => s.id) 
-            : ['bookings', 'contacts', 'reviews'] // default permissions
+          role: 'Admin',
+          pageAccess: ['bookings'] // default permissions
         }),
       });
 
@@ -300,20 +298,6 @@ export default function UserManagementSection() {
             </div>
           </div>
 
-          <div className="formRow">
-            <div className="formField">
-              <label htmlFor="admin-role">Role:</label>
-              <select
-                id="admin-role"
-                value={role}
-                onChange={e => setRole(e.target.value)}
-                className="roleSelect"
-              >
-                <option value="Admin">Admin</option>
-                <option value="Superadmin">Superadmin</option>
-              </select>
-            </div>
-          </div>
 
           <button type="submit" className="createBtn">
             Create Admin Account

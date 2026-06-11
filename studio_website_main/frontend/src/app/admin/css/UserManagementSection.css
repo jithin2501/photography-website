@@ -114,9 +114,9 @@
 }
 
 .formField input:focus, .roleSelect:focus {
-  border-color: #3b82f6;
+  border-color: #FF4D00;
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 77, 0, 0.15);
 }
 
 .roleSelect {
@@ -162,7 +162,7 @@
 
 .createBtn {
   align-self: flex-start;
-  background-color: #2563eb;
+  background-color: #FF4D00;
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -172,13 +172,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 8px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 77, 0, 0.2);
 }
 
 .createBtn:hover {
-  background-color: #1d4ed8;
+  background-color: #ff621f;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 16px rgba(255, 77, 0, 0.3);
 }
 
 .createBtn:active {
@@ -252,9 +252,9 @@
 }
 
 .roleBadge.admin {
-  background: rgba(59, 130, 246, 0.12);
-  color: #3b82f6;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(255, 77, 0, 0.12);
+  color: #FF4D00;
+  border: 1px solid rgba(255, 77, 0, 0.2);
 }
 
 /* Status Texts */
@@ -301,7 +301,7 @@
 }
 
 .permissionsBtn {
-  background-color: #7c3aed;
+  background-color: #FF4D00;
   color: #ffffff;
   border: none;
   padding: 6px 14px;
@@ -310,13 +310,13 @@
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.2);
+  box-shadow: 0 2px 6px rgba(255, 77, 0, 0.2);
 }
 
 .permissionsBtn:hover {
-  background-color: #6d28d9;
+  background-color: #ff621f;
   transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 10px rgba(255, 77, 0, 0.3);
 }
 
 /* Actions Column */
@@ -383,8 +383,8 @@
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(59, 130, 246, 0.1);
-  border-top-color: #3b82f6;
+  border: 3px solid rgba(255, 77, 0, 0.1);
+  border-top-color: #FF4D00;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -476,21 +476,9 @@
 }
 
 .checkboxesGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-height: 320px;
-  overflow-y: auto;
-  padding-right: 6px;
-}
-
-.checkboxesGrid::-webkit-scrollbar {
-  width: 4px;
-}
-
-.checkboxesGrid::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
 }
 
 /* Custom Checkbox styles */
@@ -518,8 +506,8 @@
 }
 
 .checkboxLabel input:checked + .checkboxCustom {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: #FF4D00;
+  border-color: #FF4D00;
 }
 
 .checkboxLabel input:checked + .checkboxCustom::after {
@@ -589,7 +577,7 @@
 }
 
 .saveBtn {
-  background: #3b82f6;
+  background: #FF4D00;
   border: none;
   color: #ffffff;
   padding: 10px 20px;
@@ -598,12 +586,12 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 10px rgba(255, 77, 0, 0.2);
 }
 
 .saveBtn:hover:not(:disabled) {
-  background: #2563eb;
-  box-shadow: 0 6px 14px rgba(59, 130, 246, 0.3);
+  background: #ff621f;
+  box-shadow: 0 6px 14px rgba(255, 77, 0, 0.3);
 }
 
 .saveBtn:disabled {

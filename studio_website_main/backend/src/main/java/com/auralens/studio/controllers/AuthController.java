@@ -41,7 +41,7 @@ public class AuthController {
             response.put("message", "Login successful");
             response.put("token", adminAuthResult.get("token"));
             response.put("username", adminAuthResult.get("username"));
-            response.put("role", "admin");
+            response.put("role", adminAuthResult.get("role"));
             response.put("pageAccess", adminAuthResult.get("pageAccess"));
             return ResponseEntity.ok(response);
         }

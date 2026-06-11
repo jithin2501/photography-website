@@ -40,7 +40,7 @@
 }
 
 .sidebarNav {
-  padding: 20px 0;
+  padding: 20px 0 0 0;
 }
 
 .sidebarNav ul {
@@ -80,8 +80,8 @@
 }
 
 .sidebarFooter {
-  padding: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 20px 20px 20px;
+  border-top: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
